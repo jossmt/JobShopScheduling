@@ -1,5 +1,6 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
+import com.schedule.core.Graphs.Execution;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.FileDataPaths;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.EndVertex;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -286,8 +288,6 @@ public class ScheduleService {
     private void calculatePaths(final Schedule schedule) {
 
         LOG.trace("Calculating paths.");
-
-        //Primary path to begin with
         final ArrayList<Edge> LPMachineEdges = calculateLongestPathMachineEdges(schedule.getEndVertex());
 
         schedule.setMachineEdgesOnLP(LPMachineEdges);
@@ -304,6 +304,7 @@ public class ScheduleService {
     private ArrayList<Edge> calculateLongestPathMachineEdges(final EndVertex endVertex) {
 
         final ArrayList<Edge> machineEdgesLongestPath = new ArrayList<>();
+        final Set<Edge> machineEdgesNotOnLongestPath = new HashSet<>();
         final Set<Edge> parentEdges = endVertex.getEndParentEdges();
 
         // Gets LP edges
@@ -313,7 +314,8 @@ public class ScheduleService {
 
         for (final Edge parentEdge : maxParentEdges) {
 
-            addMachineEdgesLP(machineEdgesLongestPath, parentEdge.getOperationFrom());
+            addMachineEdgesLP(machineEdgesLongestPath, machineEdgesNotOnLongestPath, parentEdge.getOperationFrom());
+
         }
 
         return machineEdgesLongestPath;
@@ -327,13 +329,14 @@ public class ScheduleService {
      * @param node
      *         Current node in recursive iteration.
      */
-    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Operation node) {
+    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Set<Edge> machineEdgesNotOnLP, final
+    Operation node) {
 
         LOG.trace("Checking node: {}", node.toString());
 
         final Set<Edge> parentEdges = node.getParentEdges();
 
-        if(parentEdges.isEmpty()){
+        if (parentEdges.isEmpty()) {
             return;
         }
 
@@ -349,7 +352,7 @@ public class ScheduleService {
                 machineEdges.add(edge);
             }
 
-            addMachineEdgesLP(machineEdges, edge.getOperationFrom());
+            addMachineEdgesLP(machineEdges, machineEdgesNotOnLP, edge.getOperationFrom());
         }
     }
 

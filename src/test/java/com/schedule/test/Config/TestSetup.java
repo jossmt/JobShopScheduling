@@ -46,7 +46,7 @@ public class TestSetup {
 
         testSchedules = new HashSet<>();
 
-        final Set<Schedule> schedules = schedulesBuilder.generateTestSchedules(benchmarkInstance, setSize);
+        final Set<Schedule> schedules = schedulesBuilder.generateStartingSchedules(benchmarkInstance, setSize);
 
         boolean first = true;
         for (final Schedule schedule : schedules) {

@@ -346,44 +346,6 @@ public class Schedule implements Serializable {
     }
 
     /**
-     * Returns first task for each job.
-     *
-     * @return Set of {@link Operation}
-     */
-    public Set<Operation> getFirstJobTasks() {
-
-        final Set<Operation> firstOperationSet = new HashSet<>();
-
-        firstOperationSet.addAll(jobHashMap.values());
-
-        return firstOperationSet;
-    }
-
-    /**
-     * Returns first task for each machine.
-     *
-     * @return Set of {@link Operation}
-     */
-    public Set<Operation> getFirstMachineTasks() {
-
-        final Set<Operation> firstMachineOperations = new HashSet<>();
-
-        Operation current = jobHashMap.get(0);
-        while (current.hasConjunctiveEdge()) {
-
-            Operation machineRoute = current;
-            while (machineRoute.hasDisjunctiveParent()) {
-                machineRoute = machineRoute.getDisjunctiveParent().getOperationFrom();
-            }
-            firstMachineOperations.add(machineRoute);
-
-            current = current.getConjunctiveEdge().getOperationTo();
-        }
-
-        return firstMachineOperations;
-    }
-
-    /**
      * Sets new Hashmap of vertices..
      *
      * @param jobHashMap
@@ -476,6 +438,8 @@ public class Schedule implements Serializable {
      */
     public void setMachineEdgesOnLP(ArrayList<Edge> machineEdgesOnLP) {
         this.machineEdgesOnLP = machineEdgesOnLP;
+
+        calculateAllMachineEdgesNotOnLP();
     }
 
     /**
@@ -495,6 +459,44 @@ public class Schedule implements Serializable {
      */
     public void setMachineEdgesNotOnLP(Set<Edge> machineEdgesNotOnLP) {
         this.machineEdgesNotOnLP = machineEdgesNotOnLP;
+    }
+
+    /**
+     * Returns all active disjunctive edges not on longest path.
+     *
+     */
+    private void calculateAllMachineEdgesNotOnLP() {
+
+
+        final Set<Edge> machineEdges = getAllMachineEdgesManually();
+
+        machineEdges.removeAll(machineEdgesOnLP);
+
+        machineEdgesNotOnLP = machineEdges;
+    }
+
+    /**
+     * Returns all active disjunctive edges.
+     *
+     * @return set of {@link Edge}
+     */
+    public Set<Edge> getAllMachineEdgesManually() {
+
+        final Set<Edge> machineEdges = new HashSet<>();
+        for (final Operation operation : jobHashMap.values()) {
+
+            Operation current = operation;
+            while (current.hasConjunctiveEdge()) {
+
+                if (current.getDisjunctiveEdge() != null) {
+                    machineEdges.add(current.getDisjunctiveEdge());
+                }
+
+                current = current.getConjunctiveEdge().getOperationTo();
+            }
+        }
+
+        return machineEdges;
     }
 
     /**

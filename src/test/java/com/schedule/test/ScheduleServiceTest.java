@@ -173,11 +173,12 @@ public class ScheduleServiceTest extends TestSetup {
     @Test
     public void testCalculateMachineEdgesOnLP(){
 
-        setUp("ft06", 1);
+        setUp("ft10", 1);
 
         scheduleService.calculateScheduleData(optimal);
 
-        LOG.debug("Machine edges: {}", optimal.getMachineEdgesOnLP());
-        LOG.debug("Machine edges set: {}", optimal.getMachineEdgesOnLPSet());
+        LOG.debug("Machine edges set: {}", optimal.getMachineEdgesOnLPSet().size());
+        LOG.debug("Machine edges set not on LP: {}", optimal.getMachineEdgesNotOnLP().size());
+
     }
 }

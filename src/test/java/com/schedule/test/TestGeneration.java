@@ -1,5 +1,6 @@
 package com.schedule.test;
 
+import com.google.common.truth.Truth;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.test.Config.TestSetup;

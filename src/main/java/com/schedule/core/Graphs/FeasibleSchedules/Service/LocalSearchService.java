@@ -17,12 +17,16 @@ public class LocalSearchService {
     /** {@link ScheduleService}. */
     final ScheduleService scheduleService;
 
+    /** {@link FeasibilityService}. */
+    final FeasibilityService feasibilityService;
+
     /** Local optimas for SA. */
     private Set<Schedule> localOptimalSchedules;
 
     public LocalSearchService() {
 
         scheduleService = new ScheduleService();
+        feasibilityService = new FeasibilityService();
         localOptimalSchedules = new HashSet<>();
 
     }
@@ -66,9 +70,9 @@ public class LocalSearchService {
 
     public Schedule executeLocalSearchIteratively(final Schedule schedule, final Integer maxIterations) {
 
-        ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
-
         for (int i = 0; i < maxIterations; i++) {
+
+            ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
 
             final Integer makespan = schedule.getMakespan();
             LOG.trace("Current makespan: {}", schedule.getMakespan());
@@ -81,7 +85,6 @@ public class LocalSearchService {
                 LOG.trace("Edge flipped: {}", edgeFlip);
 
                 scheduleService.calculateScheduleData(schedule);
-                scheduleService.calculateMakeSpan(schedule);
 
                 if (!(schedule.getMakespan() < makespan)) {
 
@@ -98,7 +101,36 @@ public class LocalSearchService {
                     continue;
                 }
             } else {
-                break;
+
+                LOG.debug("No more flips to consider on LP, trying nonLP edges");
+
+                boolean foundEdgeToFlip = false;
+//                LOG.debug("Machine edges not on lp size: {}", schedule.getMachineEdgesNotOnLP().size());
+//                for(final Edge edge : schedule.getMachineEdgesNotOnLP()){
+//
+//                    scheduleService.switchEdge(edge);
+//
+//                    if(feasibilityService.scheduleIsFeasibleProof(edge.getOperationFrom(), edge.getOperationTo())){
+//
+//                        if (!(schedule.getMakespan() < makespan)) {
+//
+//                            //flip back if not improved schedule
+//                            scheduleService.switchEdge(edge);
+//                            scheduleService.calculateScheduleData(schedule);
+//                        } else {
+//
+//                            LOG.debug("Accepted edge flip not on lp");
+//                            scheduleService.calculateScheduleData(schedule);
+//                            foundEdgeToFlip = true;
+//                            break;
+//                        }
+//                    }
+//                }
+
+                if (!foundEdgeToFlip) {
+                    LOG.debug("Reached local minima");
+                    break;
+                }
             }
         }
 
