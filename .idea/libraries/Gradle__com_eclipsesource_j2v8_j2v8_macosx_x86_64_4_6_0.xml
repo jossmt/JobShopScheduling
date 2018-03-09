@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.eclipsesource.j2v8/j2v8_macosx_x86_64/4.6.0/863d30016246f6d7356c88eaf36c3e924a2ffd3c/j2v8_macosx_x86_64-4.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.eclipsesource.j2v8/j2v8_macosx_x86_64/4.6.0/70fa3b2e113fb13a4515a981b857a4a6575aeb22/j2v8_macosx_x86_64-4.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

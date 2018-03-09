@@ -1,0 +1,291 @@
+[J: 0 M: 0 PT: 29
+ AE: [PT: 29 JFrom: 0 MFrom: 0 | JTo:1 MTo: 0,
+, PT: 29 JFrom: 0 MFrom: 0 | JTo:0 MTo: 1,
+], J: 4 M: 2 PT: 14
+ AE: [PT: 14 JFrom: 4 MFrom: 2 | JTo:4 MTo: 0,
+, PT: 14 JFrom: 4 MFrom: 2 | JTo:9 MTo: 2,
+], J: 9 M: 1 PT: 85
+ AE: [PT: 85 JFrom: 9 MFrom: 1 | JTo:3 MTo: 1,
+, PT: 85 JFrom: 9 MFrom: 1 | JTo:9 MTo: 0,
+], J: 3 M: 1 PT: 81
+ AE: [PT: 81 JFrom: 3 MFrom: 1 | JTo:3 MTo: 2,
+, PT: 81 JFrom: 3 MFrom: 1 | JTo:2 MTo: 1,
+], J: 2 M: 1 PT: 91
+ AE: [PT: 91 JFrom: 2 MFrom: 1 | JTo:2 MTo: 0,
+, PT: 91 JFrom: 2 MFrom: 1 | JTo:7 MTo: 1,
+], J: 1 M: 0 PT: 43
+ AE: [PT: 43 JFrom: 1 MFrom: 0 | JTo:1 MTo: 2,
+, PT: 43 JFrom: 1 MFrom: 0 | JTo:9 MTo: 0,
+], J: 9 M: 0 PT: 13
+ AE: [PT: 13 JFrom: 9 MFrom: 0 | JTo:7 MTo: 0,
+, PT: 13 JFrom: 9 MFrom: 0 | JTo:9 MTo: 2,
+], J: 9 M: 2 PT: 61
+ AE: [PT: 61 JFrom: 9 MFrom: 2 | JTo:5 MTo: 2,
+, PT: 61 JFrom: 9 MFrom: 2 | JTo:9 MTo: 6,
+], J: 5 M: 2 PT: 84
+ AE: [PT: 84 JFrom: 5 MFrom: 2 | JTo:1 MTo: 2,
+, PT: 84 JFrom: 5 MFrom: 2 | JTo:5 MTo: 1,
+], J: 1 M: 2 PT: 90
+ AE: [PT: 90 JFrom: 1 MFrom: 2 | JTo:3 MTo: 2,
+, PT: 90 JFrom: 1 MFrom: 2 | JTo:1 MTo: 4,
+], J: 1 M: 4 PT: 75
+ AE: [PT: 75 JFrom: 1 MFrom: 4 | JTo:3 MTo: 4,
+, PT: 75 JFrom: 1 MFrom: 4 | JTo:1 MTo: 9,
+], J: 1 M: 9 PT: 11
+ AE: [PT: 11 JFrom: 1 MFrom: 9 | JTo:9 MTo: 9,
+, PT: 11 JFrom: 1 MFrom: 9 | JTo:1 MTo: 3,
+], J: 1 M: 3 PT: 69
+ AE: [PT: 69 JFrom: 1 MFrom: 3 | JTo:1 MTo: 1,
+, PT: 69 JFrom: 1 MFrom: 3 | JTo:9 MTo: 3,
+], J: 3 M: 2 PT: 95
+ AE: [PT: 95 JFrom: 3 MFrom: 2 | JTo:7 MTo: 2,
+, PT: 95 JFrom: 3 MFrom: 2 | JTo:3 MTo: 0,
+], J: 7 M: 2 PT: 31
+ AE: [PT: 31 JFrom: 7 MFrom: 2 | JTo:7 MTo: 0,
+, PT: 31 JFrom: 7 MFrom: 2 | JTo:0 MTo: 2,
+], J: 7 M: 0 PT: 86
+ AE: [PT: 86 JFrom: 7 MFrom: 0 | JTo:4 MTo: 0,
+, PT: 86 JFrom: 7 MFrom: 0 | JTo:7 MTo: 1,
+], J: 7 M: 1 PT: 46
+ AE: [PT: 46 JFrom: 7 MFrom: 1 | JTo:7 MTo: 5,
+, PT: 46 JFrom: 7 MFrom: 1 | JTo:0 MTo: 1,
+], J: 0 M: 1 PT: 78
+ AE: [PT: 78 JFrom: 0 MFrom: 1 | JTo:0 MTo: 2,
+, PT: 78 JFrom: 0 MFrom: 1 | JTo:6 MTo: 1,
+], J: 6 M: 1 PT: 46
+ AE: [PT: 46 JFrom: 6 MFrom: 1 | JTo:5 MTo: 1,
+, PT: 46 JFrom: 6 MFrom: 1 | JTo:6 MTo: 0,
+], J: 5 M: 1 PT: 2
+ AE: [PT: 2 JFrom: 5 MFrom: 1 | JTo:1 MTo: 1,
+, PT: 2 JFrom: 5 MFrom: 1 | JTo:5 MTo: 5,
+], J: 5 M: 5 PT: 52
+ AE: [PT: 52 JFrom: 5 MFrom: 5 | JTo:9 MTo: 5,
+, PT: 52 JFrom: 5 MFrom: 5 | JTo:5 MTo: 3,
+], J: 1 M: 1 PT: 28
+ AE: [PT: 28 JFrom: 1 MFrom: 1 | JTo:1 MTo: 6,
+, PT: 28 JFrom: 1 MFrom: 1 | JTo:4 MTo: 1,
+], J: 0 M: 2 PT: 9
+ AE: [PT: 9 JFrom: 0 MFrom: 2 | JTo:0 MTo: 3,
+, PT: 9 JFrom: 0 MFrom: 2 | JTo:2 MTo: 2,
+], J: 4 M: 0 PT: 6
+ AE: [PT: 6 JFrom: 4 MFrom: 0 | JTo:4 MTo: 1,
+, PT: 6 JFrom: 4 MFrom: 0 | JTo:3 MTo: 0,
+], J: 3 M: 0 PT: 71
+ AE: [PT: 71 JFrom: 3 MFrom: 0 | JTo:3 MTo: 4,
+, PT: 71 JFrom: 3 MFrom: 0 | JTo:6 MTo: 0,
+], J: 3 M: 4 PT: 99
+ AE: [PT: 99 JFrom: 3 MFrom: 4 | JTo:3 MTo: 6,
+, PT: 99 JFrom: 3 MFrom: 4 | JTo:9 MTo: 4,
+], J: 4 M: 1 PT: 22
+ AE: [PT: 22 JFrom: 4 MFrom: 1 | JTo:4 MTo: 5,
+, PT: 22 JFrom: 4 MFrom: 1 | JTo:8 MTo: 1,
+], J: 6 M: 0 PT: 37
+ AE: [PT: 37 JFrom: 6 MFrom: 0 | JTo:8 MTo: 0,
+, PT: 37 JFrom: 6 MFrom: 0 | JTo:6 MTo: 3,
+], J: 8 M: 0 PT: 76
+ AE: [PT: 76 JFrom: 8 MFrom: 0 | JTo:2 MTo: 0,
+, PT: 76 JFrom: 8 MFrom: 0 | JTo:8 MTo: 1,
+], J: 8 M: 1 PT: 69
+ AE: [PT: 69 JFrom: 8 MFrom: 1 | JTo:8 MTo: 3,
+], J: 2 M: 0 PT: 85
+ AE: [PT: 85 JFrom: 2 MFrom: 0 | JTo:5 MTo: 0,
+, PT: 85 JFrom: 2 MFrom: 0 | JTo:2 MTo: 3,
+], J: 9 M: 6 PT: 7
+ AE: [PT: 7 JFrom: 9 MFrom: 6 | JTo:1 MTo: 6,
+, PT: 7 JFrom: 9 MFrom: 6 | JTo:9 MTo: 8,
+], J: 9 M: 8 PT: 64
+ AE: [PT: 64 JFrom: 9 MFrom: 8 | JTo:3 MTo: 8,
+, PT: 64 JFrom: 9 MFrom: 8 | JTo:9 MTo: 9,
+], J: 9 M: 9 PT: 76
+ AE: [PT: 76 JFrom: 9 MFrom: 9 | JTo:5 MTo: 9,
+, PT: 76 JFrom: 9 MFrom: 9 | JTo:9 MTo: 5,
+], J: 9 M: 5 PT: 47
+ AE: [PT: 47 JFrom: 9 MFrom: 5 | JTo:9 MTo: 3,
+, PT: 47 JFrom: 9 MFrom: 5 | JTo:4 MTo: 5,
+], J: 4 M: 5 PT: 61
+ AE: [PT: 61 JFrom: 4 MFrom: 5 | JTo:4 MTo: 3,
+, PT: 61 JFrom: 4 MFrom: 5 | JTo:1 MTo: 5,
+], J: 9 M: 3 PT: 52
+ AE: [PT: 52 JFrom: 9 MFrom: 3 | JTo:9 MTo: 4,
+, PT: 52 JFrom: 9 MFrom: 3 | JTo:4 MTo: 3,
+], J: 4 M: 3 PT: 26
+ AE: [PT: 26 JFrom: 4 MFrom: 3 | JTo:4 MTo: 4,
+, PT: 26 JFrom: 4 MFrom: 3 | JTo:0 MTo: 3,
+], J: 0 M: 3 PT: 36
+ AE: [PT: 36 JFrom: 0 MFrom: 3 | JTo:0 MTo: 4,
+, PT: 36 JFrom: 0 MFrom: 3 | JTo:8 MTo: 3,
+], J: 8 M: 3 PT: 76
+ AE: [PT: 76 JFrom: 8 MFrom: 3 | JTo:8 MTo: 5,
+, PT: 76 JFrom: 8 MFrom: 3 | JTo:2 MTo: 3,
+], J: 2 M: 3 PT: 39
+ AE: [PT: 39 JFrom: 2 MFrom: 3 | JTo:5 MTo: 3,
+, PT: 39 JFrom: 2 MFrom: 3 | JTo:2 MTo: 2,
+], J: 2 M: 2 PT: 74
+ AE: [PT: 74 JFrom: 2 MFrom: 2 | JTo:2 MTo: 8,
+, PT: 74 JFrom: 2 MFrom: 2 | JTo:8 MTo: 2,
+], J: 9 M: 4 PT: 90
+ AE: [PT: 90 JFrom: 9 MFrom: 4 | JTo:4 MTo: 4,
+, PT: 90 JFrom: 9 MFrom: 4 | JTo:9 MTo: 7,
+], J: 9 M: 7 PT: 45
+ AE: [PT: 45 JFrom: 9 MFrom: 7 | JTo:-1 MTo: -1,
+, PT: 45 JFrom: 9 MFrom: 7 | JTo:1 MTo: 7,
+], J: 4 M: 4 PT: 69
+ AE: [PT: 69 JFrom: 4 MFrom: 4 | JTo:0 MTo: 4,
+, PT: 69 JFrom: 4 MFrom: 4 | JTo:4 MTo: 8,
+], J: 0 M: 4 PT: 49
+ AE: [PT: 49 JFrom: 0 MFrom: 4 | JTo:7 MTo: 4,
+, PT: 49 JFrom: 0 MFrom: 4 | JTo:0 MTo: 5,
+], J: 1 M: 6 PT: 46
+ AE: [PT: 46 JFrom: 1 MFrom: 6 | JTo:1 MTo: 5,
+, PT: 46 JFrom: 1 MFrom: 6 | JTo:3 MTo: 6,
+], J: 3 M: 6 PT: 9
+ AE: [PT: 9 JFrom: 3 MFrom: 6 | JTo:7 MTo: 6,
+, PT: 9 JFrom: 3 MFrom: 6 | JTo:3 MTo: 8,
+], J: 3 M: 8 PT: 52
+ AE: [PT: 52 JFrom: 3 MFrom: 8 | JTo:3 MTo: 7,
+, PT: 52 JFrom: 3 MFrom: 8 | JTo:1 MTo: 8,
+], J: 1 M: 5 PT: 46
+ AE: [PT: 46 JFrom: 1 MFrom: 5 | JTo:1 MTo: 7,
+, PT: 46 JFrom: 1 MFrom: 5 | JTo:7 MTo: 5,
+], J: 7 M: 5 PT: 74
+ AE: [PT: 74 JFrom: 7 MFrom: 5 | JTo:0 MTo: 5,
+, PT: 74 JFrom: 7 MFrom: 5 | JTo:7 MTo: 4,
+], J: 7 M: 4 PT: 32
+ AE: [PT: 32 JFrom: 7 MFrom: 4 | JTo:5 MTo: 4,
+, PT: 32 JFrom: 7 MFrom: 4 | JTo:7 MTo: 6,
+], J: 7 M: 6 PT: 88
+ AE: [PT: 88 JFrom: 7 MFrom: 6 | JTo:0 MTo: 6,
+, PT: 88 JFrom: 7 MFrom: 6 | JTo:7 MTo: 8,
+], J: 0 M: 5 PT: 11
+ AE: [PT: 11 JFrom: 0 MFrom: 5 | JTo:8 MTo: 5,
+, PT: 11 JFrom: 0 MFrom: 5 | JTo:0 MTo: 6,
+], J: 0 M: 6 PT: 62
+ AE: [PT: 62 JFrom: 0 MFrom: 6 | JTo:5 MTo: 6,
+, PT: 62 JFrom: 0 MFrom: 6 | JTo:0 MTo: 7,
+], J: 8 M: 5 PT: 51
+ AE: [PT: 51 JFrom: 8 MFrom: 5 | JTo:2 MTo: 5,
+, PT: 51 JFrom: 8 MFrom: 5 | JTo:8 MTo: 2,
+], J: 8 M: 2 PT: 85
+ AE: [PT: 85 JFrom: 8 MFrom: 2 | JTo:8 MTo: 9,
+, PT: 85 JFrom: 8 MFrom: 2 | JTo:6 MTo: 2,
+], J: 1 M: 7 PT: 72
+ AE: [PT: 72 JFrom: 1 MFrom: 7 | JTo:1 MTo: 8,
+, PT: 72 JFrom: 1 MFrom: 7 | JTo:3 MTo: 7,
+], J: 3 M: 7 PT: 85
+ AE: [PT: 85 JFrom: 3 MFrom: 7 | JTo:3 MTo: 3,
+, PT: 85 JFrom: 3 MFrom: 7 | JTo:4 MTo: 7,
+], J: 1 M: 8 PT: 30
+ AE: [PT: 30 JFrom: 1 MFrom: 8 | JTo:5 MTo: 8,
+, PT: 30 JFrom: 1 MFrom: 8 | JTo:-1 MTo: -1,
+], J: 5 M: 3 PT: 95
+ AE: [PT: 95 JFrom: 5 MFrom: 3 | JTo:3 MTo: 3,
+, PT: 95 JFrom: 5 MFrom: 3 | JTo:5 MTo: 8,
+], J: 5 M: 8 PT: 48
+ AE: [PT: 48 JFrom: 5 MFrom: 8 | JTo:4 MTo: 8,
+, PT: 48 JFrom: 5 MFrom: 8 | JTo:5 MTo: 9,
+], J: 5 M: 9 PT: 72
+ AE: [PT: 72 JFrom: 5 MFrom: 9 | JTo:8 MTo: 9,
+, PT: 72 JFrom: 5 MFrom: 9 | JTo:5 MTo: 0,
+], J: 5 M: 0 PT: 47
+ AE: [PT: 47 JFrom: 5 MFrom: 0 | JTo:5 MTo: 6,
+], J: 5 M: 6 PT: 65
+ AE: [PT: 65 JFrom: 5 MFrom: 6 | JTo:5 MTo: 4,
+, PT: 65 JFrom: 5 MFrom: 6 | JTo:8 MTo: 6,
+], J: 5 M: 4 PT: 6
+ AE: [PT: 6 JFrom: 5 MFrom: 4 | JTo:8 MTo: 4,
+, PT: 6 JFrom: 5 MFrom: 4 | JTo:5 MTo: 7,
+], J: 8 M: 9 PT: 11
+ AE: [PT: 11 JFrom: 8 MFrom: 9 | JTo:4 MTo: 9,
+, PT: 11 JFrom: 8 MFrom: 9 | JTo:8 MTo: 6,
+], J: 8 M: 6 PT: 40
+ AE: [PT: 40 JFrom: 8 MFrom: 6 | JTo:8 MTo: 7,
+, PT: 40 JFrom: 8 MFrom: 6 | JTo:2 MTo: 6,
+], J: 4 M: 8 PT: 21
+ AE: [PT: 21 JFrom: 4 MFrom: 8 | JTo:4 MTo: 7,
+, PT: 21 JFrom: 4 MFrom: 8 | JTo:2 MTo: 8,
+], J: 2 M: 8 PT: 90
+ AE: [PT: 90 JFrom: 2 MFrom: 8 | JTo:0 MTo: 8,
+, PT: 90 JFrom: 2 MFrom: 8 | JTo:2 MTo: 5,
+], J: 2 M: 5 PT: 10
+ AE: [PT: 10 JFrom: 2 MFrom: 5 | JTo:6 MTo: 5,
+, PT: 10 JFrom: 2 MFrom: 5 | JTo:2 MTo: 7,
+], J: 4 M: 7 PT: 49
+ AE: [PT: 49 JFrom: 4 MFrom: 7 | JTo:5 MTo: 7,
+, PT: 49 JFrom: 4 MFrom: 7 | JTo:4 MTo: 9,
+], J: 4 M: 9 PT: 72
+ AE: [PT: 72 JFrom: 4 MFrom: 9 | JTo:0 MTo: 9,
+, PT: 72 JFrom: 4 MFrom: 9 | JTo:4 MTo: 6,
+], J: 5 M: 7 PT: 25
+ AE: [PT: 25 JFrom: 5 MFrom: 7 | JTo:2 MTo: 7,
+, PT: 25 JFrom: 5 MFrom: 7 | JTo:-1 MTo: -1,
+], J: 2 M: 7 PT: 12
+ AE: [PT: 12 JFrom: 2 MFrom: 7 | JTo:2 MTo: 6,
+, PT: 12 JFrom: 2 MFrom: 7 | JTo:0 MTo: 7,
+], J: 0 M: 7 PT: 56
+ AE: [PT: 56 JFrom: 0 MFrom: 7 | JTo:0 MTo: 8,
+, PT: 56 JFrom: 0 MFrom: 7 | JTo:8 MTo: 7,
+], J: 8 M: 7 PT: 89
+ AE: [PT: 89 JFrom: 8 MFrom: 7 | JTo:7 MTo: 7,
+, PT: 89 JFrom: 8 MFrom: 7 | JTo:8 MTo: 4,
+], J: 8 M: 4 PT: 26
+ AE: [PT: 26 JFrom: 8 MFrom: 4 | JTo:2 MTo: 4,
+, PT: 26 JFrom: 8 MFrom: 4 | JTo:8 MTo: 8,
+], J: 0 M: 8 PT: 44
+ AE: [PT: 44 JFrom: 0 MFrom: 8 | JTo:0 MTo: 9,
+, PT: 44 JFrom: 0 MFrom: 8 | JTo:7 MTo: 8,
+], J: 7 M: 8 PT: 19
+ AE: [PT: 19 JFrom: 7 MFrom: 8 | JTo:7 MTo: 9,
+, PT: 19 JFrom: 7 MFrom: 8 | JTo:6 MTo: 8,
+], J: 0 M: 9 PT: 21
+ AE: [PT: 21 JFrom: 0 MFrom: 9 | JTo:-1 MTo: -1,
+, PT: 21 JFrom: 0 MFrom: 9 | JTo:7 MTo: 9,
+], J: 7 M: 9 PT: 48
+ AE: [PT: 48 JFrom: 7 MFrom: 9 | JTo:6 MTo: 9,
+, PT: 48 JFrom: 7 MFrom: 9 | JTo:7 MTo: 7,
+], J: 7 M: 7 PT: 36
+ AE: [PT: 36 JFrom: 7 MFrom: 7 | JTo:7 MTo: 3,
+, PT: 36 JFrom: 7 MFrom: 7 | JTo:6 MTo: 7,
+], J: 2 M: 6 PT: 89
+ AE: [PT: 89 JFrom: 2 MFrom: 6 | JTo:2 MTo: 9,
+, PT: 89 JFrom: 2 MFrom: 6 | JTo:6 MTo: 6,
+], J: 3 M: 3 PT: 98
+ AE: [PT: 98 JFrom: 3 MFrom: 3 | JTo:3 MTo: 9,
+, PT: 98 JFrom: 3 MFrom: 3 | JTo:6 MTo: 3,
+], J: 6 M: 3 PT: 61
+ AE: [PT: 61 JFrom: 6 MFrom: 3 | JTo:7 MTo: 3,
+, PT: 61 JFrom: 6 MFrom: 3 | JTo:6 MTo: 2,
+], J: 6 M: 2 PT: 13
+ AE: [PT: 13 JFrom: 6 MFrom: 2 | JTo:6 MTo: 6,
+], J: 6 M: 6 PT: 32
+ AE: [PT: 32 JFrom: 6 MFrom: 6 | JTo:6 MTo: 5,
+, PT: 32 JFrom: 6 MFrom: 6 | JTo:4 MTo: 6,
+], J: 4 M: 6 PT: 53
+ AE: [PT: 53 JFrom: 4 MFrom: 6 | JTo:-1 MTo: -1,
+], J: 6 M: 5 PT: 21
+ AE: [PT: 21 JFrom: 6 MFrom: 5 | JTo:3 MTo: 5,
+, PT: 21 JFrom: 6 MFrom: 5 | JTo:6 MTo: 9,
+], J: 6 M: 9 PT: 32
+ AE: [PT: 32 JFrom: 6 MFrom: 9 | JTo:6 MTo: 8,
+, PT: 32 JFrom: 6 MFrom: 9 | JTo:2 MTo: 9,
+], J: 2 M: 9 PT: 45
+ AE: [PT: 45 JFrom: 2 MFrom: 9 | JTo:3 MTo: 9,
+, PT: 45 JFrom: 2 MFrom: 9 | JTo:2 MTo: 4,
+], J: 2 M: 4 PT: 33
+ AE: [PT: 33 JFrom: 2 MFrom: 4 | JTo:6 MTo: 4,
+, PT: 33 JFrom: 2 MFrom: 4 | JTo:-1 MTo: -1,
+], J: 6 M: 8 PT: 89
+ AE: [PT: 89 JFrom: 6 MFrom: 8 | JTo:8 MTo: 8,
+, PT: 89 JFrom: 6 MFrom: 8 | JTo:6 MTo: 7,
+], J: 6 M: 7 PT: 30
+ AE: [PT: 30 JFrom: 6 MFrom: 7 | JTo:6 MTo: 4,
+], J: 6 M: 4 PT: 55
+ AE: [PT: 55 JFrom: 6 MFrom: 4 | JTo:-1 MTo: -1,
+], J: 8 M: 8 PT: 74
+ AE: [PT: 74 JFrom: 8 MFrom: 8 | JTo:-1 MTo: -1,
+], J: 7 M: 3 PT: 79
+ AE: [PT: 79 JFrom: 7 MFrom: 3 | JTo:-1 MTo: -1,
+], J: 3 M: 9 PT: 22
+ AE: [PT: 22 JFrom: 3 MFrom: 9 | JTo:3 MTo: 5,
+], J: 3 M: 5 PT: 43
+ AE: [PT: 43 JFrom: 3 MFrom: 5 | JTo:-1 MTo: -1,
+], Final Dummy Task]
