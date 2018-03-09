@@ -3,9 +3,8 @@ package com.schedule.core.Graphs.FeasibleSchedules.Service;
 import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
-import com.schedule.core.Graphs.FeasibleSchedules.Wrapper.SchedulePaths;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,22 +116,11 @@ public class FireflyService {
 
         Integer compareScore = 0;
 
-        for (final Set<Edge> path : schedule.getLongestPaths()) {
+        final Set<Edge> machineEdgesOne = schedule.getAllMachineEdges();
+        final Set<Edge> machineEdgesTwo = compareSchedule.getAllMachineEdges();
 
-            for (final Set<Edge> comparePath : compareSchedule.getLongestPaths()) {
-
-                final Set<Edge> pathCopy = new HashSet<>(path);
-
-                LOG.trace("Path to string: {}", path.toString());
-                LOG.trace("Path compare to string: {}", comparePath.toString());
-
-                pathCopy.retainAll(comparePath);
-
-                LOG.trace("Copy path: {}", pathCopy.toString());
-                LOG.trace("Path copy size: {}", pathCopy.size());
-                compareScore += pathCopy.size();
-            }
-        }
+        machineEdgesOne.retainAll(machineEdgesTwo);
+        compareScore += machineEdgesOne.size();
 
         return compareScore;
 
@@ -150,7 +138,7 @@ public class FireflyService {
         final Schedule optimal = optimalSchedule.getOptimalSchedule();
 
         //Attempts to move toward optimal using edges on local longest paths
-        final Set<Edge> longestPathEdges = schedule.getLongestPathEdges();
+        final Set<Edge> longestPathEdges = schedule.getMachineEdgesOnLPSet();
         final Optional<Edge> edgeFlipped = findEdgeAndSwitchInSet(longestPathEdges);
 
         LOG.trace("Found edge on longest path: {}", edgeFlipped);
@@ -158,7 +146,7 @@ public class FireflyService {
         if (!edgeFlipped.isPresent()) {
 
             boolean acceptedFlip = false;
-            final Set<Edge> machineEdgesNotOnLongestPath = schedule.getAllMachineEdgesNotOnLongestPath();
+            final Set<Edge> machineEdgesNotOnLongestPath = schedule.getMachineEdgesNotOnLP();
 
             Optional<Edge> edgeFlip = findEdgeAndSwitchInSet(machineEdgesNotOnLongestPath);
 

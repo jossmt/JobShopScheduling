@@ -1,18 +1,13 @@
 package com.schedule.test;
 
 import com.google.common.truth.Truth;
-import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.FireflyService;
-import com.schedule.core.Graphs.FeasibleSchedules.Wrapper.SchedulePaths;
 import com.schedule.test.Config.TestDataPaths;
 import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashSet;
-import java.util.Optional;
 
 /**
  * Tests of Firefly Service

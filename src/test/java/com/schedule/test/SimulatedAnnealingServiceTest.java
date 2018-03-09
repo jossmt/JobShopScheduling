@@ -48,7 +48,7 @@ public class SimulatedAnnealingServiceTest extends TestSetup {
 
         setUp("4x4", 1);
 
-        final ArrayList<Edge> edgesOnLongest = optimal.getLongestPathArray();
+        final ArrayList<Edge> edgesOnLongest = optimal.getMachineEdgesOnLP();
         optimal.initialiseCache();
 
         Optional<Edge> edgeOptional = scheduleService.getMostVisitedEdgeLongestPath(optimal, edgesOnLongest, true);
@@ -61,11 +61,11 @@ public class SimulatedAnnealingServiceTest extends TestSetup {
 
         LOG.debug("Optimal cache: {}", optimal.getLruEdgeCache().toString());
 
-        scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getLongestPathArray(), true);
+        scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getMachineEdgesOnLP(), true);
 
         LOG.debug("Optimal Cache After edge flip: {}", optimal.getLruEdgeCache().toString());
 
-        scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getLongestPathArray(), true);
+        scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getMachineEdgesOnLP(), true);
 
         Truth.assertThat(optimal.getLruEdgeCache().size()).isAtMost(4);
     }

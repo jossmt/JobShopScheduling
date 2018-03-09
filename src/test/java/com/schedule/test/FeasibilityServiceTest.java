@@ -31,7 +31,7 @@ public class FeasibilityServiceTest extends TestSetup {
         Integer successSwitchCount = 0;
         Integer failureSwitchCount = 0;
 
-        final Set<Edge> machineEdgesLongestPath = optimal.getAllMachineEdgesNotOnLongestPath();
+        final Set<Edge> machineEdgesLongestPath = optimal.getMachineEdgesNotOnLP();
         LOG.trace("Edge options: {}", machineEdgesLongestPath);
 
         for (final Edge edge : machineEdgesLongestPath) {
@@ -84,7 +84,7 @@ public class FeasibilityServiceTest extends TestSetup {
                 Integer successSwitchCount = 0;
                 Integer failureSwitchCount = 0;
 
-                final Set<Edge> machineEdgesLongestPath = currentSchedule.getAllMachineEdgesNotOnLongestPath();
+                final Set<Edge> machineEdgesLongestPath = currentSchedule.getMachineEdgesNotOnLP();
                 LOG.trace("Edge options: {}", machineEdgesLongestPath);
 
                 for (final Edge edge : machineEdgesLongestPath) {
@@ -124,10 +124,10 @@ public class FeasibilityServiceTest extends TestSetup {
 
         final Schedule testSchedule = testSchedules.iterator().next();
 
-        LOG.debug("Edge options: {}", testSchedule.getAllMachineEdgesNotOnLongestPath());
+        LOG.debug("Edge options: {}", testSchedule.getMachineEdgesNotOnLP());
 
         int count = 0;
-        for (final Edge edge : testSchedule.getAllMachineEdgesNotOnLongestPath()) {
+        for (final Edge edge : testSchedule.getMachineEdgesNotOnLP()) {
 
             if (count == 0) {
                 final Operation from = edge.getOperationFrom();
@@ -169,10 +169,10 @@ public class FeasibilityServiceTest extends TestSetup {
 
 //        scheduleService.generateGraphCode(optimal);
 
-        LOG.debug("Edge options: {}", optimal.getAllMachineEdgesNotOnLongestPath());
+        LOG.debug("Edge options: {}", optimal.getMachineEdgesNotOnLP());
 
         int count = 0;
-        for (final Edge edge : optimal.getAllMachineEdgesNotOnLongestPath()) {
+        for (final Edge edge : optimal.getMachineEdgesNotOnLP()) {
 
             if (count == 1) {
 

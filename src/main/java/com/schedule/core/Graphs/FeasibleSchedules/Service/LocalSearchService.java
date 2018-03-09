@@ -66,7 +66,7 @@ public class LocalSearchService {
 
     public Schedule executeLocalSearchIteratively(final Schedule schedule, final Integer maxIterations) {
 
-        ArrayList<Edge> longestPathEdges = schedule.getLongestPathArray();
+        ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
 
         for (int i = 0; i < maxIterations; i++) {
 
@@ -95,8 +95,7 @@ public class LocalSearchService {
                 } else {
 
                     LOG.trace("Accepted move");
-
-                    longestPathEdges = schedule.getLongestPathArray();
+                    continue;
                 }
             } else {
                 break;

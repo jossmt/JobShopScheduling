@@ -79,7 +79,7 @@ public class SimulatedAnnealingService implements Observer {
         // Cooling rate
         final Double coolingRate = 0.02;
 
-        ArrayList<Edge> longestPathEdges = schedule.getLongestPathArray();
+        ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
 
         Integer count = 0;
         while (temp > 1) {
@@ -131,7 +131,6 @@ public class SimulatedAnnealingService implements Observer {
 
             } else {
                 LOG.trace("Accepted flip");
-                longestPathEdges = schedule.getLongestPathArray();
             }
 
             count++;

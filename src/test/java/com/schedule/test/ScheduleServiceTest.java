@@ -4,14 +4,15 @@ package com.schedule.test;
 import com.google.common.truth.Truth;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
-import com.schedule.core.Graphs.FeasibleSchedules.Wrapper.SchedulePaths;
-import com.schedule.test.Config.TestSetup;
 import com.schedule.test.Config.TestDataPaths;
+import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Deque;
+import java.util.Optional;
+import java.util.Set;
 
 public class ScheduleServiceTest extends TestSetup {
 
@@ -24,8 +25,8 @@ public class ScheduleServiceTest extends TestSetup {
 
         scheduleService.calculateScheduleData(optimal);
 
-        Truth.assertThat(optimal.getLongestPaths().toString()).isEqualTo(readFile(TestDataPaths
-                                                                                                .CALCULATE_PATHS_PATH));
+        Truth.assertThat(optimal.getMachineEdgesNotOnLP().toString()).isEqualTo(readFile(TestDataPaths
+                                                                                                 .CALCULATE_PATHS_PATH));
     }
 
     @Test
@@ -37,7 +38,7 @@ public class ScheduleServiceTest extends TestSetup {
 
         Truth.assertThat(feasibilityService.hasCycle(optimal)).isFalse();
 
-        final Set<Edge> edges = optimal.getLongestPaths().iterator().next();
+        final Set<Edge> edges = optimal.getMachineEdgesOnLPSet();
 
         Edge toModify = null;
         Edge child = null;
@@ -89,7 +90,7 @@ public class ScheduleServiceTest extends TestSetup {
 
         for (final String hash : scheduleHashes) {
 
-            scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getLongestPathArray(), false);
+            scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getMachineEdgesOnLP(), false);
             scheduleService.calculateScheduleData(optimal);
 
             Truth.assertThat(Integer.valueOf(hash)).isEqualTo(optimal.hashCode());
@@ -104,8 +105,8 @@ public class ScheduleServiceTest extends TestSetup {
 
         final Integer hashCode = optimal.hashCode();
         final Optional<Edge> edgeFlipped = scheduleService.flipMostVisitedEdgeLongestPath(optimal,
-                                                                                          optimal.getLongestPathArray
-                                                                                                  (), false);
+                                                                                          optimal.getMachineEdgesOnLP()
+                , false);
         scheduleService.calculateScheduleData(optimal);
 
 
@@ -126,9 +127,9 @@ public class ScheduleServiceTest extends TestSetup {
 
         optimal.initialiseCache();
 
-        final Optional<Edge> edge = scheduleService.findMostVisitedEdge(optimal.getLongestPathArray());
+        final Optional<Edge> edge = scheduleService.findMostVisitedEdge(optimal.getMachineEdgesOnLP());
 
-        if(edge.isPresent()) {
+        if (edge.isPresent()) {
             optimal.updateLruEdgeCache(edge.get());
 
             Truth.assertThat(optimal.getCachedEdgeAcceptanceProb(edge.get()).get()).isEqualTo(0.9);
@@ -140,7 +141,7 @@ public class ScheduleServiceTest extends TestSetup {
             optimal.updateLruEdgeCache(edge.get());
 
             Truth.assertThat(optimal.getCachedEdgeAcceptanceProb(edge.get()).get()).isEqualTo(0.7290000000000001);
-        }else{
+        } else {
             throw new IllegalStateException("Failed test");
         }
 
@@ -167,5 +168,16 @@ public class ScheduleServiceTest extends TestSetup {
         LOG.debug("Cache size 5: {}", optimal.getLruEdgeCache().size());
         Truth.assertThat(optimal.getLruEdgeCache().size()).isEqualTo(4);
 
+    }
+
+    @Test
+    public void testCalculateMachineEdgesOnLP(){
+
+        setUp("ft06", 1);
+
+        scheduleService.calculateScheduleData(optimal);
+
+        LOG.debug("Machine edges: {}", optimal.getMachineEdgesOnLP());
+        LOG.debug("Machine edges set: {}", optimal.getMachineEdgesOnLPSet());
     }
 }

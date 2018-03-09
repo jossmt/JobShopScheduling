@@ -142,7 +142,7 @@ public class SAFAService implements Observer {
 
                 final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(currentSchedule,
                                                                                              currentSchedule
-                                                                                                     .getLongestPathArray(), true);
+                                                                                                     .getMachineEdgesOnLP(), true);
 
                 LOG.trace("Result: {}", result);
                 scheduleService.calculateScheduleData(currentSchedule);
@@ -253,10 +253,10 @@ public class SAFAService implements Observer {
 
                         if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
                             scheduleIterator.remove();
-                        }else{
+                        } else {
                             LOG.trace("Making random move");
                             scheduleService.flipMostVisitedEdgeLongestPath(schedule, schedule
-                                    .getLongestPathArray(), false);
+                                    .getMachineEdgesOnLP(), false);
                             scheduleService.calculateScheduleData(schedule);
                         }
                     }
@@ -265,7 +265,7 @@ public class SAFAService implements Observer {
 
                     LOG.trace("Making random move");
                     scheduleService.flipMostVisitedEdgeLongestPath(schedule, schedule
-                            .getLongestPathArray(), false);
+                            .getMachineEdgesOnLP(), false);
                     scheduleService.calculateScheduleData(schedule);
                 }
 

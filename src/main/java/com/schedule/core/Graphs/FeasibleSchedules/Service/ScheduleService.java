@@ -5,7 +5,6 @@ import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.EndVertex;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
-import com.schedule.core.Graphs.FeasibleSchedules.Wrapper.SchedulePaths;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.MutableGraph;
@@ -39,10 +38,10 @@ public class ScheduleService {
      * @param schedule
      *         {@link Schedule}
      */
-    public SchedulePaths calculateScheduleData(final Schedule schedule) {
+    public void calculateScheduleData(final Schedule schedule) {
 
         calculateMakeSpan(schedule);
-        return calculatePaths(schedule);
+        calculatePaths(schedule);
     }
 
     /**
@@ -126,17 +125,6 @@ public class ScheduleService {
                 .entrySet().stream().max(Comparator.comparing(Map.Entry::getValue))
                 .map(Map.Entry::getKey).orElse(null);
 
-        if (maxVal != null) {
-            if (maxVal.getOperationFrom() != null) {
-                if (maxVal.getOperationFrom().getMachine() != maxVal.getOperationTo().getMachine()) {
-
-                    LOG.trace("Max edge not machine edge: {}", maxVal);
-
-                    allEdges.removeAll(Collections.singleton(maxVal));
-                    return findMostVisitedEdge(allEdges);
-                }
-            }
-        }
         LOG.trace("Found max Edge: {}", maxVal);
 
         return Optional.ofNullable(maxVal);
@@ -293,110 +281,76 @@ public class ScheduleService {
     }
 
     /**
-     * Calculates longest path routes.
-     *
-     * @return List of all longest paths.
+     * Calculates longest path machine edges..
      */
-    public SchedulePaths calculatePaths(final Schedule schedule) {
+    private void calculatePaths(final Schedule schedule) {
 
         LOG.trace("Calculating paths.");
 
         //Primary path to begin with
-        final Set<Edge> firstPath = new LinkedHashSet<>();
+        final ArrayList<Edge> LPMachineEdges = calculateLongestPathMachineEdges(schedule.getEndVertex());
 
-        final SchedulePaths schedulePaths = calculateAllPaths(new SchedulePaths(), firstPath, schedule.getEndVertex());
-
-        schedule.setLongestPaths(schedulePaths.getLongestpaths());
-
-        LOG.trace("Setting feasible: {}", schedulePaths.isFeasible());
+        schedule.setMachineEdgesOnLP(LPMachineEdges);
 
         LOG.trace("Finished calculating paths");
-
-        return schedulePaths;
     }
 
     /**
      * Recursively updates list with longest paths in stack format.
      *
-     * @param schedulePaths
-     *         All longest paths/feasibility boolean.
-     * @param path
-     *         Longest path vertices.
-     * @param operation
+     * @param endVertex
      *         Element in longest path.
      */
-    private SchedulePaths calculateAllPaths(final SchedulePaths schedulePaths, final Set<Edge> path,
-                                            final Operation operation) {
+    private ArrayList<Edge> calculateLongestPathMachineEdges(final EndVertex endVertex) {
 
-        final Set<Edge> parentEdges;
-        if (operation instanceof EndVertex) {
-            parentEdges = ((EndVertex) operation).getEndParentEdges();
-        } else {
-            parentEdges = operation.getParentEdges();
+        final ArrayList<Edge> machineEdgesLongestPath = new ArrayList<>();
+        final Set<Edge> parentEdges = endVertex.getEndParentEdges();
+
+        // Gets LP edges
+        final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
+        final Set<Edge> maxParentEdges = parentEdges.stream().filter(
+                e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
+
+        for (final Edge parentEdge : maxParentEdges) {
+
+            addMachineEdgesLP(machineEdgesLongestPath, parentEdge.getOperationFrom());
         }
 
-        LOG.trace("Checking operation J: {}, M: {}", operation.getJob(), operation.getMachine());
-        LOG.trace("Number of parent edges: {}", parentEdges.size());
+        return machineEdgesLongestPath;
+    }
 
-        //Runs while not root operation
-        if (!parentEdges.isEmpty()) {
+    /**
+     * Adds machine edges on LP to set.
+     *
+     * @param machineEdges
+     *         Set of m edges on LP
+     * @param node
+     *         Current node in recursive iteration.
+     */
+    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Operation node) {
 
-            //Gets maximum edge size
-            Integer maxEdge = 0;
-            for (final Edge edge : parentEdges) {
+        LOG.trace("Checking node: {}", node.toString());
 
-                if (path.contains(edge)) {
-                    LOG.trace("Detected loop");
-                    LOG.trace("Loop parent: {}\n From path: {}", edge.toString(), path.toString());
-                    schedulePaths.setIsFeasible(false);
-                    schedulePaths.setNodeCausingCycle(edge);
+        final Set<Edge> parentEdges = node.getParentEdges();
 
-                    return schedulePaths;
-                }
-
-                LOG.trace("Parent of operation: J:{} M:{}", edge.getOperationFrom().getJob(), edge.getOperationFrom()
-                        .getMachine());
-                if (edge.getMaxDistanceToMe() > maxEdge) {
-                    maxEdge = edge.getMaxDistanceToMe();
-                }
-            }
-
-            LOG.trace("Maximum edge is {}", maxEdge);
-
-            Set<Edge> pathCopy = null;
-            boolean firstEdge = true;
-            for (final Edge edge : parentEdges) {
-
-                if (Objects.equals(edge.getMaxDistanceToMe(), maxEdge)) {
-
-                    LOG.trace("Edge: {} maxd: {}", edge, edge.getMaxDistanceToMe());
-
-                    if (firstEdge) {
-
-                        pathCopy = new LinkedHashSet<>(path);
-
-                        path.add(edge);
-                        LOG.trace("Adding edge: {}", edge);
-                        firstEdge = false;
-                        calculateAllPaths(schedulePaths, path, edge.getOperationFrom());
-                    } else {
-
-                        final Set<Edge> newPath = new LinkedHashSet<>(pathCopy);
-                        LOG.trace("Creating new path, copying: {}", pathCopy);
-
-                        newPath.add(edge);
-                        LOG.trace("New Path copy, adding edge: {}", edge);
-                        calculateAllPaths(schedulePaths, newPath, edge.getOperationFrom());
-                    }
-                }
-            }
-        } else {
-
-            LOG.trace("Added new path to path set.");
-            schedulePaths.addPath(path);
+        if(parentEdges.isEmpty()){
+            return;
         }
 
-        return schedulePaths;
+        // Gets LP edges
+        final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
+        final Set<Edge> maxParentEdges = parentEdges.stream().filter(
+                e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
+
+        LOG.trace("Looping edges: {}", maxParentEdge);
+        for (final Edge edge : maxParentEdges) {
+
+            if (edge.isMachinePath()) {
+                machineEdges.add(edge);
+            }
+
+            addMachineEdgesLP(machineEdges, edge.getOperationFrom());
+        }
     }
 
     /**
