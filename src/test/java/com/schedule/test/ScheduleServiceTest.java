@@ -170,15 +170,32 @@ public class ScheduleServiceTest extends TestSetup {
 
     }
 
+    //TODO: Its not topological sort. Some reason
+    // TODO: makespan calculation isn't calculating a different value after switching edge
     @Test
-    public void testCalculateMachineEdgesOnLP(){
+    public void testCalculateMachineEdgesOnLP() {
 
-        setUp("ft10", 1);
+        setUp("ft06", 1);
+        optimal.initialiseCache();
 
+//        scheduleService.calculateScheduleData(optimal);
+
+        LOG.debug("Makespan: {}", optimal.getMakespan());
+//        scheduleService.generateGraphCode(optimal, "test1");
+        final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal
+                .getMachineEdgesOnLP(), true);
+        scheduleService.calculateMakeSpan(optimal);
+        LOG.debug("Result: {}", result);
+//        scheduleService.switchEdge(optimal.getAllMachineEdges().iterator().next());
+        LOG.debug("Makespan2: {}", optimal.getMakespan());
         scheduleService.calculateScheduleData(optimal);
+        scheduleService.calculateMakeSpan(optimal);
+        final Optional<Edge> result2 = scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal
+                .getMachineEdgesOnLP(), true);
+        scheduleService.calculateMakeSpan(optimal);
+        LOG.debug("Result2: {}", result2);
+//        scheduleService.generateGraphCode(optimal, "test2");
 
-        LOG.debug("Machine edges set: {}", optimal.getMachineEdgesOnLPSet().size());
-        LOG.debug("Machine edges set not on LP: {}", optimal.getMachineEdgesNotOnLP().size());
-
+        LOG.debug("Makespan3: {}", optimal.getMakespan());
     }
 }

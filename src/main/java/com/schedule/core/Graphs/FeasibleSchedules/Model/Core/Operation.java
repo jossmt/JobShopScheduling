@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * ScheduleTask identifying a task in the DiGraph
+ * Schedule operation.
  */
 public class Operation implements Serializable {
 
@@ -394,13 +394,12 @@ public class Operation implements Serializable {
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (conjunctiveEdge != null) {
-            stringBuilder.append("J: " + job + " M: " + machine + " PT: " + conjunctiveEdge.getProcessingTime()
-                                         + "\n AE: " + getActiveEdges());
+            stringBuilder.append("J: " + job + " M: " + machine + " PT: " + conjunctiveEdge.getProcessingTime());
         } else if (job == -1) {
             stringBuilder.append("Final Dummy Operation");
 
         } else {
-            stringBuilder.append("J: " + job + " M: " + machine + " PT: " + "\n AE: " + getActiveEdges());
+            stringBuilder.append("J: " + job + " M: " + machine);
         }
 
         return stringBuilder.toString();

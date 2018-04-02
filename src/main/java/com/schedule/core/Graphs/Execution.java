@@ -11,57 +11,81 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
- * Executes makespan optimisation process for given machine size and starting tree set size.
+ * Executes makespan optimisation process.
  */
 public class Execution {
 
+    /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(Execution.class);
 
+    /** {@link LocalSearchService}. */
     private static final LocalSearchService localSearchService = new LocalSearchService();
 
+    /** {@link ScheduleService}. */
     private static final ScheduleService scheduleService = new ScheduleService();
 
     /** {@link SchedulesBuilder}. */
     private static final SchedulesBuilder schedulesBuilder = new SchedulesBuilder();
 
+    /** {@link OptimalSchedule}. */
     private static final OptimalSchedule optimalSchedule = new OptimalSchedule();
 
+    /** {@link FireflyService}. */
     private static final FireflyService fireflyService = new FireflyService(optimalSchedule);
 
+    /** {@link SimulatedAnnealingService}. */
     private static final SimulatedAnnealingService simulatedAnnealingService = new SimulatedAnnealingService
             (optimalSchedule);
 
+    /** {@link SAFAService}. */
     private static final SAFAService safaService = new SAFAService(fireflyService, simulatedAnnealingService,
                                                                    optimalSchedule);
 
+    /**
+     * Executor
+     */
     public static void main(String[] args) {
 
         optimalSchedule.addObserver(simulatedAnnealingService);
         optimalSchedule.addObserver(safaService);
 
-        final String benchmarkInstance = "ft06";
+        final String benchmarkInstance = "la21";
 
-        // Generate Schedules
-        final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 200);
+        final StringBuilder resultBuilder = new StringBuilder();
 
-        // Execute Local Search
-        final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet);
+        for (int i = 0; i < 5; i++) {
 
-        // Executes SA on Optimal
-        fireflyService.computeOptimal(localOptimaSet, false, localSearchService.getOptimalSchedule());
+            // Generate Schedules
+            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 100);
 
-        LOG.debug("Computed optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+            LOG.debug("Finished generating schedules");
 
-        //Executes SAFA
-        safaService.iterativeApproachSAFA(localOptimaSet);
+            // Execute Local Search
+            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet, 30);
 
-        //Result
-        LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+            // Executes SA on Optimal
+            fireflyService.computeOptimal(localOptimaSet, false, localSearchService.getOptimalSchedule());
 
-        if (optimalSchedule.getOptimalSchedule().getMakespan() <=
-                BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
-            LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
-            scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance + "Optimal");
+            LOG.debug("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+
+            //Executes SAFA
+            safaService.iterativeApproachSAFA(localOptimaSet);
+
+            //Result
+            LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+            resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
+
+            if (optimalSchedule.getOptimalSchedule().getMakespan() <=
+                    BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
+                LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+                scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance + "Optimal");
+            }
+
+            //Restart thread executor
+            simulatedAnnealingService.restartThreadExecutor();
+            safaService.restartThreadExecutor();
         }
+
+        LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
     }
 }

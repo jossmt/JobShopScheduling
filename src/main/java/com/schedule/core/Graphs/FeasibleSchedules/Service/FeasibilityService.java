@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class FeasibilityService {
 
+    /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(FeasibilityService.class);
 
     /**
@@ -23,11 +24,16 @@ public class FeasibilityService {
     }
 
     /**
-     * Schedule feasibility check. (Seems to only work if feasible before flipping edge).
+     * Schedule feasibility check following an edge switch.
+     * Using operation edge flipped from, and operation edge flipped to, a method is developed to assert if the new
+     * schedule instance is feasible. With the help of a proof, the method checks that all paths leading from
+     * operation to do not lead back to any job preceding the new operation from.
      *
      * @param from
+     *         after being flipped
      *         {@link Operation}
      * @param to
+     *         after being flipped
      *         {@link Operation}
      * @return true/false
      */
@@ -35,23 +41,29 @@ public class FeasibilityService {
 
         LOG.trace("Checking feasibility for edge flip task from: {}, task to: {}", from, to);
 
-        Operation postJobPathFrom = null;
-        if (from.hasConjunctiveEdge()) {
-            postJobPathFrom = from.getConjunctiveEdge().getOperationTo();
+        // Check if new operation to has no path ahead
+        Operation postJobPathTo = null;
+        if (to.hasConjunctiveEdge()) {
+            postJobPathTo = to.getConjunctiveEdge().getOperationTo();
         }
 
-        // If no operations on forward job path, there is no route back to cause cycle
-        if (postJobPathFrom == null) {
+        // If not, no risk of cycle
+        if (postJobPathTo instanceof EndVertex) {
             return true;
         }
-        final Set<Operation> preJobPathsTo = getOperationsOnJobPath(to, false);
 
-        LOG.trace("J(from): {}", postJobPathFrom);
-        LOG.trace("-J(to): {}", preJobPathsTo);
+        // Gets all operations preceding new from on job path
+        final Set<Operation> preJobPathsFrom = getOperationsOnJobPath(from, false);
 
-        final Set<Operation> forwardMachinePathOps = breadthFirstSearch(postJobPathFrom);
-        forwardMachinePathOps.retainAll(preJobPathsTo);
+        LOG.trace("-J(from): {}", preJobPathsFrom);
+        LOG.trace("J(to): {}", postJobPathTo);
 
+        // Gets all possible forward routes ahead of new operation to
+        final Set<Operation> forwardMachinePathOps = breadthFirstSearch(postJobPathTo);
+        LOG.trace("Forward mach path ops: {}", forwardMachinePathOps);
+        forwardMachinePathOps.retainAll(preJobPathsFrom);
+
+        // If there is any overlap, return false, otherwise true
         return forwardMachinePathOps.size() == 0;
     }
 
@@ -73,7 +85,6 @@ public class FeasibilityService {
                 current = current.getConjunctiveEdge().getOperationTo();
                 operations.add(current);
             }
-            operations.add(current);
         } else {
 
             Operation current = op;
@@ -88,7 +99,7 @@ public class FeasibilityService {
     }
 
     /**
-     * Breadth first search graph from root.
+     * Breadth First Search graph from root.
      *
      * @param root
      *         Start Operation.
@@ -125,7 +136,7 @@ public class FeasibilityService {
     }
 
     /**
-     * Detects if schedule contains a cycle.
+     * Detects if schedule contains a cycle (uses BFS).
      *
      * @param schedule
      *         {@link Schedule}

@@ -13,11 +13,13 @@ public class LocalSearchCallable implements Callable<Schedule> {
 
     private LocalSearchService localSearchService;
     private Schedule schedule;
+    private Integer maxIterations;
 
     public LocalSearchCallable(final LocalSearchService localSearchService,
-                                      final Schedule schedule) {
+                               final Schedule schedule, final Integer maxIterations) {
         this.localSearchService = localSearchService;
         this.schedule = schedule;
+        this.maxIterations = maxIterations;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class LocalSearchCallable implements Callable<Schedule> {
 
         LOG.debug("Starting new LS thread");
 
-        final Schedule localOptimal = localSearchService.executeLocalSearchIteratively(schedule, 100);
+        final Schedule localOptimal = localSearchService.executeLocalSearchIteratively(schedule, maxIterations);
         LOG.debug("Finished LS thread.");
 
         localSearchService.addLocalOptimalSchedule(schedule);

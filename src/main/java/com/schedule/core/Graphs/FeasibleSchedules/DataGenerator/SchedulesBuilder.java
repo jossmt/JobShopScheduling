@@ -11,13 +11,27 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Generates schedules from benchmark instances.
+ */
 public class SchedulesBuilder {
 
+    /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(com.schedule.core.Graphs.FeasibleSchedules
                                                                       .DataGenerator.SchedulesBuilder.class);
 
+    /** {@link ScheduleService}. */
     private ScheduleService scheduleService = new ScheduleService();
 
+    /**
+     * Generate starting schedules.
+     *
+     * @param benchmarkInstance
+     *         Benchmark instance.
+     * @param setSize
+     *         Number of schedules to generate.
+     * @return Set of {@link Schedule}
+     */
     public Set<Schedule> generateStartingSchedules(final String benchmarkInstance,
                                                    final Integer setSize) {
 
@@ -34,6 +48,15 @@ public class SchedulesBuilder {
         return startingScheduleSet;
     }
 
+    /**
+     * Generates schedules for testing purposes (i.e. excludes randomness).
+     *
+     * @param benchmarkInstance
+     *         Benchmark instance.
+     * @param setSize
+     *         Number of schedules to generate.
+     * @return Set of {@link Schedule}
+     */
     public Set<Schedule> generateTestSchedules(final String benchmarkInstance,
                                                final Integer setSize) {
 
@@ -72,6 +95,13 @@ public class SchedulesBuilder {
         return startingScheduleSet;
     }
 
+    /**
+     * Builds random schedules using benchmark instance data.
+     *
+     * @param jobset
+     *         Data of benchmark instance.
+     * @return {@link Schedule}
+     */
     private Schedule buildRandomSchedules(final Integer[][][] jobset) {
 
         final Integer numMachines = jobset[0].length;
@@ -110,6 +140,15 @@ public class SchedulesBuilder {
         return schedule;
     }
 
+    /**
+     * Builds test schedules using random values from a file.s
+     *
+     * @param jobset
+     *         Data for schedule instance.
+     * @param randomTestValues
+     *         Static random values to generate the same test schedule each time.s
+     * @return {@link Schedule}
+     */
     private Schedule buildTestSchedules(final Integer[][][] jobset, final Integer[] randomTestValues) {
 
         final Integer numMachines = jobset[0].length;
@@ -152,6 +191,17 @@ public class SchedulesBuilder {
         return schedule;
     }
 
+    /**
+     * Generates a schedule template using provided size parameters.
+     *
+     * @param jobset
+     *         Schedule data.
+     * @param numMachines
+     *         Number of machines.
+     * @param numJobs
+     *         Number of jobs.
+     * @return {@link Schedule}
+     */
     private Schedule generateTreeTemplate(final Integer[][][] jobset, final Integer numMachines,
                                           final Integer numJobs) {
 
@@ -177,6 +227,13 @@ public class SchedulesBuilder {
         return schedule;
     }
 
+    /**
+     * Gets the benchmark instance data from a saved file.s
+     *
+     * @param instance
+     *         String of instance name.
+     * @return Data required to generate schedule.
+     */
     public Integer[][][] getBenchmarkInstance(final String instance) {
 
         //Generates the same schedules using same random number set.

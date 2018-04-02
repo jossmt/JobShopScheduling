@@ -124,12 +124,14 @@ public class Edge implements Serializable {
         return operationTo != null;
     }
 
+    /**
+     * Checks if machine path.
+     *
+     * @return true if is MP.
+     */
     public boolean isMachinePath() {
 
-        if (operationTo.getMachine() == operationFrom.getMachine()) {
-            return true;
-        }
-        return false;
+        return operationTo.getMachine() == operationFrom.getMachine();
     }
 
     /**
@@ -151,11 +153,10 @@ public class Edge implements Serializable {
     @Override
     public boolean equals(final Object obj) {
 
-        final Edge compareEdge = (Edge) obj;
-
-        if (compareEdge == null) {
+        if (!(obj instanceof Edge)) {
             return false;
         }
+        final Edge compareEdge = (Edge) obj;
 
         final EqualsBuilder equalsBuilder = new EqualsBuilder();
         equalsBuilder.append(getOperationFrom(), compareEdge.getOperationFrom());
@@ -165,6 +166,11 @@ public class Edge implements Serializable {
         return equalsBuilder.isEquals();
     }
 
+    /**
+     * Hash code builder.
+     *
+     * @return Hash of edge.
+     */
     @Override
     public int hashCode() {
 
@@ -175,6 +181,11 @@ public class Edge implements Serializable {
         return hashCodeBuilder.toHashCode();
     }
 
+    /**
+     * toString method.
+     *
+     * @return {@link String}
+     */
     @Override
     public String toString() {
 
@@ -182,15 +193,16 @@ public class Edge implements Serializable {
 
         if (operationFrom != null) {
 
-            stringBuilder.append("PT: ").append(processingTime).append(" JFrom: ").append(operationFrom.getJob()).append(" MFrom: ").append(operationFrom
-                                                                                                                                               .getMachine());
+            stringBuilder.append("PT: ").append(processingTime).append(" JFrom: ").append(operationFrom.getJob())
+                    .append(" MFrom: ").append(operationFrom
+                                                       .getMachine());
         }
         if (operationTo != null) {
 
-            stringBuilder.append(" | JTo:").append(operationTo.getJob()).append(" MTo: ").append(operationTo.getMachine())
+            stringBuilder.append(" | JTo:").append(operationTo.getJob()).append(" MTo: ").append(operationTo
+                                                                                                         .getMachine())
                     .append(",\n");
         }
-
         return stringBuilder.toString();
     }
 }

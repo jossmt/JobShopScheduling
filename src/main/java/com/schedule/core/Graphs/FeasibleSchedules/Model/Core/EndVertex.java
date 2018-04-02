@@ -12,7 +12,7 @@ public class EndVertex extends Operation implements Serializable {
     /**
      * End Edges.
      */
-    public Set<Edge> endParentEdges;
+    private Set<Edge> endParentEdges;
 
     /**
      * Constructor.
@@ -22,6 +22,7 @@ public class EndVertex extends Operation implements Serializable {
      * @param job
      *         Job id.
      * @param machine
+     *         Machine id.
      */
     public EndVertex(Integer id, Integer job, Integer machine) {
         super(id, job, machine);
@@ -40,19 +41,11 @@ public class EndVertex extends Operation implements Serializable {
     }
 
     /**
-     * Sets new endEdges.
+     * Adds parent edge to end vertex.
      *
-     * @param endParentEdges
-     *         New value of endParentEdges.
+     * @param endParentEdge
+     *         {@link Edge}
      */
-    public void getEndParentEdges(Set<Edge> endParentEdges) {
-        this.endParentEdges = endParentEdges;
-    }
-
-    public boolean hasEndParentEdges(){
-        return !endParentEdges.isEmpty();
-    }
-
     public void addEndParentEdge(final Edge endParentEdge) {
 
         endParentEdges.removeIf(edge -> edge.getOperationFrom().getJob() == endParentEdge.getOperationFrom().getJob());

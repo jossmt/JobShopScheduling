@@ -463,7 +463,6 @@ public class Schedule implements Serializable {
 
     /**
      * Returns all active disjunctive edges not on longest path.
-     *
      */
     private void calculateAllMachineEdgesNotOnLP() {
 
@@ -648,6 +647,7 @@ public class Schedule implements Serializable {
         stringBuilder.append("\n(J:").append(operation.getJob()).append(", M:").append(operation.getMachine()).append
                 (")\n");
 
+        // Prints active edges.
         if (operation.hasActiveEdges()) {
             for (final Edge edge : operation.getActiveEdges()) {
                 stringBuilder.append("---").append(edge.getProcessingTime()).append("--->")
@@ -656,6 +656,7 @@ public class Schedule implements Serializable {
             }
         }
 
+        // Prints parent edges
         if (operation.hasParentEdges()) {
             for (final Edge edge : operation.getParentEdges()) {
                 stringBuilder.append("<---").append(edge.getProcessingTime()).append("---")
@@ -666,9 +667,7 @@ public class Schedule implements Serializable {
         }
 
         if (operation.hasNeighbour()) {
-
             stringBuilder.append(printVertex(operation.getConjunctiveEdge().getOperationTo()));
-
         }
         return stringBuilder.toString();
     }

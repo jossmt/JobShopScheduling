@@ -62,7 +62,7 @@ public class FireflyService {
     }
 
     /**
-     * Comparing schedules by backbone
+     * Comparing schedules by backbone (number of similar orientations on longest paths).
      *
      * @param schedules
      *         List of highest makespan schedules
@@ -104,7 +104,7 @@ public class FireflyService {
     }
 
     /**
-     * Checks the backbone similarity between two schedules.
+     * Checks the backbone (number of equal edge orientations on longest path0 similarity between two schedules.
      *
      * @param schedule
      *         {@link Schedule}
@@ -126,9 +126,12 @@ public class FireflyService {
 
     }
 
-
     /**
-     * Moves toward optimal by flipping local edges.
+     * Moves toward optimal beacon by modifying the underlying structure of the schedule instance
+     * using a transition function. The transition function (firefly movement), involves checking the edge orientation
+     * of two operations on the optimal schedule instance and mimicking the orientation for the local schedule instance
+     * by flipping edges on the longest paths. If no move can be made on the longest path, an effort is made to
+     * switch edges not on the longest path.
      *
      * @param schedule
      *         {@link Schedule}
@@ -173,7 +176,6 @@ public class FireflyService {
                     }
 
                 } else {
-
                     if (schedule.hashCode() != optimal.hashCode()) {
 
                         LOG.trace("Can't get any closer to optimal using firefly");
@@ -190,14 +192,12 @@ public class FireflyService {
             scheduleService.calculateScheduleData(schedule);
         }
 
-        scheduleService.calculateScheduleData(schedule);
-
         return true;
     }
 
     /**
-     * Using local edge, determines if optimal has equal edge, if not, switches edge if order needs changing, otherwise
-     * continue looking for edge options.
+     * Locates an edge on the longest path. If the operations on said edge are not in order on the local schedule
+     * instance, the edge is flipped. If it is, a new edge option is found.
      *
      * @param edges
      *         Set of {@link Edge}
@@ -213,6 +213,7 @@ public class FireflyService {
 
             final Edge currentEdge = edgeIterator.next();
 
+            // Checks if the edge is flippable (i.e. on the machine path).
             if (currentEdge.isMachinePath()) {
 
                 final Operation opFrom = optimal.locateOperation(currentEdge.getOperationFrom().getJob(), currentEdge

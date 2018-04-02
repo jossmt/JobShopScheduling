@@ -21,7 +21,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * StaticSchedule essentially representing origin vertex for job shop scheduling
+ * Schedule Service handling functionality directly related to the {@link Schedule} object.
  */
 public class ScheduleService {
 
@@ -29,7 +29,7 @@ public class ScheduleService {
     private static final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
 
     /**
-     * COnstructor.
+     * Constructor.
      */
     public ScheduleService() {
     }
@@ -88,7 +88,6 @@ public class ScheduleService {
             final Optional<Double> acceptanceProb = schedule.getCachedEdgeAcceptanceProb(maxEdge.get());
 
             LOG.trace("Edge: {}, acceptance prob: {}", maxEdge.get(), acceptanceProb);
-
             LOG.trace("Cached Data: {}", schedule.getLruEdgeCache().size());
 
             if (acceptanceProb.isPresent()) {
@@ -229,7 +228,7 @@ public class ScheduleService {
 
 
     /**
-     * Finds longest path
+     * Calculates makespan using reverse modification of Dijkstras Algorithm.
      *
      * @return Makespan
      */
@@ -304,7 +303,6 @@ public class ScheduleService {
     private ArrayList<Edge> calculateLongestPathMachineEdges(final EndVertex endVertex) {
 
         final ArrayList<Edge> machineEdgesLongestPath = new ArrayList<>();
-        final Set<Edge> machineEdgesNotOnLongestPath = new HashSet<>();
         final Set<Edge> parentEdges = endVertex.getEndParentEdges();
 
         // Gets LP edges
@@ -314,7 +312,7 @@ public class ScheduleService {
 
         for (final Edge parentEdge : maxParentEdges) {
 
-            addMachineEdgesLP(machineEdgesLongestPath, machineEdgesNotOnLongestPath, parentEdge.getOperationFrom());
+            addMachineEdgesLP(machineEdgesLongestPath, parentEdge.getOperationFrom());
 
         }
 
@@ -329,8 +327,7 @@ public class ScheduleService {
      * @param node
      *         Current node in recursive iteration.
      */
-    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Set<Edge> machineEdgesNotOnLP, final
-    Operation node) {
+    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Operation node) {
 
         LOG.trace("Checking node: {}", node.toString());
 
@@ -340,11 +337,19 @@ public class ScheduleService {
             return;
         }
 
+        LOG.trace("Parent edges: {}", parentEdges.toString());
+
         // Gets LP edges
         final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
-        final Set<Edge> maxParentEdges = parentEdges.stream().filter(
-                e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
+        Set<Edge> maxParentEdges;
 
+        try {
+            maxParentEdges = parentEdges.stream().filter(
+                    e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
+
+        } catch (StackOverflowError e) {
+            throw new IllegalStateException("Cycle when calculating longest path...");
+        }
         LOG.trace("Looping edges: {}", maxParentEdge);
         for (final Edge edge : maxParentEdges) {
 
@@ -352,7 +357,7 @@ public class ScheduleService {
                 machineEdges.add(edge);
             }
 
-            addMachineEdgesLP(machineEdges, machineEdgesNotOnLP, edge.getOperationFrom());
+            addMachineEdgesLP(machineEdges, edge.getOperationFrom());
         }
     }
 
@@ -381,31 +386,6 @@ public class ScheduleService {
     }
 
     /**
-     * Checks whether edge exists in schedule.
-     *
-     * @param schedule
-     *         {@link Schedule}
-     * @param edge
-     *         {@link Edge}
-     * @return true/false
-     */
-    public Boolean edgeExists(final Schedule schedule, final Edge edge) {
-
-        final Operation operationFrom = edge.getOperationFrom();
-
-        final Operation actualOperation = schedule.locateOperation(operationFrom.getJob(), operationFrom.getMachine());
-
-        if (actualOperation.getDisjunctiveEdge() != null) {
-            if (actualOperation.getDisjunctiveEdge().equals(edge)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    /**
      * Calculates random double between 0 and 1
      *
      * @return [0-1]
@@ -417,9 +397,7 @@ public class ScheduleService {
     }
 
     /**
-     * Generates graph code
-     *
-     * @return Stringified code for graphviz visualiser
+     * Generates graph code: stringified code for graphviz converter.
      */
     public void generateGraphCode(final Schedule schedule, final String fileName) {
 
@@ -427,11 +405,8 @@ public class ScheduleService {
         stringBuilder.append("digraph G { \nrankdir=LR;\n");
 
         final StringBuilder clusters = new StringBuilder();
-
         final StringBuilder directedEdges = new StringBuilder();
-
         final StringBuilder endEdges = new StringBuilder();
-
         final StringBuilder startEdges = new StringBuilder();
 
         for (final Integer job : schedule.getJobHashMap().keySet()) {
@@ -476,7 +451,6 @@ public class ScheduleService {
             }
 
             cluster.append("\n};\n");
-
             clusters.append(cluster);
 
         }

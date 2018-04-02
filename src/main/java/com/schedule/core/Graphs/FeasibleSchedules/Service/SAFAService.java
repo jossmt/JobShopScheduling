@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * Simulated Annealing-Firefly Algorithm service layer.
+ */
 public class SAFAService implements Observer {
 
     /** logger. */
@@ -29,8 +32,10 @@ public class SAFAService implements Observer {
     /** {@link Schedule}. */
     private OptimalSchedule optimalSchedule;
 
+    /** {@link ExecutorService}. */
     private ExecutorService executorService;
 
+    /** List of {@link Future} of type {@link Schedule}. */
     private List<Future<Schedule>> allRunningThreads;
 
     /**
@@ -50,7 +55,7 @@ public class SAFAService implements Observer {
     }
 
     /**
-     * Executes SA using random population of schedules.
+     * Generates and executes SAFA threads using population of Schedule instances.
      *
      * @param scheduleSet
      *         Set of {@link Schedule}
@@ -81,22 +86,30 @@ public class SAFAService implements Observer {
     }
 
     /**
-     * Adds new SAFA thread.
+     * Adds new SAFA thread to executor service.
      *
      * @param schedule
      *         {@link Schedule}
      */
-    public synchronized void addSimulatedAnnealingFireflyThread(final Schedule schedule) {
+    private synchronized void addSimulatedAnnealingFireflyThread(final Schedule schedule) {
 
         final SAFACallable safaCallable = new SAFACallable(this, schedule);
-
         final Future<Schedule> future = executorService.submit(safaCallable);
 
         allRunningThreads.add(future);
     }
 
     /**
-     * Simulated Annealing Formula
+     * Simulated Annealing Firefly Algorithm Formula
+     * Utilises parameters starting temperature (default 3000) and a cooling rate (default 0.02) to dictate number
+     * of iterations and the rate of temperature change. When temperature is high, our acceptance rate is high, leading
+     * to the acceptance of a sporadic/random movement. As our temperature diminishes according to the cooling rate
+     * and our acceptance rate diminishes, execution of the desired transition function, in this case the firefly
+     * movement towards the beacon, increases.
+     * <p>
+     * <p>
+     * This approach depends on threading, whereby each firefly is represented by an individual thread that moves
+     * of it's own accord.
      *
      * @param schedule
      *         {@link Schedule}
@@ -112,47 +125,37 @@ public class SAFAService implements Observer {
         // Cooling rate
         final Double coolingRate = 0.02;
 
-        //Reference to optimal and previous schedule
-        Schedule currentSchedule = schedule;
-
         int iterations = 0;
         while (temp > 1) {
 
             LOG.trace("\n_________________________\n");
-
 
             final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
             final Double randomProb = scheduleService.randomDouble();
             if (!(acceptanceProb > randomProb)) {
                 LOG.trace("Firefly move toward optimal");
 
-                final boolean successMove = fireflyService.moveToOptimalNew(currentSchedule);
-
+                final boolean successMove = fireflyService.moveToOptimalNew(schedule);
                 if (!successMove) {
-
                     LOG.debug("No more move options, check if equal to optimal: {}",
-                              currentSchedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
-
+                              schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
                     break;
                 }
 
             } else {
 
                 LOG.trace("Making random move");
-
-                final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(currentSchedule,
-                                                                                             currentSchedule
+                final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
+                                                                                             schedule
                                                                                                      .getMachineEdgesOnLP(), true);
-
                 LOG.trace("Result: {}", result);
-                scheduleService.calculateScheduleData(currentSchedule);
+                scheduleService.calculateScheduleData(schedule);
             }
 
-            if (currentSchedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
+            if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
 
                 LOG.trace("Setting new optimal");
-
-                optimalSchedule.setOptimalSchedule(currentSchedule);
+                optimalSchedule.setOptimalSchedule(schedule);
                 break;
             }
 
@@ -163,55 +166,24 @@ public class SAFAService implements Observer {
         LOG.debug("Finished SAFA execution after {} iterations", iterations);
     }
 
-    public Schedule getOptimal() {
-        return optimalSchedule.getOptimalSchedule();
-    }
-
     /**
-     * Shuts down executor service when all threads complete.
+     * Simulated Annealing Firefly Algorithm Formula
+     * Utilises parameters starting temperature (default 3000) and a cooling rate (default 0.02) to dictate number
+     * of iterations and the rate of temperature change. When temperature is high, our acceptance rate is high, leading
+     * to the acceptance of a sporadic/random movement. As our temperature diminishes according to the cooling rate
+     * and our acceptance rate diminishes, execution of the desired transition function, in this case the firefly
+     * movement towards the beacon, increases.
+     * <p>
+     * A threadless implementation of the SAFA algorithm, executing a single iteration for each firefly in the
+     * population per iteration.
+     *
+     * @param scheduleSet
+     *         Set of {@link Schedule}
      */
-    public boolean removeCompletedThreads() {
-
-        LOG.debug("Removing completed threads from cache, size: {}", allRunningThreads.size());
-
-        if (!allRunningThreads.isEmpty()) {
-
-            Iterator<Future<Schedule>> threadIterator = allRunningThreads.iterator();
-            while (threadIterator.hasNext()) {
-
-                final Future<Schedule> currentThread = threadIterator.next();
-
-                try {
-                    currentThread.get();
-
-                    if (currentThread.isDone()) {
-                        threadIterator.remove();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return allRunningThreads.isEmpty();
-    }
-
-    /**
-     * Shuts down executors.
-     */
-    public void shutDownExecutors() {
-
-        executorService.shutdown();
-        simulatedAnnealingService.shutdownExecutorService();
-    }
-
-
     public void iterativeApproachSAFA(final Set<Schedule> scheduleSet) {
 
         // Must use arraylist for object reference as hashcode reference is immutable
-        // And we're constantly changing hash value theirfore cant iterator.remove()
+        // And we're constantly changing hash value therefore cant iterator.remove()
         final ArrayList<Schedule> schedules = new ArrayList<>(scheduleSet);
 
         schedules.remove(optimalSchedule.getOptimalSchedule());
@@ -282,6 +254,62 @@ public class SAFAService implements Observer {
         }
 
         shutDownExecutors();
+    }
+
+    /**
+     * Shuts down executor service when all threads complete.
+     */
+    public boolean removeCompletedThreads() {
+
+        LOG.trace("Removing completed threads from cache, size: {}", allRunningThreads.size());
+
+        if (!allRunningThreads.isEmpty()) {
+
+            Iterator<Future<Schedule>> threadIterator = allRunningThreads.iterator();
+            while (threadIterator.hasNext()) {
+
+                final Future<Schedule> currentThread = threadIterator.next();
+
+                try {
+                    currentThread.get();
+
+                    if (currentThread.isDone()) {
+                        threadIterator.remove();
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return allRunningThreads.isEmpty();
+    }
+
+    /**
+     * Shuts down executors.
+     */
+    public void shutDownExecutors() {
+
+        executorService.shutdown();
+        simulatedAnnealingService.shutdownExecutorService();
+    }
+
+    /**
+     * Restarts thread executor
+     */
+    public void restartThreadExecutor() {
+
+        executorService = Executors.newFixedThreadPool(5);
+        allRunningThreads = new ArrayList<>();
+    }
+
+    /**
+     * Returns optimal schedule.
+     *
+     * @return {@link Schedule}
+     */
+    public Schedule getOptimal() {
+        return optimalSchedule.getOptimalSchedule();
     }
 
     /**

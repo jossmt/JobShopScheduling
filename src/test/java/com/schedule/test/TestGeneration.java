@@ -34,4 +34,12 @@ public class TestGeneration extends TestSetup {
             count++;
         }
     }
+
+    @Test
+    public void generateTesta(){
+
+        setUp("dmu05", 1);
+
+        scheduleService.generateGraphCode(optimal, "dmu05");
+    }
 }

@@ -7,15 +7,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+/**
+ * Optimal schedule reference.
+ */
 public class OptimalSchedule implements Observable {
 
     /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(OptimalSchedule.class);
 
-    private Cloner cloner = new Cloner();
-
+    /** List of {@link Observer}. */
     private ArrayList<Observer> services = new ArrayList<>();
 
+    /** Optimal {@link Schedule} instance. */
     private Schedule optimalSchedule;
 
     /**
@@ -55,21 +58,38 @@ public class OptimalSchedule implements Observable {
         this.optimalSchedule = optimalSchedule;
     }
 
+    /**
+     * Adds observer.
+     *
+     * @param service
+     *         Service class.
+     */
     @Override
     public void addObserver(Observer service) {
         services.add(service);
     }
 
+    /**
+     * Removes observer.
+     *
+     * @param service
+     *         Service class.
+     */
     @Override
     public void removeObserver(Observer service) {
         services.remove(service);
     }
 
+    /**
+     * Notifies all services of an update of the optimal schedule.
+     *
+     * @param oldOptimalSchedule
+     *         Previous optimal {@link Schedule}
+     */
     @Override
     public void notifyObservers(final Schedule oldOptimalSchedule) {
 
         for (final Observer service : services) {
-
             service.update(oldOptimalSchedule);
         }
     }

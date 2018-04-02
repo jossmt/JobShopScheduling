@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * Local Search Service layer.
+ */
 public class LocalSearchService {
 
     /** Logger. */
@@ -23,6 +26,9 @@ public class LocalSearchService {
     /** Local optimas for SA. */
     private Set<Schedule> localOptimalSchedules;
 
+    /**
+     * Constructor.
+     */
     public LocalSearchService() {
 
         scheduleService = new ScheduleService();
@@ -32,13 +38,15 @@ public class LocalSearchService {
     }
 
     /**
-     * Executes SA using random population of schedules.
+     * Local Search Algorithm Executor
+     * Creates a new thread for each of the schedule instances in the population and executes local search
+     * for a number of iterations = maxIterations parameter.
      *
      * @param scheduleSet
      *         Set of {@link Schedule}
      * @return Set of local optimal {@link Schedule}
      */
-    public Set<Schedule> executeLocalSearch(final Set<Schedule> scheduleSet) {
+    public Set<Schedule> executeLocalSearch(final Set<Schedule> scheduleSet, final Integer maxIterations) {
 
         final ExecutorService executorService = Executors.newFixedThreadPool(5);
 
@@ -46,7 +54,7 @@ public class LocalSearchService {
         final List<Callable<Schedule>> callables = new ArrayList<>();
         for (final Schedule schedule : scheduleSet) {
 
-            final LocalSearchCallable localSearchCallable = new LocalSearchCallable(this, schedule);
+            final LocalSearchCallable localSearchCallable = new LocalSearchCallable(this, schedule, maxIterations);
             callables.add(localSearchCallable);
         }
         try {
@@ -56,9 +64,7 @@ public class LocalSearchService {
             for (final Future<Schedule> result : results) {
                 result.get();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
 
@@ -68,6 +74,19 @@ public class LocalSearchService {
         return localOptimalSchedules;
     }
 
+    /**
+     * LS Algorithm
+     * <p>
+     * Modifies the underlying structure of the given instance using the transition function (flipping an edge) and
+     * checks if the neighbouring instance has a preferred cost function. If so, proceed with the new instance.
+     * Otherwise, find a new neighbour. once all neighbours have been exhausted, a local optimum has been found.
+     *
+     * @param schedule
+     *         {@link Schedule}
+     * @param maxIterations
+     *         Maximum number of iterations before returning.
+     * @return {@link Schedule}
+     */
     public Schedule executeLocalSearchIteratively(final Schedule schedule, final Integer maxIterations) {
 
         for (int i = 0; i < maxIterations; i++) {
@@ -77,15 +96,16 @@ public class LocalSearchService {
             final Integer makespan = schedule.getMakespan();
             LOG.trace("Current makespan: {}", schedule.getMakespan());
 
-            final Optional<Edge> edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
-                                                                                           longestPathEdges, false);
+            Optional<Edge> edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
+                                                                                     longestPathEdges, false);
 
-            if (edgeFlip.isPresent()) {
+            while (edgeFlip.isPresent()) {
 
                 LOG.trace("Edge flipped: {}", edgeFlip);
 
                 scheduleService.calculateScheduleData(schedule);
 
+                LOG.trace("Local MP: {}, Optimal: {}", schedule.getMakespan(), makespan);
                 if (!(schedule.getMakespan() < makespan)) {
 
                     LOG.trace("Moving away from local minima, undoing move");
@@ -95,40 +115,10 @@ public class LocalSearchService {
                     //flip back if not improved schedule
                     scheduleService.switchEdge(edgeFlip.get());
                     scheduleService.calculateScheduleData(schedule);
+                    edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule, longestPathEdges, false);
                 } else {
 
                     LOG.trace("Accepted move");
-                    continue;
-                }
-            } else {
-
-                LOG.debug("No more flips to consider on LP, trying nonLP edges");
-
-                boolean foundEdgeToFlip = false;
-//                LOG.debug("Machine edges not on lp size: {}", schedule.getMachineEdgesNotOnLP().size());
-//                for(final Edge edge : schedule.getMachineEdgesNotOnLP()){
-//
-//                    scheduleService.switchEdge(edge);
-//
-//                    if(feasibilityService.scheduleIsFeasibleProof(edge.getOperationFrom(), edge.getOperationTo())){
-//
-//                        if (!(schedule.getMakespan() < makespan)) {
-//
-//                            //flip back if not improved schedule
-//                            scheduleService.switchEdge(edge);
-//                            scheduleService.calculateScheduleData(schedule);
-//                        } else {
-//
-//                            LOG.debug("Accepted edge flip not on lp");
-//                            scheduleService.calculateScheduleData(schedule);
-//                            foundEdgeToFlip = true;
-//                            break;
-//                        }
-//                    }
-//                }
-
-                if (!foundEdgeToFlip) {
-                    LOG.debug("Reached local minima");
                     break;
                 }
             }
@@ -146,10 +136,21 @@ public class LocalSearchService {
         return localOptimalSchedules;
     }
 
+    /**
+     * Adds a local optimal schedule to the set of local optimas.
+     *
+     * @param schedule
+     *         {@link Schedule}
+     */
     public void addLocalOptimalSchedule(final Schedule schedule) {
         localOptimalSchedules.add(schedule);
     }
 
+    /**
+     * Returns optimal schedule instance.
+     *
+     * @return {@link Schedule}
+     */
     public Schedule getOptimalSchedule() {
 
         return localOptimalSchedules.stream().min(Comparator.comparing(Schedule::getMakespan))

@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * Makespan optimisation service.
+ * Simulated Annealing Service Layer.
  */
 public class SimulatedAnnealingService implements Observer {
 
@@ -26,10 +26,13 @@ public class SimulatedAnnealingService implements Observer {
     /** Global optimal schedule. */
     private OptimalSchedule optimalSchedule;
 
+    /** {@link ExecutorService}. */
     private ExecutorService executorService;
 
+    /** {@link Cloner}. */
     private Cloner cloner = new Cloner();
 
+    /** {@link Future} of type {@link Schedule}. */
     private Future<Schedule> runningThread;
 
     /**
@@ -41,11 +44,10 @@ public class SimulatedAnnealingService implements Observer {
     }
 
     /**
-     * Executes SA using random population of schedules.
+     * Executes SA thread using schedule instance.
      *
      * @param schedule
      *         {@link Schedule}
-     * @return Set of local optimal {@link Schedule}
      */
     public void executeSimulatedAnnealing(final Schedule schedule) {
 
@@ -63,7 +65,13 @@ public class SimulatedAnnealingService implements Observer {
     }
 
     /**
-     * Simulated Annealing Formula
+     * Simulated Annealing Algorithm
+     * <p>
+     * Utilises parameters starting temperature (default 3000) and a cooling rate (default 0.02) to dictate number
+     * of iterations and the rate of temperature change. When temperature is high, our acceptance rate is high, leading
+     * to the acceptance of a sporadic/random movement. As our temperature diminishes according to the cooling rate
+     * and our acceptance rate diminishes, execution of the desired transition function increases, thereby effectively
+     * covering the entire solution space.
      *
      * @param schedule
      *         {@link Schedule}
@@ -162,6 +170,11 @@ public class SimulatedAnnealingService implements Observer {
         return (temp / startTemp);
     }
 
+    /**
+     * Returns optimal schedule.
+     *
+     * @return {@link Schedule}
+     */
     public Schedule getOptimal() {
         return optimalSchedule.getOptimalSchedule();
     }
@@ -171,6 +184,15 @@ public class SimulatedAnnealingService implements Observer {
      */
     public void shutdownExecutorService() {
         executorService.shutdown();
+    }
+
+    /**
+     * Restarts thread executor
+     */
+    public void restartThreadExecutor() {
+
+        executorService = Executors.newSingleThreadExecutor();
+        runningThread = null;
     }
 
     /**

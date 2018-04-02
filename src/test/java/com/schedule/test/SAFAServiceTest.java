@@ -38,7 +38,7 @@ public class SAFAServiceTest extends TestSetup {
     @Test
     public void SAFATestIterative() {
 
-        setUp("ft06", 10);
+        setUp("ft10", 500);
 
         optimalSchedule.setOptimalScheduleWithoutNotifyingObservers(optimal);
 

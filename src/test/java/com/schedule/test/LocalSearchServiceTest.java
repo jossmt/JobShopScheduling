@@ -31,26 +31,18 @@ public class LocalSearchServiceTest extends TestSetup {
     @Test
     public void executeLocalSearchTest() {
 
-        setUp("4x4", 500);
+        setUp("ft10", 10);
 
-        final Cloner clone = new Cloner();
-
-        int count = 0;
         for (final Schedule schedule : testSchedules) {
 
             try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
+                localSearchService.executeLocalSearchIteratively(schedule, 100);
+            }catch(StackOverflowError e){
                 e.printStackTrace();
+                scheduleService.generateGraphCode(schedule, "cycle");
+                break;
             }
-
-            final Schedule before = clone.deepClone(schedule);
-
-            LOG.debug("Sched count: {}", count);
-
-            localSearchService.executeLocalSearchIteratively(schedule, 1000);
-
-            count++;
+            LOG.debug("Localmin: {}", schedule.getMakespan());
         }
     }
 }
