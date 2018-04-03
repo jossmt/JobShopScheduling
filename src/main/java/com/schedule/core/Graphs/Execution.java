@@ -49,11 +49,11 @@ public class Execution {
         optimalSchedule.addObserver(simulatedAnnealingService);
         optimalSchedule.addObserver(safaService);
 
-        final String benchmarkInstance = "la21";
+        final String benchmarkInstance = "la23";
 
         final StringBuilder resultBuilder = new StringBuilder();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
 
             // Generate Schedules
             final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 100);
