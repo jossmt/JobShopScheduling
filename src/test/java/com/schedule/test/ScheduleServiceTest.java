@@ -4,6 +4,7 @@ package com.schedule.test;
 import com.google.common.truth.Truth;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
+import com.schedule.core.Graphs.FeasibleSchedules.Service.ScheduleService;
 import com.schedule.test.Config.TestDataPaths;
 import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
@@ -14,10 +15,17 @@ import java.util.Deque;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Tests for {@link ScheduleService}
+ */
 public class ScheduleServiceTest extends TestSetup {
 
+    /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(ScheduleServiceTest.class);
 
+    /**
+     * Calculates paths and asserts the same as tested sample.
+     */
     @Test
     public void calculatePathsTest() {
 
@@ -27,38 +35,6 @@ public class ScheduleServiceTest extends TestSetup {
 
         Truth.assertThat(optimal.getMachineEdgesNotOnLP().toString()).isEqualTo(readFile(TestDataPaths
                                                                                                  .CALCULATE_PATHS_PATH));
-    }
-
-    @Test
-    public void calculatePathsInfeasibleScheduleTest() {
-
-        setUp("ft10", 1);
-
-        scheduleService.calculateScheduleData(optimal);
-
-        Truth.assertThat(feasibilityService.hasCycle(optimal)).isFalse();
-
-        final Set<Edge> edges = optimal.getMachineEdgesOnLPSet();
-
-        Edge toModify = null;
-        Edge child = null;
-        for (final Edge edge : edges) {
-
-            if (edge.getOperationTo().hasDisjunctiveEge()) {
-                if (edge.getOperationTo().getDisjunctiveEdge().isMachinePath()) {
-
-                    toModify = edge;
-                    child = edge.getOperationTo().getDisjunctiveEdge();
-                    break;
-                }
-            }
-        }
-
-        //Manually added loop
-        child.getOperationTo().setDisjunctiveEdge(new Edge(child.getOperationTo(), toModify.getOperationFrom(), 100));
-
-        Truth.assertThat(feasibilityService.hasCycle(optimal)).isTrue();
-
     }
 
     @Test
@@ -81,23 +57,29 @@ public class ScheduleServiceTest extends TestSetup {
         Truth.assertThat(operations.toString()).isEqualTo(readFile(TestDataPaths.TOPOLOGICAL_SORT_PATH));
     }
 
+    /**
+     * Flips popular edges and asserts hash equal to previously assessed hashes.
+     */
     @Test
     public void flipPopularEdgeTest() {
 
         setUp("ft10", 1);
+        optimal.initialiseCache();
 
         final String[] scheduleHashes = readFile(TestDataPaths.FLIP_EDGE_HASHES_PATH).split(",");
 
         for (final String hash : scheduleHashes) {
 
-            scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getMachineEdgesOnLP(), false);
+            scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal.getMachineEdgesOnLP(), true);
             scheduleService.calculateScheduleData(optimal);
 
             Truth.assertThat(Integer.valueOf(hash)).isEqualTo(optimal.hashCode());
-            Truth.assertThat(feasibilityService.hasCycle(optimal)).isFalse();
         }
     }
 
+    /**
+     * Flips edge and then re-flips and asserts hashes equal.
+     */
     @Test
     public void flipBackEdges() {
 
@@ -170,32 +152,24 @@ public class ScheduleServiceTest extends TestSetup {
 
     }
 
-    //TODO: Its not topological sort. Some reason
-    // TODO: makespan calculation isn't calculating a different value after switching edge
+    /**
+     * Checks that the calculate maximal machine edge on LP is calculated correctly
+     */
     @Test
     public void testCalculateMachineEdgesOnLP() {
 
-        setUp("ft06", 1);
+        setUp("ft10", 1);
         optimal.initialiseCache();
 
-//        scheduleService.calculateScheduleData(optimal);
+        final String[] edges = readFile(TestDataPaths.MOST_VISITED_EDGE_PATH).split(",");
 
-        LOG.debug("Makespan: {}", optimal.getMakespan());
-//        scheduleService.generateGraphCode(optimal, "test1");
-        final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal
-                .getMachineEdgesOnLP(), true);
-        scheduleService.calculateMakeSpan(optimal);
-        LOG.debug("Result: {}", result);
-//        scheduleService.switchEdge(optimal.getAllMachineEdges().iterator().next());
-        LOG.debug("Makespan2: {}", optimal.getMakespan());
-        scheduleService.calculateScheduleData(optimal);
-        scheduleService.calculateMakeSpan(optimal);
-        final Optional<Edge> result2 = scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal
-                .getMachineEdgesOnLP(), true);
-        scheduleService.calculateMakeSpan(optimal);
-        LOG.debug("Result2: {}", result2);
-//        scheduleService.generateGraphCode(optimal, "test2");
-
-        LOG.debug("Makespan3: {}", optimal.getMakespan());
+        for(final String edge : edges) {
+            final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(optimal, optimal
+                    .getMachineEdgesOnLP(), true);
+            LOG.debug("Result: {}", result.toString());
+            LOG.debug("Res: {}", edge);
+            Truth.assertThat(result.toString().contains(edge)).isTrue();
+            scheduleService.calculateScheduleData(optimal);
+        }
     }
 }

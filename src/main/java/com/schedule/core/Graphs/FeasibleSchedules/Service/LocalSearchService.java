@@ -94,11 +94,12 @@ public class LocalSearchService {
             ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
 
             final Integer makespan = schedule.getMakespan();
-            LOG.trace("Current makespan: {}", schedule.getMakespan());
+            LOG.debug("Current makespan: {}", schedule.getMakespan());
 
             Optional<Edge> edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
                                                                                      longestPathEdges, false);
 
+            LOG.debug("Edges size: {}", longestPathEdges.size());
             while (edgeFlip.isPresent()) {
 
                 LOG.trace("Edge flipped: {}", edgeFlip);
@@ -110,7 +111,9 @@ public class LocalSearchService {
 
                     LOG.trace("Moving away from local minima, undoing move");
 
+                    LOG.debug("Edges before: {}", longestPathEdges.size());
                     longestPathEdges.removeAll(Collections.singleton(edgeFlip.get()));
+                    LOG.debug("Edges after: {}", longestPathEdges.size());
 
                     //flip back if not improved schedule
                     scheduleService.switchEdge(edgeFlip.get());
@@ -121,6 +124,10 @@ public class LocalSearchService {
                     LOG.trace("Accepted move");
                     break;
                 }
+            }
+
+            if(!edgeFlip.isPresent()){
+                break;
             }
         }
 

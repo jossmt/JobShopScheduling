@@ -14,10 +14,15 @@ import org.slf4j.LoggerFactory;
  */
 public class LocalSearchServiceTest extends TestSetup {
 
+    /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(LocalSearchServiceTest.class);
 
+    /** {@link LocalSearchService}. */
     private final LocalSearchService localSearchService = new LocalSearchService();
 
+    /**
+     * Asserts local optimal reached.
+     */
     @Test
     public void executeLocalSearch() {
 
@@ -25,7 +30,7 @@ public class LocalSearchServiceTest extends TestSetup {
 
         localSearchService.executeLocalSearchIteratively(optimal, 1000);
 
-        Truth.assertThat(optimal.getMakespan()).isEqualTo(966);
+        Truth.assertThat(optimal.getMakespan()).isEqualTo(879);
     }
 
     @Test

@@ -10,4 +10,7 @@ public class TestDataPaths {
 
     public static final String FIREFLY_MOVEMENT_PATH = "./src/test/resources/FireflyMovementHashes.txt";
 
+    public static final String LRU_CACHE_PATH = "./src/test/resources/LRUCacheTestData.txt";
+
+    public static final String MOST_VISITED_EDGE_PATH = "./src/test/resources/MostVisitedEdgeData.txt";
 }

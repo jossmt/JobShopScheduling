@@ -17,29 +17,31 @@ public class TestGeneration extends TestSetup {
     private static final Logger LOG = LoggerFactory.getLogger(TestGeneration.class);
 
     @Test
-    public void generateBenchmarkInstance(){
+    public void generateBenchmarkInstance() {
 
         schedulesBuilder.getBenchmarkInstance("la17");
     }
 
+    /**
+     * Generate graph test.
+     */
     @Test
-    public void generateTest(){
+    public void generateTest() {
 
-        setUp("4x4", 5);
+        setUp("4x4", 1);
 
-        int count = 0;
-        for(final Schedule schedule : testSchedules){
-
-            scheduleService.generateGraphCode(schedule, "4x4test" + count);
-            count++;
-        }
+        scheduleService.generateGraphCode(optimal, "4x4Test");
     }
 
+
+    /**
+     * Generates larger graph.
+     */
     @Test
-    public void generateTesta(){
+    public void generateTestLarge() {
 
-        setUp("dmu05", 1);
+        setUp("la23", 1);
 
-        scheduleService.generateGraphCode(optimal, "dmu05");
+        scheduleService.generateGraphCode(optimal, "la23Test");
     }
 }

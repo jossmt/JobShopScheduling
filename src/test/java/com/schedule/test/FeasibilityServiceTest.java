@@ -41,12 +41,11 @@ public class FeasibilityServiceTest extends TestSetup {
 
             LOG.debug("Edge: {}", edge);
             scheduleService.switchEdge(edge);
-            scheduleService.calculateScheduleData(optimal);
 
             if (feasibilityService.hasCycle(optimal)) {
 
                 LOG.debug("Cycle is infeasible");
-                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isFalse();
+                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isTrue();
 
                 failureSwitchCount++;
 
@@ -56,11 +55,9 @@ public class FeasibilityServiceTest extends TestSetup {
             } else {
 
                 successSwitchCount++;
-                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isTrue();
+                scheduleService.calculateScheduleData(optimal);
             }
         }
-
-        LOG.debug("Ratio of success:failure edge flips: {}:{}", successSwitchCount, failureSwitchCount);
     }
 
 
@@ -70,12 +67,11 @@ public class FeasibilityServiceTest extends TestSetup {
     @Test
     public void successfulSwitchRatios() {
 
-        final String[] benchmarks = {"4x4", "ft06", "ft10", "ft20"};
+        final String[] benchmarks = {"ft06", "ft10", "ft20"};
 
-        for (final String machineJob : benchmarks) {
+        for (final String benchmark : benchmarks) {
 
-
-            setUp(machineJob, 10);
+            setUp(benchmark, 10);
 
             final String[] averageRatios = new String[10];
 
@@ -113,10 +109,13 @@ public class FeasibilityServiceTest extends TestSetup {
                 count++;
             }
 
-            LOG.debug("For Benchmark: {} ratios were: {}", machineJob, averageRatios);
+            LOG.debug("For Benchmark: {} ratios were: {}", benchmark, averageRatios);
         }
     }
 
+    /**
+     * Forced cycle test.
+     */
     @Test
     public void feasibilityTest() {
 
@@ -150,7 +149,7 @@ public class FeasibilityServiceTest extends TestSetup {
                 scheduleService.calculateScheduleData(testSchedule);
 
                 LOG.debug("Has cycle First: {}", feasibilityService.hasCycle(testSchedule));
-                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isFalse();
+                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isTrue();
 
                 final Operation cycleParent = testSchedule.locateOperation(2, 0);
                 scheduleService.switchEdge(cycleParent.getDisjunctiveParent());
@@ -162,40 +161,37 @@ public class FeasibilityServiceTest extends TestSetup {
         }
     }
 
+    /**
+     * Manually creates cycle and tests if cycle is detected.
+     */
     @Test
-    public void feasibilityTest4x4() {
+    public void calculatePathsInfeasibleScheduleTest() {
 
-        setUp("4x4", 1);
+        setUp("ft10", 1);
 
-//        scheduleService.generateGraphCode(optimal);
+        scheduleService.calculateScheduleData(optimal);
 
-        LOG.debug("Edge options: {}", optimal.getMachineEdgesNotOnLP());
+        Truth.assertThat(feasibilityService.hasCycle(optimal)).isFalse();
 
-        int count = 0;
-        for (final Edge edge : optimal.getMachineEdgesNotOnLP()) {
+        final Set<Edge> edges = optimal.getMachineEdgesOnLPSet();
 
-            if (count == 1) {
+        Edge toModify = null;
+        Edge child = null;
+        for (final Edge edge : edges) {
 
-                final Operation from = edge.getOperationFrom();
-                final Operation to = edge.getOperationTo();
+            if (edge.getOperationTo().hasDisjunctiveEge()) {
+                if (edge.getOperationTo().getDisjunctiveEdge().isMachinePath()) {
 
-                LOG.debug("Edge: {}", edge);
-                scheduleService.switchEdge(edge);
-                scheduleService.calculateScheduleData(optimal);
-
-                LOG.debug("Has cycle: {}", feasibilityService.hasCycle(optimal));
-                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isFalse();
-
-                final Operation cycleOperation = optimal.locateOperation(0, 1);
-                final Operation cycleOperation2 = cycleOperation.getDisjunctiveParent().getOperationTo();
-
-                scheduleService.switchEdge(cycleOperation.getDisjunctiveParent());
-                scheduleService.calculateScheduleData(optimal);
-
-                LOG.debug("Has cycle: {}", feasibilityService.hasCycle(optimal));
-                LOG.debug("Feasible: {}", feasibilityService.scheduleIsFeasibleProof(cycleOperation, cycleOperation2));
+                    toModify = edge;
+                    child = edge.getOperationTo().getDisjunctiveEdge();
+                    break;
+                }
             }
-            count++;
         }
+
+        //Manually added loop
+        child.getOperationTo().setDisjunctiveEdge(new Edge(child.getOperationTo(), toModify.getOperationFrom(), 100));
+
+        Truth.assertThat(feasibilityService.hasCycle(optimal)).isTrue();
     }
 }
