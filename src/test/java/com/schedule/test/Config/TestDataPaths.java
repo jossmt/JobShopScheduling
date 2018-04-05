@@ -13,4 +13,12 @@ public class TestDataPaths {
     public static final String LRU_CACHE_PATH = "./src/test/resources/LRUCacheTestData.txt";
 
     public static final String MOST_VISITED_EDGE_PATH = "./src/test/resources/MostVisitedEdgeData.txt";
+
+    public static final String LOCAL_SEARCH_DATA_PATH = "./src/test/resources/LSft10Data.txt";
+
+    public static final String LOCAL_SEARCH_DATA_PATH_2 = "./src/test/resources/LSla01Data.txt";
+
+    public static final String LOCAL_SEARCH_DATA_PATH_3 = "./src/test/resources/LSla23Data.txt";
+
+
 }

@@ -284,26 +284,13 @@ public class ScheduleService {
     /**
      * Calculates longest path machine edges..
      */
-    private void calculatePaths(final Schedule schedule) {
+    public void calculatePaths(final Schedule schedule) {
 
         LOG.trace("Calculating paths.");
-        final ArrayList<Edge> LPMachineEdges = calculateLongestPathMachineEdges(schedule.getEndVertex());
 
-        schedule.setMachineEdgesOnLP(LPMachineEdges);
+        final Set<Edge> parentEdges = schedule.getEndVertex().getEndParentEdges();
 
-        LOG.trace("Finished calculating paths");
-    }
-
-    /**
-     * Recursively updates list with longest paths in stack format.
-     *
-     * @param endVertex
-     *         Element in longest path.
-     */
-    private ArrayList<Edge> calculateLongestPathMachineEdges(final EndVertex endVertex) {
-
-        final ArrayList<Edge> machineEdgesLongestPath = new ArrayList<>();
-        final Set<Edge> parentEdges = endVertex.getEndParentEdges();
+        schedule.clearLongestPaths();
 
         // Gets LP edges
         final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
@@ -312,11 +299,9 @@ public class ScheduleService {
 
         for (final Edge parentEdge : maxParentEdges) {
 
-            addMachineEdgesLP(machineEdgesLongestPath, parentEdge.getOperationFrom());
+            addMachineEdgesLP(schedule, parentEdge.getOperationFrom());
 
         }
-
-        return machineEdgesLongestPath;
     }
 
     /**
@@ -327,7 +312,7 @@ public class ScheduleService {
      * @param node
      *         Current node in recursive iteration.
      */
-    private void addMachineEdgesLP(final ArrayList<Edge> machineEdges, final Operation node) {
+    private void addMachineEdgesLP(final Schedule schedule, final Operation node) {
 
         LOG.trace("Checking node: {}", node.toString());
 
@@ -350,14 +335,14 @@ public class ScheduleService {
         } catch (StackOverflowError e) {
             throw new IllegalStateException("Cycle when calculating longest path...");
         }
-        LOG.trace("Looping edges: {}", maxParentEdge);
+        LOG.trace("Looping edges: {}", maxParentEdges);
         for (final Edge edge : maxParentEdges) {
 
             if (edge.isMachinePath()) {
-                machineEdges.add(edge);
+                schedule.addLongestPathEdge(edge);
             }
 
-            addMachineEdgesLP(machineEdges, edge.getOperationFrom());
+            addMachineEdgesLP(schedule, edge.getOperationFrom());
         }
     }
 

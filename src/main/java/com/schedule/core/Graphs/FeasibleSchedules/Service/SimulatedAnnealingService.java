@@ -118,6 +118,7 @@ public class SimulatedAnnealingService implements Observer {
 
             LOG.trace("Acceptance prob: {}, Random generated: {}, temp: {}", acceptanceProb, random, temp);
 
+
             //
             if (currentMakespan < optimalSchedule.getOptimalSchedule().getMakespan()) {
                 optimalSchedule.setOptimalSchedule(schedule);
@@ -184,6 +185,23 @@ public class SimulatedAnnealingService implements Observer {
      */
     public void shutdownExecutorService() {
         executorService.shutdown();
+    }
+
+    /**
+     * Shuts down executor service.
+     */
+    public void manualShutdownExecutorService() {
+
+        if (runningThread.isDone()) {
+            executorService.shutdown();
+        }else{
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            manualShutdownExecutorService();
+        }
     }
 
     /**

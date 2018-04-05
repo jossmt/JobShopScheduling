@@ -74,4 +74,20 @@ public class SimulatedAnnealingServiceTest extends TestSetup {
         final String cacheTestData = readFile(TestDataPaths.LRU_CACHE_PATH);
         Truth.assertThat(cacheTestData).isEqualTo(optimal.getLruEdgeCache().toString());
     }
+
+    /**
+     * Black box SA test.
+     */
+    @Test
+    public void simulatedAnnealingTest() {
+
+        setUp("ft10", 1);
+
+        optimalSchedule.setOptimalSchedule(optimal);
+        LOG.debug("Starting makespan: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+
+        simulatedAnnealingService.iterateAndUpdateOptimal(optimal);
+
+        LOG.debug("Optimal makespan: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+    }
 }

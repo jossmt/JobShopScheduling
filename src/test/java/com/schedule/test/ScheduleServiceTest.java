@@ -172,4 +172,12 @@ public class ScheduleServiceTest extends TestSetup {
             scheduleService.calculateScheduleData(optimal);
         }
     }
+
+    @Test
+    public void testCalculatePaths(){
+
+        setUp("4x4", 1);
+
+        scheduleService.calculatePaths(optimal);
+    }
 }

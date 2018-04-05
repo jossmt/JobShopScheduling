@@ -583,6 +583,24 @@ public class Schedule implements Serializable {
     }
 
     /**
+     * Adds edge to longest path list.
+     *
+     * @param edge
+     *         {@link Edge}
+     */
+    public void addLongestPathEdge(final Edge edge) {
+
+        machineEdgesOnLP.add(edge);
+    }
+
+    /**
+     * Clears longest path.
+     */
+    public void clearLongestPaths() {
+        machineEdgesOnLP = new ArrayList<>();
+    }
+
+    /**
      * Equals.
      */
     @Override

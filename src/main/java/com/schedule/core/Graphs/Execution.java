@@ -49,11 +49,13 @@ public class Execution {
         optimalSchedule.addObserver(simulatedAnnealingService);
         optimalSchedule.addObserver(safaService);
 
-        final String benchmarkInstance = "la23";
+        final String benchmarkInstance = "swv11";
 
         final StringBuilder resultBuilder = new StringBuilder();
 
         for (int i = 0; i < 1; i++) {
+
+            LOG.debug("Generating starting schedules...");
 
             // Generate Schedules
             final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 100);
@@ -75,10 +77,13 @@ public class Execution {
             LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
             resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
 
-            if (optimalSchedule.getOptimalSchedule().getMakespan() <=
-                    BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
-                LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
-                scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance + "Optimal");
+            if(BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance)) {
+                if (optimalSchedule.getOptimalSchedule().getMakespan() <=
+                        BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
+                    LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance + "Optimal");
+
+                }
             }
 
             //Restart thread executor

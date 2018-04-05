@@ -28,33 +28,25 @@ public class FeasibilityServiceTest extends TestSetup {
 
         setUp("ft10", 1);
 
-        Integer successSwitchCount = 0;
-        Integer failureSwitchCount = 0;
-
         final Set<Edge> machineEdgesLongestPath = optimal.getMachineEdgesNotOnLP();
         LOG.trace("Edge options: {}", machineEdgesLongestPath);
 
         for (final Edge edge : machineEdgesLongestPath) {
 
+            scheduleService.switchEdge(edge);
+
             final Operation from = edge.getOperationFrom();
             final Operation to = edge.getOperationTo();
 
-            LOG.debug("Edge: {}", edge);
-            scheduleService.switchEdge(edge);
-
             if (feasibilityService.hasCycle(optimal)) {
 
-                LOG.debug("Cycle is infeasible");
-                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isTrue();
-
-                failureSwitchCount++;
+                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isFalse();
 
                 //undo flip edge
                 scheduleService.switchEdge(edge);
                 scheduleService.calculateScheduleData(optimal);
             } else {
 
-                successSwitchCount++;
                 scheduleService.calculateScheduleData(optimal);
             }
         }
@@ -67,42 +59,44 @@ public class FeasibilityServiceTest extends TestSetup {
     @Test
     public void successfulSwitchRatios() {
 
-        final String[] benchmarks = {"ft06", "ft10", "ft20"};
+        final String[] benchmarks = {"ft06", "ft10", "la23"};
 
         for (final String benchmark : benchmarks) {
 
             setUp(benchmark, 10);
 
-            final String[] averageRatios = new String[10];
+            final String[] averageRatios = new String[9];
 
             int count = 0;
             for (final Schedule currentSchedule : testSchedules) {
                 Integer successSwitchCount = 0;
                 Integer failureSwitchCount = 0;
 
-                final Set<Edge> machineEdgesLongestPath = currentSchedule.getMachineEdgesNotOnLP();
-                LOG.trace("Edge options: {}", machineEdgesLongestPath);
+                final Set<Edge> machineEdgesNotOnLongestPath = currentSchedule.getMachineEdgesNotOnLP();
+                LOG.trace("Edge options: {}", machineEdgesNotOnLongestPath);
 
-                for (final Edge edge : machineEdgesLongestPath) {
+                int countcount = 0;
+                for (final Edge edge : machineEdgesNotOnLongestPath) {
+
+                    LOG.trace("edge: {}", edge);
+                    scheduleService.switchEdge(edge);
 
                     final Operation from = edge.getOperationFrom();
                     final Operation to = edge.getOperationTo();
 
-                    LOG.trace("Edge: {}", edge);
+                    if (feasibilityService.scheduleIsFeasibleProof(from, to)) {
+
+                        successSwitchCount++;
+                    } else {
+
+                        failureSwitchCount++;
+                    }
+
+                    //undo flip edge
                     scheduleService.switchEdge(edge);
                     scheduleService.calculateScheduleData(currentSchedule);
 
-                    if (!(feasibilityService.scheduleIsFeasibleProof(from, to))) {
-
-                        failureSwitchCount++;
-
-                        //undo flip edge
-                        scheduleService.switchEdge(edge);
-                        scheduleService.calculateScheduleData(currentSchedule);
-                    } else {
-
-                        successSwitchCount++;
-                    }
+                    countcount++;
                 }
 
                 averageRatios[count] = successSwitchCount + "/" + (successSwitchCount + failureSwitchCount);
@@ -132,7 +126,7 @@ public class FeasibilityServiceTest extends TestSetup {
                 final Operation from = edge.getOperationFrom();
                 final Operation to = edge.getOperationTo();
 
-                LOG.debug("Edge: {}", edge);
+                LOG.trace("Edge: {}", edge);
                 scheduleService.switchEdge(edge);
                 scheduleService.calculateScheduleData(testSchedule);
 
@@ -144,18 +138,18 @@ public class FeasibilityServiceTest extends TestSetup {
                 final Operation from = edge.getOperationFrom();
                 final Operation to = edge.getOperationTo();
 
-                LOG.debug("Edge: {}", edge);
+                LOG.trace("Edge: {}", edge);
                 scheduleService.switchEdge(edge);
                 scheduleService.calculateScheduleData(testSchedule);
 
-                LOG.debug("Has cycle First: {}", feasibilityService.hasCycle(testSchedule));
+                LOG.trace("Has cycle First: {}", feasibilityService.hasCycle(testSchedule));
                 Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isTrue();
 
                 final Operation cycleParent = testSchedule.locateOperation(2, 0);
                 scheduleService.switchEdge(cycleParent.getDisjunctiveParent());
                 scheduleService.calculateScheduleData(testSchedule);
 
-                LOG.debug("Has Cycle Final: {}", feasibilityService.hasCycle(testSchedule));
+                LOG.trace("Has Cycle Final: {}", feasibilityService.hasCycle(testSchedule));
             }
             count++;
         }
