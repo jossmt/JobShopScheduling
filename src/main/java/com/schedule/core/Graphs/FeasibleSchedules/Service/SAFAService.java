@@ -1,6 +1,7 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
+import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SAFACallable;
@@ -22,6 +23,9 @@ public class SAFAService implements Observer {
 
     /** {@link ScheduleService}. */
     private ScheduleService scheduleService = new ScheduleService();
+
+    /** {@link FeasibilityService}. */
+    private FeasibilityService feasibilityService = new FeasibilityService();
 
     /** {@link FireflyService}. */
     private FireflyService fireflyService;
@@ -145,11 +149,14 @@ public class SAFAService implements Observer {
             } else {
 
                 LOG.trace("Making random move");
-                final Optional<Edge> result = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
-                                                                                             schedule
-                                                                                                     .getMachineEdgesOnLP(), true);
-                LOG.trace("Result: {}", result);
-                scheduleService.calculateScheduleData(schedule);
+                final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+
+                final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
+
+                if (edge.isPresent()) {
+                    scheduleService.switchEdge(edge.get());
+                    scheduleService.calculateMakeSpan(schedule);
+                }
             }
 
             if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
@@ -223,22 +230,20 @@ public class SAFAService implements Observer {
                         LOG.debug("No more move options, check if equal to optimal: {}",
                                   schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
 
-                        if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
-                            scheduleIterator.remove();
-                        } else {
-                            LOG.trace("Making random move");
-                            scheduleService.flipMostVisitedEdgeLongestPath(schedule, schedule
-                                    .getMachineEdgesOnLP(), false);
-                            scheduleService.calculateScheduleData(schedule);
-                        }
+                        scheduleIterator.remove();
                     }
 
                 } else {
 
                     LOG.trace("Making random move");
-                    scheduleService.flipMostVisitedEdgeLongestPath(schedule, schedule
-                            .getMachineEdgesOnLP(), false);
-                    scheduleService.calculateScheduleData(schedule);
+                    final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+
+                    final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
+
+                    if (edge.isPresent()) {
+                        scheduleService.switchEdge(edge.get());
+                        scheduleService.calculateMakeSpan(schedule);
+                    }
                 }
 
                 if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {

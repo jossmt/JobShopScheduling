@@ -51,6 +51,7 @@ public class TestSetup {
         boolean first = true;
         for (final Schedule schedule : schedules) {
 
+            schedule.getAllMachineEdgesManually();
             if (first) {
                 optimal = schedule;
                 first = false;

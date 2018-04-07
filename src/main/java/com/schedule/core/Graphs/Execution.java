@@ -58,15 +58,15 @@ public class Execution {
             LOG.debug("Generating starting schedules...");
 
             // Generate Schedules
-            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 10);
+            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 200);
 
             LOG.debug("Finished generating schedules");
 
             // Execute Local Search
-            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet, 30);
+            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet, 100);
 
             // Executes SA on Optimal
-            fireflyService.computeOptimal(localOptimaSet, false, localSearchService.getOptimalSchedule());
+            optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule());
 
             LOG.debug("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
@@ -77,11 +77,12 @@ public class Execution {
             LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
             resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
 
-            if(BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance)) {
+            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance)) {
                 if (optimalSchedule.getOptimalSchedule().getMakespan() <=
                         BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
                     LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
-                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance + "Optimal");
+                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance +
+                            "Optimal");
 
                 }
             }

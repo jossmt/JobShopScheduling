@@ -33,14 +33,11 @@ public class Schedule implements Serializable {
     /** Set of all vertices. */
     private Set<Operation> allVertices;
 
+    /** Set of all edges. */
+    private Set<Edge> allEdges;
+
     /** Makespan. */
     private Integer makespan;
-
-    /** Machine edges on longest path. */
-    private ArrayList<Edge> machineEdgesOnLP;
-
-    /** Machine edges NOT on longest path. */
-    private Set<Edge> machineEdgesNotOnLP;
 
     /** BackBone Score (Firefly). */
     private Integer backBoneScore = 0;
@@ -251,25 +248,6 @@ public class Schedule implements Serializable {
         }
     }
 
-    /**
-     * Returns all active machine edges.
-     *
-     * @return set of {@link Edge}
-     */
-    public Set<Edge> getAllMachineEdges() {
-
-        final Set<Edge> allMachineEdges = new HashSet<>();
-
-        if (machineEdgesOnLP != null) {
-            allMachineEdges.addAll(machineEdgesOnLP);
-        }
-        if (machineEdgesNotOnLP != null) {
-            allMachineEdges.addAll(machineEdgesNotOnLP);
-        }
-
-        return allMachineEdges;
-    }
-
 
     /**
      * Returns operation in job that runs on given machine adding active edges until reached.
@@ -431,55 +409,11 @@ public class Schedule implements Serializable {
     }
 
     /**
-     * Sets new Machine edges on longest path..
-     *
-     * @param machineEdgesOnLP
-     *         New value of Machine edges on longest path..
-     */
-    public void setMachineEdgesOnLP(ArrayList<Edge> machineEdgesOnLP) {
-        this.machineEdgesOnLP = machineEdgesOnLP;
-
-        calculateAllMachineEdgesNotOnLP();
-    }
-
-    /**
-     * Gets Machine edges NOT on longest path..
-     *
-     * @return Value of Machine edges NOT on longest path..
-     */
-    public Set<Edge> getMachineEdgesNotOnLP() {
-        return machineEdgesNotOnLP;
-    }
-
-    /**
-     * Sets new Machine edges NOT on longest path..
-     *
-     * @param machineEdgesNotOnLP
-     *         New value of Machine edges NOT on longest path..
-     */
-    public void setMachineEdgesNotOnLP(Set<Edge> machineEdgesNotOnLP) {
-        this.machineEdgesNotOnLP = machineEdgesNotOnLP;
-    }
-
-    /**
-     * Returns all active disjunctive edges not on longest path.
-     */
-    private void calculateAllMachineEdgesNotOnLP() {
-
-
-        final Set<Edge> machineEdges = getAllMachineEdgesManually();
-
-        machineEdges.removeAll(machineEdgesOnLP);
-
-        machineEdgesNotOnLP = machineEdges;
-    }
-
-    /**
      * Returns all active disjunctive edges.
      *
      * @return set of {@link Edge}
      */
-    public Set<Edge> getAllMachineEdgesManually() {
+    public ArrayList<Edge> getAllMachineEdgesManually() {
 
         final Set<Edge> machineEdges = new HashSet<>();
         for (final Operation operation : jobHashMap.values()) {
@@ -495,25 +429,9 @@ public class Schedule implements Serializable {
             }
         }
 
-        return machineEdges;
-    }
+        allEdges = machineEdges;
 
-    /**
-     * Gets Machine edges on longest path..
-     *
-     * @return Value of Machine edges on longest path..
-     */
-    public ArrayList<Edge> getMachineEdgesOnLP() {
-        return machineEdgesOnLP;
-    }
-
-    /**
-     * Gets Machine edges on longest path..
-     *
-     * @return Value of Machine edges on longest path..
-     */
-    public Set<Edge> getMachineEdgesOnLPSet() {
-        return new HashSet<>(machineEdgesOnLP);
+        return new ArrayList<>(machineEdges);
     }
 
     /**
@@ -566,6 +484,15 @@ public class Schedule implements Serializable {
     }
 
     /**
+     * Gets Set of all edges..
+     *
+     * @return Value of Set of all edges..
+     */
+    public Set<Edge> getAllEdges() {
+        return allEdges;
+    }
+
+    /**
      * Returns acceptance probability of cached edge.
      *
      * @param edge
@@ -583,35 +510,6 @@ public class Schedule implements Serializable {
     }
 
     /**
-     * Adds edge to longest path list.
-     *
-     * @param edge
-     *         {@link Edge}
-     */
-    public void addLongestPathEdge(final Edge edge) {
-
-        machineEdgesOnLP.add(edge);
-    }
-
-    /**
-     * Adds edges to longest path list.
-     *
-     * @param edges
-     *         {@link Edge}
-     */
-    public void addLongestPathEdges(final Set<Edge> edges) {
-
-        machineEdgesOnLP.addAll(edges);
-    }
-
-    /**
-     * Clears longest path.
-     */
-    public void clearLongestPaths() {
-        machineEdgesOnLP = new ArrayList<>();
-    }
-
-    /**
      * Equals.
      */
     @Override
@@ -624,7 +522,7 @@ public class Schedule implements Serializable {
         final Schedule compareSchedule = (Schedule) obj;
 
         final EqualsBuilder equalsBuilder = new EqualsBuilder();
-        equalsBuilder.append(getAllMachineEdges(), compareSchedule.getAllMachineEdges());
+        equalsBuilder.append(getAllEdges(), compareSchedule.getAllEdges());
         equalsBuilder.append(getJobHashMap(), compareSchedule.getJobHashMap());
         equalsBuilder.append(getMakespan(), compareSchedule.getMakespan());
 
@@ -640,7 +538,7 @@ public class Schedule implements Serializable {
         final HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
         hashCodeBuilder.append(getJobHashMap());
         hashCodeBuilder.append(getMakespan());
-        hashCodeBuilder.append(getAllMachineEdges());
+        hashCodeBuilder.append(getAllEdges());
 
         return hashCodeBuilder.toHashCode();
     }

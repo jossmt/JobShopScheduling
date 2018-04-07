@@ -1,6 +1,5 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
-import com.github.rkumsher.collection.IterableUtils;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
@@ -99,7 +98,7 @@ public class LocalSearchService {
             final Integer makespan = schedule.getMakespan();
             LOG.trace("Current makespan: {}", schedule.getMakespan());
 
-            Optional<Edge> edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
+            Optional<Edge> edgeFlip = scheduleService.findRandomEdge(allMachineEdges);
             while (edgeFlip.isPresent()) {
 
                 final Edge edge = edgeFlip.get();
@@ -121,7 +120,7 @@ public class LocalSearchService {
 
                         //flip back if not improved schedule
                         scheduleService.switchEdge(edge);
-                        edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
+                        edgeFlip = scheduleService.findRandomEdge(allMachineEdges);
                     } else {
 
                         LOG.trace("Accepted move");
@@ -132,7 +131,7 @@ public class LocalSearchService {
 
                     //flip back if not improved schedule
                     scheduleService.switchEdge(edge);
-                    edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
+                    edgeFlip = scheduleService.findRandomEdge(allMachineEdges);
                 }
             }
 

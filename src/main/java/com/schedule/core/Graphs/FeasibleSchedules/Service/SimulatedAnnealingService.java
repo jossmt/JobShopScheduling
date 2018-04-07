@@ -2,6 +2,7 @@ package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
 import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
+import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SimulatedAnnealingCallable;
@@ -22,6 +23,9 @@ public class SimulatedAnnealingService implements Observer {
 
     /** {@link ScheduleService}. */
     private ScheduleService scheduleService = new ScheduleService();
+
+    /** {@link ScheduleService}. */
+    private FeasibilityService feasibilityService = new FeasibilityService();
 
     /** Global optimal schedule. */
     private OptimalSchedule optimalSchedule;
@@ -87,59 +91,72 @@ public class SimulatedAnnealingService implements Observer {
         // Cooling rate
         final Double coolingRate = 0.03;
 
-        ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
+        ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
 
-        Integer count = 0;
+        int count = 0;
         while (temp > 1) {
+
+            LOG.debug("Iteration: {}, Makespan: {}", count, schedule.getMakespan());
 
             // Makespan before flipping edge.
             final Integer prevMakespan = schedule.getMakespan();
 
             // Flipping most visited edge on longest path
-            final Optional<Edge> successfulSwitch = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
-                                                                                                   longestPathEdges,
-                                                                                                   true);
-            scheduleService.calculateScheduleData(schedule);
+            final Optional<Edge> edgeOptional = scheduleService.findRandomEdge(allMachineEdges);
 
-            // New makespan calculated
-            final Integer currentMakespan = schedule.getMakespan();
-
-            // Reached local minima
-            if (!successfulSwitch.isPresent()) {
-
-                LOG.trace("All edge flips considered for this schedule instance after {} iterations", count);
+            if (!edgeOptional.isPresent()) {
+                LOG.trace("Local minima reached");
                 schedule.clearCache();
-                break;
+                allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+                continue;
             }
 
-            // Calculates probability of accepting new schedule
-            final Double acceptanceProb = acceptanceProbability(prevMakespan, currentMakespan, temp, startTemp);
-            final Double random = scheduleService.randomDouble();
+            final Edge edge = edgeOptional.get();
 
-            LOG.trace("Acceptance prob: {}, Random generated: {}, temp: {}", acceptanceProb, random, temp);
+            LOG.trace("Switching edge: {}", edge);
+            scheduleService.switchEdge(edge);
 
+            final Operation opFrom = edge.getOperationFrom();
+            final Operation opTo = edge.getOperationTo();
 
-            //
-            if (currentMakespan < optimalSchedule.getOptimalSchedule().getMakespan()) {
-                optimalSchedule.setOptimalSchedule(schedule);
-            }
+            if (feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)) {
 
-            // If acceptance prob exceeds threshold, flip edge back
-            if (!(acceptanceProb > random)) {
+                scheduleService.calculateMakeSpan(schedule);
 
-                // Remove neighbour option.
-                if (currentMakespan < prevMakespan) {
-                    longestPathEdges.remove(successfulSwitch.get());
+                // New makespan calculated
+                final Integer currentMakespan = schedule.getMakespan();
+
+                // Calculates probability of accepting new schedule
+                final Double acceptanceProb = acceptanceProbability(prevMakespan, currentMakespan, temp, startTemp);
+                final Double random = scheduleService.randomDouble();
+
+                LOG.trace("Acceptance prob: {}, Random generated: {}, temp: {}", acceptanceProb, random, temp);
+
+                // Update external reference to optimal if makespan preferred
+                if (currentMakespan < optimalSchedule.getOptimalSchedule().getMakespan()) {
+
+                    optimalSchedule.setOptimalSchedule(schedule);
                 }
 
-                LOG.trace("Not accepting edge flip");
+                // If acceptance prob exceeds threshold, flip edge back
+                if (!(acceptanceProb > random)) {
 
-                // Switching same edge back
-                scheduleService.switchEdge(successfulSwitch.get());
-                scheduleService.calculateScheduleData(schedule);
+                    LOG.debug("Not accepting edge flip");
 
+                    // Switching same edge back
+                    scheduleService.switchEdge(edgeOptional.get());
+                    scheduleService.calculateMakeSpan(schedule);
+
+                } else {
+                    LOG.debug("Accepted flip");
+                }
             } else {
-                LOG.trace("Accepted flip");
+                LOG.debug("Infeasible edge flip");
+
+                // Switching same edge back - continue so as not to count iteration in temp.
+                scheduleService.switchEdge(edgeOptional.get());
+                scheduleService.calculateMakeSpan(schedule);
+                continue;
             }
 
             count++;
@@ -194,7 +211,7 @@ public class SimulatedAnnealingService implements Observer {
 
         if (runningThread.isDone()) {
             executorService.shutdown();
-        }else{
+        } else {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

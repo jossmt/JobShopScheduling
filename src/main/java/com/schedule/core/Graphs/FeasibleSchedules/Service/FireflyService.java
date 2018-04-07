@@ -41,92 +41,6 @@ public class FireflyService {
     }
 
     /**
-     * Sets the beacon sBest depending on whether its based on backbone score or makespan.
-     *
-     * @param schedules
-     *         Set of {@link Schedule}
-     * @param isBackBone
-     *         true/false
-     * @param optimalSchedule
-     *         {@link Schedule}
-     */
-    public void computeOptimal(final Set<Schedule> schedules, final boolean isBackBone, final Schedule
-            optimalSchedule) {
-
-        if (isBackBone) {
-            computeOptimalBackBone(schedules);
-        } else {
-
-            this.optimalSchedule.setOptimalSchedule(optimalSchedule);
-        }
-    }
-
-    /**
-     * Comparing schedules by backbone (number of similar orientations on longest paths).
-     *
-     * @param schedules
-     *         List of highest makespan schedules
-     */
-    private void computeOptimalBackBone(final Set<Schedule> schedules) {
-
-        final Set<Schedule> schedulesCopy = new HashSet<>();
-
-        Iterator<Schedule> iterator = schedules.iterator();
-
-        while (iterator.hasNext()) {
-
-            final Schedule schedule = iterator.next();
-            iterator.remove();
-
-            while (iterator.hasNext()) {
-
-                final Schedule nestedSchedule = iterator.next();
-
-                final Integer backBoneScore = checkBackBoneSimilarity(schedule, nestedSchedule);
-
-                LOG.trace("Updating backbone score with: {}", backBoneScore);
-                schedule.updateBackBoneScore(backBoneScore);
-                nestedSchedule.updateBackBoneScore(backBoneScore);
-
-            }
-
-            schedulesCopy.add(schedule);
-        }
-
-        final Schedule optimalSchedule = Collections.max(schedulesCopy, Comparator.comparing
-                (Schedule::getBackBoneScore));
-
-        LOG.trace("Optimal Schedule found with score: {}", optimalSchedule.getBackBoneScore());
-        LOG.trace("and makespan: {}", optimalSchedule.getMakespan());
-
-        this.optimalSchedule.setOptimalSchedule(cloner.deepClone(optimalSchedule));
-
-    }
-
-    /**
-     * Checks the backbone (number of equal edge orientations on longest path0 similarity between two schedules.
-     *
-     * @param schedule
-     *         {@link Schedule}
-     * @param compareSchedule
-     *         {@link Schedule}
-     * @return Backbone score
-     */
-    private Integer checkBackBoneSimilarity(final Schedule schedule, final Schedule compareSchedule) {
-
-        Integer compareScore = 0;
-
-        final Set<Edge> machineEdgesOne = schedule.getAllMachineEdges();
-        final Set<Edge> machineEdgesTwo = compareSchedule.getAllMachineEdges();
-
-        machineEdgesOne.retainAll(machineEdgesTwo);
-        compareScore += machineEdgesOne.size();
-
-        return compareScore;
-
-    }
-
-    /**
      * Moves toward optimal beacon by modifying the underlying structure of the schedule instance
      * using a transition function. The transition function (firefly movement), involves checking the edge orientation
      * of two operations on the optimal schedule instance and mimicking the orientation for the local schedule instance
@@ -140,56 +54,44 @@ public class FireflyService {
 
         final Schedule optimal = optimalSchedule.getOptimalSchedule();
 
-        //Attempts to move toward optimal using edges on local longest paths
-        final Set<Edge> longestPathEdges = schedule.getMachineEdgesOnLPSet();
-        final Optional<Edge> edgeFlipped = findEdgeAndSwitchInSet(longestPathEdges);
+        boolean acceptedFlip = false;
+        final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
 
-        LOG.trace("Found edge on longest path: {}", edgeFlipped);
+        Optional<Edge> edgeFlip = findEdgeToSwitchInList(allMachineEdges);
 
-        if (!edgeFlipped.isPresent()) {
+        while (!acceptedFlip) {
+            if (edgeFlip.isPresent()) {
 
-            boolean acceptedFlip = false;
-            final Set<Edge> machineEdgesNotOnLongestPath = schedule.getMachineEdgesNotOnLP();
+                final Edge edge = edgeFlip.get();
+                allMachineEdges.remove(edge);
+                scheduleService.switchEdge(edge);
 
-            Optional<Edge> edgeFlip = findEdgeAndSwitchInSet(machineEdgesNotOnLongestPath);
+                if (feasibilityService.scheduleIsFeasibleProof(edge.getOperationFrom(), edge.getOperationTo())) {
 
-            LOG.trace("Found edge not on longest path to flip: {}", edgeFlip);
+                    LOG.trace("Edge flip created feasible schedule");
 
-            while (!acceptedFlip) {
-                if (edgeFlip.isPresent()) {
+                    scheduleService.calculateMakeSpan(schedule);
 
-                    final Edge edge = edgeFlip.get();
-                    if (feasibilityService.scheduleIsFeasibleProof(edge.getOperationFrom(), edge.getOperationTo())) {
-
-                        LOG.trace("Edge flip created feasible schedule");
-
-                        scheduleService.calculateScheduleData(schedule);
-
-                        acceptedFlip = true;
-                    } else {
-
-                        LOG.trace("Edge flip created infeasible schedule");
-
-                        scheduleService.switchEdge(edgeFlip.get());
-                        machineEdgesNotOnLongestPath.remove(edge);
-                        edgeFlip = findEdgeAndSwitchInSet(machineEdgesNotOnLongestPath);
-                    }
-
+                    acceptedFlip = true;
                 } else {
-                    if (schedule.hashCode() != optimal.hashCode()) {
 
-                        LOG.trace("Can't get any closer to optimal using firefly");
-                    } else {
+                    LOG.trace("Edge flip created infeasible schedule, remaining options size: {}",
+                              allMachineEdges.size());
 
-                        LOG.trace("Reached optimal using firefly");
-                    }
-                    return false;
+                    scheduleService.switchEdge(edgeFlip.get());
+                    edgeFlip = findEdgeToSwitchInList(allMachineEdges);
                 }
+
+            } else {
+                if (schedule.hashCode() != optimal.hashCode()) {
+
+                    LOG.debug("Can't get any closer to optimal using firefly");
+                } else {
+
+                    LOG.debug("Reached optimal using firefly");
+                }
+                return false;
             }
-
-        } else {
-
-            scheduleService.calculateScheduleData(schedule);
         }
 
         return true;
@@ -203,7 +105,7 @@ public class FireflyService {
      *         Set of {@link Edge}
      * @return Flipped edge or null
      */
-    private Optional<Edge> findEdgeAndSwitchInSet(final Set<Edge> edges) {
+    private Optional<Edge> findEdgeToSwitchInList(final ArrayList<Edge> edges) {
 
         final Schedule optimal = optimalSchedule.getOptimalSchedule();
         final Iterator<Edge> edgeIterator = edges.iterator();
@@ -231,7 +133,6 @@ public class FireflyService {
                 if (!scheduleService.isInOrder(opFrom, opTo)) {
 
                     edgeFlipped = currentEdge;
-                    scheduleService.switchEdge(currentEdge);
                     break;
                 }
             } else {

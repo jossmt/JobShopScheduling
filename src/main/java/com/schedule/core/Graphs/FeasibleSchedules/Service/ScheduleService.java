@@ -27,46 +27,49 @@ public class ScheduleService {
     /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(ScheduleService.class);
 
+    /** {@link FeasibilityService}. */
+    private FeasibilityService feasibilityService = new FeasibilityService();
+
     /**
      * Constructor.
      */
     public ScheduleService() {
     }
 
-    /**
-     * Triggers on change calculation of Schedule makespan/longest paths.
-     *
-     * @param schedule
-     *         {@link Schedule}
-     */
-    public void calculateScheduleData(final Schedule schedule) {
+//    /**
+//     * Triggers on change calculation of Schedule makespan/longest paths.
+//     *
+//     * @param schedule
+//     *         {@link Schedule}
+//     */
+//    public void calculateScheduleData(final Schedule schedule) {
+//
+//        LOG.debug("Calculating schedule data");
+//        calculateMakeSpan(schedule);
+//        calculateMachineEdgesLP(schedule);
+//    }
 
-        LOG.debug("Calculating schedule data");
-        calculateMakeSpan(schedule);
-        calculateMachineEdgesLP(schedule);
-    }
-
-    /**
-     * Flips the edge that is crossed most on each of the longest paths provided.
-     *
-     * @param schedule
-     *         Schedule instance.
-     * @param longestPathEdges
-     *         List of all edges on longest paths (including duplicates).
-     * @param useTabuList
-     *         Determines whether or not to use a tabu list.
-     * @return {@link Edge}
-     */
-    public Optional<Edge> flipMostVisitedEdgeLongestPath(final Schedule schedule,
-                                                         final ArrayList<Edge> longestPathEdges,
-                                                         final boolean useTabuList) {
-
-        final Optional<Edge> maxEdge = getMostVisitedEdgeLongestPath(schedule, longestPathEdges, useTabuList);
-
-        maxEdge.ifPresent(this::switchEdge);
-
-        return maxEdge;
-    }
+//    /**
+//     * Flips the edge that is crossed most on each of the longest paths provided.
+//     *
+//     * @param schedule
+//     *         Schedule instance.
+//     * @param longestPathEdges
+//     *         List of all edges on longest paths (including duplicates).
+//     * @param useTabuList
+//     *         Determines whether or not to use a tabu list.
+//     * @return {@link Edge}
+//     */
+//    public Optional<Edge> flipMostVisitedEdgeLongestPath(final Schedule schedule,
+//                                                         final ArrayList<Edge> longestPathEdges,
+//                                                         final boolean useTabuList) {
+//
+//        final Optional<Edge> maxEdge = getMostVisitedEdgeLongestPath(schedule, longestPathEdges, useTabuList);
+//
+//        maxEdge.ifPresent(this::switchEdge);
+//
+//        return maxEdge;
+//    }
 
     /**
      * Returns the edge that is crossed most on each of the longest paths provided.
@@ -172,19 +175,18 @@ public class ScheduleService {
     }
 
     /**
-     * Switches random edge
+     * Finds random edge
      *
      * @param edgeOptions
      *         set of {@link Edge}
      * @return {@link Edge}
      */
-    public Optional<Edge> switchRandomEdge(final ArrayList<Edge> edgeOptions) {
+    public Optional<Edge> findRandomEdge(final ArrayList<Edge> edgeOptions) {
 
         Edge edgeFlipped = null;
         if (!edgeOptions.isEmpty()) {
             edgeFlipped = IterableUtils.randomFrom(edgeOptions);
             edgeOptions.remove(edgeFlipped);
-            switchEdge(edgeFlipped);
         }
 
         return Optional.ofNullable(edgeFlipped);
@@ -301,117 +303,30 @@ public class ScheduleService {
     }
 
     /**
-     * Calculates longest path machine edges..
-     */
-    public void calculatePaths(final Schedule schedule) {
-
-        LOG.trace("Calculating paths.");
-
-        final Set<Edge> parentEdges = schedule.getEndVertex().getParentEdges();
-
-        schedule.clearLongestPaths();
-
-        // Gets LP edges
-        final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
-        final Set<Edge> maxParentEdges = parentEdges.stream().filter(
-                e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
-
-        for (final Edge parentEdge : maxParentEdges) {
-
-            addMachineEdgesLP(schedule, parentEdge.getOperationFrom());
-
-        }
-    }
-
-    /**
-     * Adds machine edges on LP to set.
+     * Finds feasible edge to flip from given list.
      *
-     * @param schedule
-     *         {@link Schedule}
-     * @param node
-     *         Current node in recursive iteration.
+     * @param allMachineEdges
+     *         List of {@link Edge}
+     * @return Optional {@link Edge}
      */
-    private void addMachineEdgesLP(final Schedule schedule, final Operation node) {
+    public Optional<Edge> findFeasibleEdgeToFlip(final ArrayList<Edge> allMachineEdges) {
 
-        LOG.trace("Checking node: {}", node.toString());
+        Optional<Edge> edgeOptional = findRandomEdge(allMachineEdges);
+        while (edgeOptional.isPresent()) {
+            final Edge edge = edgeOptional.get();
 
-        final Set<Edge> parentEdges = node.getParentEdges();
+            switchEdge(edge);
+            final Operation opFrom = edge.getOperationFrom();
+            final Operation opTo = edge.getOperationTo();
 
-        if (parentEdges.isEmpty()) {
-            return;
-        }
+            if (feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)) {
 
-        LOG.trace("Parent edges: {}", parentEdges.toString());
-
-        // Gets LP edges
-        final Edge maxParentEdge = parentEdges.stream().max(Comparator.comparing(Edge::getMaxDistanceToMe)).get();
-        Set<Edge> maxParentEdges;
-
-        try {
-            maxParentEdges = parentEdges.stream().filter(
-                    e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
-
-        } catch (StackOverflowError e) {
-            throw new IllegalStateException("Cycle when calculating longest path...");
-        }
-
-        LOG.trace("Parent edges: {}\n {}", maxParentEdge.getMaxDistanceToMe(), maxParentEdges);
-        for (final Edge edge : maxParentEdges) {
-
-            if (edge.isMachinePath()) {
-                schedule.addLongestPathEdge(edge);
-            }
-
-            addMachineEdgesLP(schedule, edge.getOperationFrom());
-        }
-    }
-
-    /**
-     * Calculates Machine Edges on Longest Path.
-     *
-     * @param schedule
-     *         {@link Schedule}
-     */
-    public void calculateMachineEdgesLP(final Schedule schedule) {
-
-        final EndVertex endVertex = schedule.getEndVertex();
-        schedule.clearLongestPaths();
-
-        getMaxPathRoute(schedule, endVertex);
-
-        LOG.trace("Schedule MP Edges: {}", schedule.getMachineEdgesOnLPSet());
-    }
-
-    private void getMaxPathRoute(final Schedule schedule, final Operation operation) {
-
-        if (operation.hasParentEdges()) {
-
-            LOG.trace("Operation: {}", operation);
-
-            final Edge maxParentEdge = operation.getParentEdges().stream().max(Comparator.comparing
-                    (Edge::getMaxDistanceToMe)).get();
-
-            Set<Edge> maxParentEdges;
-            try {
-                maxParentEdges = operation.getParentEdges().stream().filter(
-                        e -> e.getMaxDistanceToMe().equals(maxParentEdge.getMaxDistanceToMe())).collect(Collectors.toSet());
-
-            } catch (StackOverflowError e) {
-                throw new IllegalStateException("Cycle when calculating longest path...");
-            }
-
-            LOG.trace("Max parent Edges: {} \n{}", maxParentEdge.getMaxDistanceToMe(), maxParentEdges);
-
-            for (final Edge edge : maxParentEdges) {
-
-                getMaxPathRoute(schedule, edge.getOperationFrom());
-            }
-
-            if (!(operation instanceof EndVertex)) {
-                maxParentEdges.removeIf(edge -> !edge.isMachinePath());
-                schedule.addLongestPathEdges(maxParentEdges);
+                return edgeOptional;
+            } else {
+                edgeOptional = findRandomEdge(allMachineEdges);
             }
         }
+        return Optional.empty();
     }
 
     /**

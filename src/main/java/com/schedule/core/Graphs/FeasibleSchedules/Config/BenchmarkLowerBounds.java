@@ -28,7 +28,7 @@ public class BenchmarkLowerBounds {
             put("la10", 958);
             put("la11", 1222);
             put("la23", 1155);
-            put("swv11", 10000);
+            put("swv11", 4964);
         }
     };
 }
