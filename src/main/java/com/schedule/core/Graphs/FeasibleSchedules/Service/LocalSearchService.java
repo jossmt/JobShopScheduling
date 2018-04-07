@@ -92,7 +92,7 @@ public class LocalSearchService {
 
         for (int i = 0; i < maxIterations; i++) {
 
-            ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+            ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
             LOG.trace("Machine edges size: {}", allMachineEdges.size());
 
             final Integer makespan = schedule.getMakespan();

@@ -1,5 +1,6 @@
 package com.schedule.core.Graphs;
 
+import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.BenchmarkLowerBounds;
 import com.schedule.core.Graphs.FeasibleSchedules.DataGenerator.SchedulesBuilder;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
@@ -34,36 +35,54 @@ public class Execution {
     private static final FireflyService fireflyService = new FireflyService(optimalSchedule);
 
     /** {@link SimulatedAnnealingService}. */
-    private static final SimulatedAnnealingService simulatedAnnealingService = new SimulatedAnnealingService
-            (optimalSchedule);
+    private static SimulatedAnnealingService simulatedAnnealingService;
 
     /** {@link SAFAService}. */
-    private static final SAFAService safaService = new SAFAService(fireflyService, simulatedAnnealingService,
-                                                                   optimalSchedule);
+    private static SAFAService safaService;
 
     /**
-     * Executor
+     * Executor main method.
      */
     public static void main(String[] args) {
 
+        //Benchmark instance to use
+        final String benchmarkInstance = "la11";
+
+        //Generates parameters given the benchmark instance
+        final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);
+        final Integer localSearchMaxIterations = AlgorithmParameters.localSearchIterationsParameter.get
+                (benchmarkInstance);
+        final Double[] saParameters = AlgorithmParameters.saParameters.get(benchmarkInstance);
+
+        final Double startTempSA = saParameters[0];
+        final Double coolingRateSA = saParameters[1];
+
+        //Instantiates services with generated execution parameters
+        simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, startTempSA, coolingRateSA);
+        safaService = new SAFAService(fireflyService, simulatedAnnealingService, optimalSchedule, startTempSA,
+                                      coolingRateSA);
+
+        // Adds observer services to {@link OptimalSchedule}.
         optimalSchedule.addObserver(simulatedAnnealingService);
         optimalSchedule.addObserver(safaService);
 
-        final String benchmarkInstance = "swv11";
-
+        // Accumulates results for multiple executions.
         final StringBuilder resultBuilder = new StringBuilder();
 
+        // Loop dictating number of times entire algorithm is to be run on a random instance.
         for (int i = 0; i < 1; i++) {
 
             LOG.debug("Generating starting schedules...");
 
             // Generate Schedules
-            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 200);
+            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance,
+                                                                                         startingPopulation);
 
             LOG.debug("Finished generating schedules");
 
             // Execute Local Search
-            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet, 100);
+            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet,
+                                                                                       localSearchMaxIterations);
 
             // Executes SA on Optimal
             optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule());

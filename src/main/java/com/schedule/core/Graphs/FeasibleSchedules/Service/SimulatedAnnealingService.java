@@ -39,12 +39,22 @@ public class SimulatedAnnealingService implements Observer {
     /** {@link Future} of type {@link Schedule}. */
     private Future<Schedule> runningThread;
 
+    /** Start temperature. */
+    private Double startTemp;
+
+    /** Cooling rate. */
+    private Double coolingRate;
+
     /**
      * Constructor.
      */
-    public SimulatedAnnealingService(final OptimalSchedule optimalSchedule) {
+    public SimulatedAnnealingService(final OptimalSchedule optimalSchedule, final Double startTemp,
+                                     final Double coolingRate) {
         this.optimalSchedule = optimalSchedule;
         executorService = Executors.newSingleThreadExecutor();
+
+        this.startTemp = startTemp;
+        this.coolingRate = coolingRate;
     }
 
     /**
@@ -85,13 +95,9 @@ public class SimulatedAnnealingService implements Observer {
         scheduleService.calculateMakeSpan(schedule);
         schedule.initialiseCache();
 
-        // Starting temp
-        Double startTemp = 1000.0;
         Double temp = startTemp;
-        // Cooling rate
-        final Double coolingRate = 0.03;
 
-        ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+        ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
         int count = 0;
         while (temp > 1) {
@@ -107,7 +113,7 @@ public class SimulatedAnnealingService implements Observer {
             if (!edgeOptional.isPresent()) {
                 LOG.trace("Local minima reached");
                 schedule.clearCache();
-                allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+                allMachineEdges = schedule.getAllMachineEdgesManually();
                 continue;
             }
 

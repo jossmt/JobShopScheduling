@@ -42,6 +42,12 @@ public class SAFAService implements Observer {
     /** List of {@link Future} of type {@link Schedule}. */
     private List<Future<Schedule>> allRunningThreads;
 
+    /** Start temperature. */
+    private Double startTemp;
+
+    /** Cooling rate. */
+    private Double coolingRate;
+
     /**
      * Constructor.
      *
@@ -49,13 +55,16 @@ public class SAFAService implements Observer {
      *         {@link FireflyService}
      */
     public SAFAService(final FireflyService fireflyService, final SimulatedAnnealingService simulatedAnnealingService,
-                       final OptimalSchedule optimalSchedule) {
+                       final OptimalSchedule optimalSchedule, final Double startTemp, final Double coolingRate) {
         this.fireflyService = fireflyService;
         this.simulatedAnnealingService = simulatedAnnealingService;
         this.optimalSchedule = optimalSchedule;
 
         executorService = Executors.newFixedThreadPool(5);
         allRunningThreads = new ArrayList<>();
+
+        this.startTemp = startTemp;
+        this.coolingRate = coolingRate;
     }
 
     /**
@@ -123,11 +132,7 @@ public class SAFAService implements Observer {
         scheduleService.calculateMakeSpan(schedule);
         schedule.initialiseCache();
 
-        // Starting temp
-        Double startTemp = 3000.0;
         Double temp = startTemp;
-        // Cooling rate
-        final Double coolingRate = 0.02;
 
         int iterations = 0;
         while (temp > 1) {
@@ -149,7 +154,7 @@ public class SAFAService implements Observer {
             } else {
 
                 LOG.trace("Making random move");
-                final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+                final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
                 final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
 
@@ -195,11 +200,7 @@ public class SAFAService implements Observer {
 
         schedules.remove(optimalSchedule.getOptimalSchedule());
 
-        // Starting temp
-        Double startTemp = 1000.0;
         Double temp = startTemp;
-        // Cooling rate
-        final Double coolingRate = 0.03;
 
         int iteration = 0;
         while (temp > 1) {
@@ -209,6 +210,9 @@ public class SAFAService implements Observer {
             }
 
             LOG.debug("Iteration: {}", iteration);
+            int randomCount = 0;
+            int fireflyMoveCount = 0;
+
             final Iterator<Schedule> scheduleIterator = schedules.iterator();
             while (scheduleIterator.hasNext()) {
 
@@ -221,7 +225,7 @@ public class SAFAService implements Observer {
                 final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
                 final Double randomProb = scheduleService.randomDouble();
                 if (!(acceptanceProb > randomProb)) {
-                    LOG.trace("Firefly move toward optimal");
+                    LOG.debug("Firefly move toward optimal");
 
                     final boolean successMove = fireflyService.moveToOptimalNew(schedule);
 
@@ -232,11 +236,12 @@ public class SAFAService implements Observer {
 
                         scheduleIterator.remove();
                     }
+                    fireflyMoveCount++;
 
                 } else {
 
-                    LOG.trace("Making random move");
-                    final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+                    LOG.debug("Making random move");
+                    final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
                     final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
 
@@ -244,6 +249,8 @@ public class SAFAService implements Observer {
                         scheduleService.switchEdge(edge.get());
                         scheduleService.calculateMakeSpan(schedule);
                     }
+
+                    randomCount++;
                 }
 
                 if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
@@ -253,6 +260,8 @@ public class SAFAService implements Observer {
                     optimalSchedule.setOptimalSchedule(schedule);
                 }
             }
+
+            LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
 
             iteration++;
             temp *= 1 - coolingRate;

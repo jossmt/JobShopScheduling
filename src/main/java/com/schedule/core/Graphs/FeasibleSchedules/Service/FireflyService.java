@@ -24,9 +24,6 @@ public class FireflyService {
     /** {@link FeasibilityService}. */
     private FeasibilityService feasibilityService = new FeasibilityService();
 
-    /** {@link Cloner}. */
-    private Cloner cloner = new Cloner();
-
     /** Schedule state with optimal backbone. */
     private OptimalSchedule optimalSchedule;
 
@@ -55,7 +52,7 @@ public class FireflyService {
         final Schedule optimal = optimalSchedule.getOptimalSchedule();
 
         boolean acceptedFlip = false;
-        final ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+        final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
         Optional<Edge> edgeFlip = findEdgeToSwitchInList(allMachineEdges);
 
