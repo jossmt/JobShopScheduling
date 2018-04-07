@@ -23,6 +23,18 @@ public class LocalSearchServiceTest extends TestSetup {
     /** {@link LocalSearchService}. */
     private final LocalSearchService localSearchService = new LocalSearchService();
 
+
+    @Test
+    public void executeLocalSearchNewMethod() {
+        setUp("ft06", 1);
+
+        for(final Schedule schedule : testSchedules) {
+            localSearchService.executeLocalSearchIteratively(schedule, 1000);
+
+            LOG.debug("__________________");
+        }
+    }
+
     /**
      * Asserts local optimal reached.
      */

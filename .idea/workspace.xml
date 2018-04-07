@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3f661da-2b14-4e22-af47-fa28a769e40a" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_guava_23_4_android.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/JobShopSchedule_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/JobShopSchedule_main.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/JobShopSchedule_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/JobShopSchedule_test.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java" afterPath="$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -31,64 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Execution.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="60" column="110" lean-forward="false" selection-start-line="60" selection-start-column="110" selection-end-line="60" selection-end-column="110" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LocalSearchService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="109" column="0" lean-forward="true" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScheduleService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="282" column="46" lean-forward="true" selection-start-line="282" selection-start-column="46" selection-end-line="282" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Operation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Operation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="260" column="16" lean-forward="false" selection-start-line="260" selection-start-column="16" selection-end-line="260" selection-end-column="16" />
-              <folding>
-                <element signature="e#5806#5807#0" expanded="true" />
-                <element signature="e#5846#5847#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScheduleServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="244" column="0" lean-forward="true" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestSetup.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="48" column="79" lean-forward="false" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+            <state relative-caret-position="75">
+              <caret line="96" column="72" lean-forward="false" selection-start-line="96" selection-start-column="72" selection-end-line="96" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -97,36 +44,8 @@
       <file leaf-file-name="EndVertex.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-              <folding>
-                <element signature="e#954#955#0" expanded="true" />
-                <element signature="e#991#992#0" expanded="true" />
-                <element signature="e#1273#1274#0" expanded="true" />
-                <element signature="e#1322#1323#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Schedule.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="601" column="16" lean-forward="false" selection-start-line="601" selection-start-column="16" selection-end-line="601" selection-end-column="16" />
-              <folding>
-                <element signature="e#17056#17057#0" expanded="true" />
-                <element signature="e#17108#17109#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FeasibilityService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="95" column="21" lean-forward="false" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
+            <state relative-caret-position="-170">
+              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -135,8 +54,80 @@
       <file leaf-file-name="SchedulesBuilder.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-569">
-              <caret line="34" column="25" lean-forward="false" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+            <state relative-caret-position="188">
+              <caret line="139" column="42" lean-forward="false" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocalSearchServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="31" column="46" lean-forward="false" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSetup.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDataPaths.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestDataPaths.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="121">
+              <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LSla01Data.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/resources/LSla01Data.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ScheduleService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="27">
+              <caret line="38" column="22" lean-forward="true" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Edge.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1948">
+              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="337">
+              <caret line="35" column="73" lean-forward="false" selection-start-line="35" selection-start-column="73" selection-end-line="35" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -179,6 +170,7 @@
       <find>calculateSch</find>
       <find>getMachineEdgesOn</find>
       <find>calculatePaths</find>
+      <find>calculateSc</find>
     </findStrings>
     <replaceStrings>
       <replace>,</replace>
@@ -366,8 +358,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4539594147000" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="3636965273" />
+        <entry key="$PROJECT_DIR$" value="4539907427000" />
+        <entry key="$PROJECT_DIR$/build.gradle" value="4250513560" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -494,29 +486,29 @@
         <option value="$PROJECT_DIR$/src/test/resources/LSft10Data.txt" />
         <option value="$PROJECT_DIR$/src/test/resources/LSla01Data.txt" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestDataPaths.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/LSla23Data.txt" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/SimulatedAnnealingServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/FireflyMovementHashes.txt" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/FireflyServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/FeasibilityServiceTest.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/resources/BenchmarkInstances/swv11" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/SAExecution.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java" />
       </list>
     </option>
   </component>
@@ -581,6 +573,10 @@
               <option name="myItemId" value="test" />
               <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -635,32 +631,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JobShopSchedule" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JobShopScheduling" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="graphviz" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -942,7 +912,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Execution">
+  <component name="RunManager" selected="JUnit.LocalSearchServiceTest.executeLocalSearchNewMethod">
     <configuration default="false" name="ScheduleServiceTest.testCalculatePaths" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -995,32 +965,6 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="ScheduleServiceTest.calculatePathsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.schedule.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="JobShopSchedule_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.schedule.test" />
-      <option name="MAIN_CLASS_NAME" value="com.schedule.test.ScheduleServiceTest" />
-      <option name="METHOD_NAME" value="calculatePathsTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="ScheduleServiceTest.compareLPMethods" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1060,6 +1004,32 @@
       <option name="PACKAGE_NAME" value="com.schedule.test" />
       <option name="MAIN_CLASS_NAME" value="com.schedule.test.ScheduleServiceTest" />
       <option name="METHOD_NAME" value="compareLPMethodsTime" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="LocalSearchServiceTest.executeLocalSearchNewMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.schedule.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="JobShopSchedule_test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.schedule.test" />
+      <option name="MAIN_CLASS_NAME" value="com.schedule.test.LocalSearchServiceTest" />
+      <option name="METHOD_NAME" value="executeLocalSearchNewMethod" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1484,17 +1454,17 @@
       <item index="0" class="java.lang.String" itemvalue="Application.Execution" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculatePaths" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculateMachineEdgesLP" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.calculatePathsTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethods" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethodsTime" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethods" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethodsTime" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.LocalSearchServiceTest.executeLocalSearchNewMethod" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethodsTime" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculateMachineEdgesLP" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculatePaths" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethods" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.calculatePathsTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.LocalSearchServiceTest.executeLocalSearchNewMethod" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethodsTime" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculateMachineEdgesLP" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.testCalculatePaths" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ScheduleServiceTest.compareLPMethods" />
       </list>
     </recent_temporary>
   </component>
@@ -1521,44 +1491,44 @@
       <workItem from="1522788413568" duration="1905000" />
       <workItem from="1522912517987" duration="7376000" />
       <workItem from="1523008152750" duration="3180000" />
-      <workItem from="1523087271059" duration="10620000" />
+      <workItem from="1523087271059" duration="14890000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ScheduleServiceTest_compareLPMethods - 2018.04.07 at 10h 43m 06s.xml">
-      <configuration name="ScheduleServiceTest.compareLPMethods" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 34m 07s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_compareLPMethods - 2018.04.07 at 10h 43m 33s.xml">
-      <configuration name="ScheduleServiceTest.compareLPMethods" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 34m 25s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_compareLPMethods - 2018.04.07 at 10h 43m 36s.xml">
-      <configuration name="ScheduleServiceTest.compareLPMethods" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 35m 58s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_compareLPMethodsTime - 2018.04.07 at 10h 49m 00s.xml">
-      <configuration name="ScheduleServiceTest.compareLPMethodsTime" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 36m 56s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_compareLPMethodsTime - 2018.04.07 at 10h 49m 26s.xml">
-      <configuration name="ScheduleServiceTest.compareLPMethodsTime" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 37m 41s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_testCalculateMachineEdgesLP - 2018.04.07 at 10h 43m 53s.xml">
-      <configuration name="ScheduleServiceTest.testCalculateMachineEdgesLP" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 38m 04s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_testCalculateMachineEdgesLP - 2018.04.07 at 10h 44m 40s.xml">
-      <configuration name="ScheduleServiceTest.testCalculateMachineEdgesLP" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 39m 16s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_testCalculateMachineEdgesLP - 2018.04.07 at 10h 45m 32s.xml">
-      <configuration name="ScheduleServiceTest.testCalculateMachineEdgesLP" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 41m 27s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_testCalculatePaths - 2018.04.07 at 10h 39m 50s.xml">
-      <configuration name="ScheduleServiceTest.testCalculatePaths" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 42m 10s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ScheduleServiceTest_testCalculatePaths - 2018.04.07 at 10h 44m 01s.xml">
-      <configuration name="ScheduleServiceTest.testCalculatePaths" configurationId="JUnit" />
+    <history-entry file="LocalSearchServiceTest_executeLocalSearchNewMethod - 2018.04.07 at 14h 42m 37s.xml">
+      <configuration name="LocalSearchServiceTest.executeLocalSearchNewMethod" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93458000" />
+    <option name="totallyTimeSpent" value="97728000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1279" height="725" extended-state="6" />
@@ -1573,10 +1543,10 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3270142" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43443918" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25592417" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36966825" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25626516" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1707,24 +1677,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/resources/LSla01Data.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/LSft10Data.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestDataPaths.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1770,14 +1726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
           <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="76" lean-forward="false" selection-start-line="21" selection-start-column="76" selection-end-line="21" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1871,42 +1819,13 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="177" column="49" lean-forward="false" selection-start-line="177" selection-start-column="49" selection-end-line="177" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Operation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
           <caret line="260" column="16" lean-forward="false" selection-start-line="260" selection-start-column="16" selection-end-line="260" selection-end-column="16" />
           <folding>
-            <element signature="e#5806#5807#0" expanded="true" />
-            <element signature="e#5846#5847#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="52" column="0" lean-forward="true" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#954#955#0" expanded="true" />
-            <element signature="e#991#992#0" expanded="true" />
-            <element signature="e#1273#1274#0" expanded="true" />
-            <element signature="e#1322#1323#0" expanded="true" />
+            <element signature="e#5806#5807#0" expanded="false" />
+            <element signature="e#5846#5847#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1919,18 +1838,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="48" column="79" lean-forward="false" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
-          <caret line="244" column="0" lean-forward="true" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+          <caret line="244" column="0" lean-forward="false" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1946,22 +1857,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-569">
-          <caret line="34" column="25" lean-forward="false" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="282" column="46" lean-forward="true" selection-start-line="282" selection-start-column="46" selection-end-line="282" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -1970,10 +1865,84 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="35" column="73" lean-forward="false" selection-start-line="35" selection-start-column="73" selection-end-line="35" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-170">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1948">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestDataPaths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="18" column="31" lean-forward="false" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/LSla01Data.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="38" column="22" lean-forward="true" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="139" column="42" lean-forward="false" selection-start-line="139" selection-start-column="42" selection-end-line="139" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/Config/TestSetup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="31" column="46" lean-forward="false" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/LocalSearchService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="109" column="0" lean-forward="true" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+        <state relative-caret-position="75">
+          <caret line="96" column="72" lean-forward="false" selection-start-line="96" selection-start-column="72" selection-end-line="96" selection-end-column="72" />
           <folding />
         </state>
       </provider>

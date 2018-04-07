@@ -35,5 +35,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.truth/truth
     testCompile group: 'com.google.truth', name: 'truth', version: '0.39'
 
+    compile 'com.github.rkumsher:utils:1.3'
 
 }

@@ -1,6 +1,8 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
+import com.github.rkumsher.collection.IterableUtils;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
+import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.LocalSearchCallable;
 import org.slf4j.Logger;
@@ -91,40 +93,51 @@ public class LocalSearchService {
 
         for (int i = 0; i < maxIterations; i++) {
 
-            ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
+            ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
+            LOG.debug("Machine edges size: {}", allMachineEdges.size());
 
             final Integer makespan = schedule.getMakespan();
-            LOG.trace("Current makespan: {}", schedule.getMakespan());
+            LOG.debug("Current makespan: {}", schedule.getMakespan());
 
-            Optional<Edge> edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule,
-                                                                                     longestPathEdges, false);
-
+            Optional<Edge> edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
             while (edgeFlip.isPresent()) {
 
-                LOG.trace("Edge flipped: {}", edgeFlip);
+                final Edge edge = edgeFlip.get();
+                scheduleService.switchEdge(edge);
 
-                scheduleService.calculateScheduleData(schedule);
+                LOG.trace("Edge chosen :{} \nfrom: {}", edge, allMachineEdges);
 
-                LOG.trace("Local MP: {}, Optimal: {}", schedule.getMakespan(), makespan);
-                if (!(schedule.getMakespan() < makespan)) {
+                final Operation opFrom = edge.getOperationFrom();
+                final Operation opTo = edge.getOperationTo();
 
-                    LOG.trace("Moving away from local minima, undoing move");
+                if (feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)) {
 
-                    longestPathEdges.removeAll(Collections.singleton(edgeFlip.get()));
+                    scheduleService.calculateMakeSpan(schedule);
+
+                    LOG.debug("Local Makespan: {}, Optimal Makespan: {}", schedule.getMakespan(), makespan);
+                    if (!(schedule.getMakespan() < makespan)) {
+
+                        LOG.debug("Moving away from local minima, undoing move");
+
+                        //flip back if not improved schedule
+                        scheduleService.switchEdge(edge);
+                        edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
+                    } else {
+
+                        LOG.debug("Accepted move");
+                        break;
+                    }
+                } else {
+                    LOG.debug("Edge flip wasn't feasible");
 
                     //flip back if not improved schedule
-                    scheduleService.switchEdge(edgeFlip.get());
-                    scheduleService.calculateScheduleData(schedule);
-                    edgeFlip = scheduleService.flipMostVisitedEdgeLongestPath(schedule, longestPathEdges, false);
-                } else {
-
-                    LOG.trace("Accepted move");
-                    break;
+                    scheduleService.switchEdge(edge);
+                    edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
                 }
             }
 
             //Reached local minima.
-            if(!edgeFlip.isPresent()){
+            if (!edgeFlip.isPresent()) {
                 break;
             }
         }

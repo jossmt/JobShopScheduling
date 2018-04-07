@@ -137,7 +137,7 @@ public class SchedulesBuilder {
 
         LOG.debug("Generated schedule, calculating schedule data...");
 
-        scheduleService.calculateScheduleData(schedule);
+        scheduleService.calculateMakeSpan(schedule);
 
         return schedule;
     }

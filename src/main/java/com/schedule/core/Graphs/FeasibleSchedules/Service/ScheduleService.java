@@ -1,5 +1,6 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
+import com.github.rkumsher.collection.IterableUtils;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.FileDataPaths;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.EndVertex;
@@ -40,6 +41,7 @@ public class ScheduleService {
      */
     public void calculateScheduleData(final Schedule schedule) {
 
+        LOG.debug("Calculating schedule data");
         calculateMakeSpan(schedule);
         calculateMachineEdgesLP(schedule);
     }
@@ -167,6 +169,25 @@ public class ScheduleService {
 
         LOG.trace("Edge after flipping: {}", edge);
 
+    }
+
+    /**
+     * Switches random edge
+     *
+     * @param edgeOptions
+     *         set of {@link Edge}
+     * @return {@link Edge}
+     */
+    public Optional<Edge> switchRandomEdge(final ArrayList<Edge> edgeOptions) {
+
+        Edge edgeFlipped = null;
+        if (!edgeOptions.isEmpty()) {
+            edgeFlipped = IterableUtils.randomFrom(edgeOptions);
+            edgeOptions.remove(edgeFlipped);
+            switchEdge(edgeFlipped);
+        }
+
+        return Optional.ofNullable(edgeFlipped);
     }
 
     /**
