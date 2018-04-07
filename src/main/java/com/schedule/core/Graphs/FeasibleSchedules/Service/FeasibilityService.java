@@ -47,6 +47,8 @@ public class FeasibilityService {
             postJobPathTo = to.getConjunctiveEdge().getOperationTo();
         }
 
+        LOG.trace("A");
+
         // If not, no risk of cycle
         if (postJobPathTo instanceof EndVertex) {
             return true;
@@ -78,6 +80,8 @@ public class FeasibilityService {
      */
     private Set<Operation> getOperationsOnJobPath(final Operation op, final boolean isForward) {
 
+        LOG.trace("Finding ops on job path from: {} direction: {}", op, isForward);
+
         final Set<Operation> operations = new HashSet<>();
         if (isForward) {
             Operation current = op;
@@ -88,6 +92,8 @@ public class FeasibilityService {
         } else {
 
             Operation current = op;
+            LOG.trace("Current: {}", current);
+            LOG.trace("Parent: {}", current.getConjunctiveParent());
             while (current.hasConjunctiveParent()) {
                 operations.add(current);
                 current = current.getConjunctiveParent().getOperationFrom();

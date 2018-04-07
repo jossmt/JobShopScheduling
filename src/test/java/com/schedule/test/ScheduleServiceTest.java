@@ -159,6 +159,8 @@ public class ScheduleServiceTest extends TestSetup {
     public void testCalculateMachineEdgesOnLP() {
 
         setUp("ft10", 1);
+
+        LOG.debug("End vertex: {}", optimal.getEndVertex().getParentEdges());
         optimal.initialiseCache();
 
         final String[] edges = readFile(TestDataPaths.MOST_VISITED_EDGE_PATH).split(",");
@@ -176,8 +178,67 @@ public class ScheduleServiceTest extends TestSetup {
     @Test
     public void testCalculatePaths(){
 
-        setUp("4x4", 1);
+        setUp("ft10", 1);
+        scheduleService.calculatePaths(optimal);
+
+        LOG.debug("MEdges: {}", optimal.getMachineEdgesOnLPSet());
+    }
+
+    @Test
+    public void testCalculateMachineEdgesLP(){
+        setUp("swv11", 1);
+
+        scheduleService.calculateMachineEdgesLP(optimal);
+        LOG.debug("MEdges: {}", optimal.getMachineEdgesOnLPSet());
+
+        for(final Edge edge : optimal.getMachineEdgesOnLPSet()){
+            scheduleService.switchEdge(edge);
+
+            final Operation opFrom = edge.getOperationFrom();
+            final Operation opTo = edge.getOperationTo();
+
+            Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)).isTrue();
+
+            scheduleService.switchEdge(edge);
+        }
+    }
+
+    @Test
+    public void compareLPMethods(){
+
+        setUp("ft10", 1);
 
         scheduleService.calculatePaths(optimal);
+        final Set<Edge> edges = optimal.getMachineEdgesOnLPSet();
+        LOG.debug("MEdges: {}", edges);
+
+        scheduleService.calculateMachineEdgesLP(optimal);
+        final Set<Edge> edges2 = optimal.getMachineEdgesOnLPSet();
+        LOG.debug("MEdges2: {}", edges2);
+
+        Truth.assertThat(edges2.containsAll(edges)).isTrue();
+
+        edges2.removeAll(edges);
+        LOG.debug("MEdges3: {}", edges2);
+    }
+
+    @Test
+    public void compareLPMethodsTime(){
+        setUp("swv11", 1);
+
+        final long start = System.nanoTime();
+        scheduleService.calculateMachineEdgesLP(optimal);
+        final long stop = System.nanoTime();
+
+        final long timeTaken = stop - start;
+        LOG.debug("Time Taken new method: {}", timeTaken);
+
+        final long start2 = System.nanoTime();
+        scheduleService.calculatePaths(optimal);
+        final long stop2 = System.nanoTime();
+
+        final long timeTaken2 = stop2 - start2;
+        LOG.debug("Time Taken old method: {}", timeTaken2);
+
     }
 }

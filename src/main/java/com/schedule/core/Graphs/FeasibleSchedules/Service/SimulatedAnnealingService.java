@@ -82,10 +82,10 @@ public class SimulatedAnnealingService implements Observer {
         schedule.initialiseCache();
 
         // Starting temp
-        Double startTemp = 3000.0;
+        Double startTemp = 1000.0;
         Double temp = startTemp;
         // Cooling rate
-        final Double coolingRate = 0.02;
+        final Double coolingRate = 0.03;
 
         ArrayList<Edge> longestPathEdges = schedule.getMachineEdgesOnLP();
 

@@ -135,6 +135,8 @@ public class SchedulesBuilder {
             LOG.trace("Sum: {}, total: {}", sum, numMachines * numJobs);
         }
 
+        LOG.debug("Generated schedule, calculating schedule data...");
+
         scheduleService.calculateScheduleData(schedule);
 
         return schedule;
@@ -223,6 +225,8 @@ public class SchedulesBuilder {
 
             jobValue++;
         }
+
+        schedule.getEndVertex().removeOverridenParentEdges();
 
         return schedule;
     }

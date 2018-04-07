@@ -189,10 +189,10 @@ public class SAFAService implements Observer {
         schedules.remove(optimalSchedule.getOptimalSchedule());
 
         // Starting temp
-        Double startTemp = 3000.0;
+        Double startTemp = 1000.0;
         Double temp = startTemp;
         // Cooling rate
-        final Double coolingRate = 0.02;
+        final Double coolingRate = 0.03;
 
         int iteration = 0;
         while (temp > 1) {

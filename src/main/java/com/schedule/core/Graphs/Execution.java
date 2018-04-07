@@ -58,7 +58,7 @@ public class Execution {
             LOG.debug("Generating starting schedules...");
 
             // Generate Schedules
-            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 100);
+            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 10);
 
             LOG.debug("Finished generating schedules");
 
