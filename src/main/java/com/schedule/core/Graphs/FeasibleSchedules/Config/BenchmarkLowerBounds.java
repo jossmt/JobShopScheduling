@@ -17,6 +17,17 @@ public class BenchmarkLowerBounds {
             put("la11", 1222);
             put("la23", 1032);
             put("swv11", 2983);
+            //to be updated
+            put("la34", 10000);
+            put("la35", 10000);
+            put("swv11",10000);
+            put("swv13",10000);
+            put("swv17",10000);
+            put("swv18",10000);
+            put("ta69", 10000);
+            put("ta71", 10000);
+            put("ta76", 10000);
+            put("yn2",  10000);
         }
     };
 
@@ -29,6 +40,16 @@ public class BenchmarkLowerBounds {
             put("la11", 1222);
             put("la23", 1155);
             put("swv11", 4583);
+            put("la34", 10000);
+            put("la35", 10000);
+            put("swv11",10000);
+            put("swv13",10000);
+            put("swv17",10000);
+            put("swv18",10000);
+            put("ta69", 10000);
+            put("ta71", 10000);
+            put("ta76", 10000);
+            put("yn2",  10000);
         }
     };
 }
