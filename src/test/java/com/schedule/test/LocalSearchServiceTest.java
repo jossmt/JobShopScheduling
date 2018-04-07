@@ -26,13 +26,17 @@ public class LocalSearchServiceTest extends TestSetup {
 
     @Test
     public void executeLocalSearchNewMethod() {
-        setUp("ft06", 1);
+        setUp("ft06", 50);
 
+        Integer total = 0;
+        Integer sum = 0;
         for(final Schedule schedule : testSchedules) {
             localSearchService.executeLocalSearchIteratively(schedule, 1000);
-
-            LOG.debug("__________________");
+            total += schedule.getMakespan();
+            sum += 1;
         }
+
+        LOG.debug("Average makespan LS result: {}", total/sum);
     }
 
     /**

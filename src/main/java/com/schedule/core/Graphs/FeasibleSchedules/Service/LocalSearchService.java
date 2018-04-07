@@ -94,10 +94,10 @@ public class LocalSearchService {
         for (int i = 0; i < maxIterations; i++) {
 
             ArrayList<Edge> allMachineEdges = new ArrayList<>(schedule.getAllMachineEdgesManually());
-            LOG.debug("Machine edges size: {}", allMachineEdges.size());
+            LOG.trace("Machine edges size: {}", allMachineEdges.size());
 
             final Integer makespan = schedule.getMakespan();
-            LOG.debug("Current makespan: {}", schedule.getMakespan());
+            LOG.trace("Current makespan: {}", schedule.getMakespan());
 
             Optional<Edge> edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
             while (edgeFlip.isPresent()) {
@@ -114,21 +114,21 @@ public class LocalSearchService {
 
                     scheduleService.calculateMakeSpan(schedule);
 
-                    LOG.debug("Local Makespan: {}, Optimal Makespan: {}", schedule.getMakespan(), makespan);
+                    LOG.trace("Local Makespan: {}, Optimal Makespan: {}", schedule.getMakespan(), makespan);
                     if (!(schedule.getMakespan() < makespan)) {
 
-                        LOG.debug("Moving away from local minima, undoing move");
+                        LOG.trace("Moving away from local minima, undoing move");
 
                         //flip back if not improved schedule
                         scheduleService.switchEdge(edge);
                         edgeFlip = scheduleService.switchRandomEdge(allMachineEdges);
                     } else {
 
-                        LOG.debug("Accepted move");
+                        LOG.trace("Accepted move");
                         break;
                     }
                 } else {
-                    LOG.debug("Edge flip wasn't feasible");
+                    LOG.trace("Edge flip wasn't feasible");
 
                     //flip back if not improved schedule
                     scheduleService.switchEdge(edge);
