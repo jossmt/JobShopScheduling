@@ -46,7 +46,7 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = "la11";
+        final String benchmarkInstance = "ta76";
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);

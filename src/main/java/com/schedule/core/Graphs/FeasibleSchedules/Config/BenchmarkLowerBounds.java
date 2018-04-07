@@ -18,16 +18,16 @@ public class BenchmarkLowerBounds {
             put("la23", 1032);
             put("swv11", 2983);
             //to be updated
-            put("la34", 10000);
-            put("la35", 10000);
-            put("swv11",10000);
-            put("swv13",10000);
-            put("swv17",10000);
-            put("swv18",10000);
-            put("ta69", 10000);
-            put("ta71", 10000);
-            put("ta76", 10000);
-            put("yn2",  10000);
+            put("la34", 1721);
+            put("la35", 1888);
+            put("swv11",2983);
+            put("swv13",3104);
+            put("swv17",2794);
+            put("swv18",2852);
+            put("ta69", 3071);
+            put("ta71", 5464);
+            put("ta76", 5342);
+            put("yn2",  870);
         }
     };
 
