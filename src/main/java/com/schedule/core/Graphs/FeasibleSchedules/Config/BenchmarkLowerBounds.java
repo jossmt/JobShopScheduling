@@ -17,7 +17,6 @@ public class BenchmarkLowerBounds {
             put("la11", 1222);
             put("la23", 1032);
             put("swv11", 2983);
-            //to be updated
             put("la34", 1721);
             put("la35", 1888);
             put("swv11",2983);

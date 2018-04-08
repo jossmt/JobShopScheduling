@@ -44,7 +44,7 @@ public class AlgorithmParameters {
             put("swv18",500);
             put("ta69", 500);
             put("ta71", 500);
-            put("ta76", 500);
+            put("ta76", 300);
             put("yn2",  500);
         }
     };
@@ -66,7 +66,7 @@ public class AlgorithmParameters {
             put("swv18",new Double[]{1000000.0, 0.001});
             put("ta69", new Double[]{1000000.0, 0.001});
             put("ta71", new Double[]{1000000.0, 0.001});
-            put("ta76", new Double[]{1000000.0, 0.001});
+            put("ta76", new Double[]{100000000.0, 0.001});
             put("yn2",  new Double[]{1000000.0, 0.001});
         }
     };
