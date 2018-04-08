@@ -154,14 +154,7 @@ public class SAFAService implements Observer {
             } else {
 
                 LOG.trace("Making random move");
-                final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
-
-                final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
-
-                if (edge.isPresent()) {
-                    scheduleService.switchEdge(edge.get());
-                    scheduleService.calculateMakeSpan(schedule);
-                }
+                scheduleService.findFeasibleEdgeAndFlip(schedule);
             }
 
             if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
@@ -209,7 +202,7 @@ public class SAFAService implements Observer {
                 break;
             }
 
-            LOG.debug("Iteration: {}", iteration);
+            LOG.trace("Iteration: {}", iteration);
             int randomCount = 0;
             int fireflyMoveCount = 0;
 
@@ -225,30 +218,29 @@ public class SAFAService implements Observer {
                 final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
                 final Double randomProb = scheduleService.randomDouble();
                 if (!(acceptanceProb > randomProb)) {
-                    LOG.debug("Firefly move toward optimal");
+                    LOG.trace("Firefly move toward optimal");
 
                     final boolean successMove = fireflyService.moveToOptimalNew(schedule);
 
                     if (!successMove) {
 
-                        LOG.debug("No more move options, check if equal to optimal: {}",
+                        LOG.trace("No more move options, check if equal to optimal: {}",
                                   schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
+                        if(schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()){
 
-                        scheduleIterator.remove();
+                            LOG.trace("Making random move");
+                            scheduleService.findFeasibleEdgeAndFlip(schedule);
+                        }else {
+                            scheduleIterator.remove();
+                        }
                     }
                     fireflyMoveCount++;
 
                 } else {
 
-                    LOG.debug("Making random move");
-                    final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
+                    LOG.trace("Making random move");
+                    scheduleService.findFeasibleEdgeAndFlip(schedule);
 
-                    final Optional<Edge> edge = scheduleService.findFeasibleEdgeToFlip(allMachineEdges);
-
-                    if (edge.isPresent()) {
-                        scheduleService.switchEdge(edge.get());
-                        scheduleService.calculateMakeSpan(schedule);
-                    }
 
                     randomCount++;
                 }
@@ -261,7 +253,7 @@ public class SAFAService implements Observer {
                 }
             }
 
-            LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
+            LOG.trace("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
 
             iteration++;
             temp *= 1 - coolingRate;

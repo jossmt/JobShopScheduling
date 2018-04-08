@@ -1,5 +1,6 @@
 package com.schedule.test;
 
+import com.google.common.truth.Truth;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.FireflyService;
@@ -121,13 +122,49 @@ public class TestsAfterOverhaul extends TestSetup {
 
     @Test
     public void SAFAserviceTest() {
+        instantiateServices("swv11");
+        setUp("swv11", 100);
 
-        instantiateServices("ft06");
-        setUp("ft06", 10);
+        localSearchService.executeLocalSearch(testSchedules, 500);
 
-        optimalSchedule.setOptimalScheduleWithoutNotifyingObservers(optimal);
+        optimalSchedule.setOptimalScheduleWithoutNotifyingObservers(localSearchService.getOptimalSchedule());
 
         safaService.iterativeApproachSAFA(testSchedules);
+    }
+
+    @Test
+    public void checkNumberOfRequiredIterations(){
+        instantiateServices("yn2");
+        setUp("yn2", 100);
+
+        optimalSchedule.setOptimalSchedule(optimal);
+
+        safaService.iterativeApproachSAFA(testSchedules);
+    }
+
+    @Test
+    public void calculateSAParams() {
+
+        Double temp = 1000.0;
+        Double coolingRate = 0.0025;
+
+        int count = 0;
+        while (temp > 1) {
+            count++;
+            temp *= 1 - coolingRate;
+        }
+
+        LOG.debug("Count: {}", count);
+    }
+
+    @Test
+    public void localSearchIterations(){
+        instantiateServices("yn2");
+        setUp("yn2", 30);
+
+        for(final Schedule schedule : testSchedules){
+            localSearchService.executeLocalSearchIteratively(schedule, Integer.MAX_VALUE);
+        }
     }
 
     /**
@@ -137,8 +174,8 @@ public class TestsAfterOverhaul extends TestSetup {
 
         final Double[] saParameters = AlgorithmParameters.saParameters.get(benchmarkInstance);
 
+        simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, saParameters[0], saParameters[1]);
         safaService = new SAFAService(fireflyService, simulatedAnnealingService, optimalSchedule, saParameters[0],
                                       saParameters[1]);
-        simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, saParameters[0], saParameters[1]);
     }
 }

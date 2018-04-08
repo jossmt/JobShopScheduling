@@ -137,6 +137,7 @@ public class LocalSearchService {
 
             //Reached local minima.
             if (!edgeFlip.isPresent()) {
+                LOG.trace("Final iteration: {}", i);
                 break;
             }
         }

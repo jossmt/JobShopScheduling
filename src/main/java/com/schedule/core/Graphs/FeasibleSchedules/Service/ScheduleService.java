@@ -305,11 +305,13 @@ public class ScheduleService {
     /**
      * Finds feasible edge to flip from given list.
      *
-     * @param allMachineEdges
-     *         List of {@link Edge}
+     * @param schedule
+     *         {@link Schedule}
      * @return Optional {@link Edge}
      */
-    public Optional<Edge> findFeasibleEdgeToFlip(final ArrayList<Edge> allMachineEdges) {
+    public Optional<Edge> findFeasibleEdgeAndFlip(final Schedule schedule) {
+
+        final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
         Optional<Edge> edgeOptional = findRandomEdge(allMachineEdges);
         while (edgeOptional.isPresent()) {
@@ -321,8 +323,10 @@ public class ScheduleService {
 
             if (feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)) {
 
+                calculateMakeSpan(schedule);
                 return edgeOptional;
             } else {
+                switchEdge(edge);
                 edgeOptional = findRandomEdge(allMachineEdges);
             }
         }
