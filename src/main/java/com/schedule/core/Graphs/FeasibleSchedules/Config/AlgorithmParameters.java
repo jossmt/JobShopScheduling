@@ -17,14 +17,14 @@ public class AlgorithmParameters {
             put("la34", 200);
             put("la35", 200);
 
-            put("swv11",250);
-            put("swv13",250);
-            put("swv17",250);
-            put("swv18",250);
+            put("swv11",220);
+            put("swv13",220);
+            put("swv17",220);
+            put("swv18",220);
 
-            put("ta69", 300);
-            put("ta71", 300);
-            put("ta76", 300);
+            put("ta69", 250);
+            put("ta71", 250);
+            put("ta76", 250);
 
             put("yn2",  200);
         }

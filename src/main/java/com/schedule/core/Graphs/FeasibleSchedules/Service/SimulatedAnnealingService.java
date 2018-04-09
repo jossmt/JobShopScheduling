@@ -102,7 +102,7 @@ public class SimulatedAnnealingService implements Observer {
         int count = 0;
         while (temp > 1) {
 
-            LOG.debug("Iteration: {}, Makespan: {}", count, schedule.getMakespan());
+            LOG.trace("Iteration: {}, Makespan: {}", count, schedule.getMakespan());
 
             // Makespan before flipping edge.
             final Integer prevMakespan = schedule.getMakespan();
@@ -147,17 +147,17 @@ public class SimulatedAnnealingService implements Observer {
                 // If acceptance prob exceeds threshold, flip edge back
                 if (!(acceptanceProb > random)) {
 
-                    LOG.debug("Not accepting edge flip");
+                    LOG.trace("Not accepting edge flip");
 
                     // Switching same edge back
                     scheduleService.switchEdge(edgeOptional.get());
                     scheduleService.calculateMakeSpan(schedule);
 
                 } else {
-                    LOG.debug("Accepted flip");
+                    LOG.trace("Accepted flip");
                 }
             } else {
-                LOG.debug("Infeasible edge flip");
+                LOG.trace("Infeasible edge flip");
 
                 // Switching same edge back - continue so as not to count iteration in temp.
                 scheduleService.switchEdge(edgeOptional.get());

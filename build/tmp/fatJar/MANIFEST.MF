@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Title: Jar File JSSP
+Implementation-Version: 1.0-SNAPSHOT
+Main-Class: com.schedule.core.Graphs.Execution
+

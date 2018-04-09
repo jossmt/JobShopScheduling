@@ -7,8 +7,8 @@ import com.schedule.core.Graphs.FeasibleSchedules.Service.ScheduleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -241,46 +241,48 @@ public class SchedulesBuilder {
     public Integer[][][] getBenchmarkInstance(final String instance) {
 
         //Generates the same schedules using same random number set.
-        Scanner input = null;
+        Integer[][][] benchmarkInstance = null;
         try {
-            File file = new File(FileDataPaths.BENCHMARK_INSTANCES_PATH + instance);
-            LOG.trace("File exists: {}", file.exists());
-            input = new Scanner(file);
-        } catch (FileNotFoundException e) {
+            InputStream filePath = SchedulesBuilder.class.getClassLoader().getResourceAsStream("BenchmarkInstances/"
+                                                                                                       + instance);
+            BufferedReader br = new BufferedReader(new InputStreamReader(filePath));
+
+            final String line = br.readLine();
+            LOG.trace("Line: {}", line);
+            final String[] size = line.split("\t");
+            final Integer jobNum = Integer.valueOf(size[0]);
+            final Integer machineNum = Integer.valueOf(size[1]);
+
+            LOG.trace("Job num: {}, machine num: {}", jobNum, machineNum);
+
+            benchmarkInstance = new Integer[jobNum][2][machineNum];
+
+            int jobCount = 0;
+            String nextLine;
+            while ((nextLine = br.readLine()) != null) {
+
+                final Integer[][] row = new Integer[machineNum][2];
+                final String[] values = nextLine.split("\\t");
+
+                Integer machine;
+                Integer processingTime;
+                Integer count = 0;
+                for (int i = 0; i < values.length; i += 2) {
+
+                    machine = Integer.valueOf(values[i]);
+                    processingTime = Integer.valueOf(values[i + 1]);
+                    row[count] = new Integer[]{machine, processingTime};
+                    count++;
+                }
+
+                benchmarkInstance[jobCount] = row;
+                jobCount++;
+            }
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-        final String line = input.nextLine();
-        LOG.trace("Line: {}", line);
-        final String[] size = line.split("\t");
-        final Integer jobNum = Integer.valueOf(size[0]);
-        final Integer machineNum = Integer.valueOf(size[1]);
-
-        LOG.trace("Job num: {}, machine num: {}", jobNum, machineNum);
-
-        final Integer[][][] benchmarkInstance = new Integer[jobNum][2][machineNum];
-
-        int jobCount = 0;
-        while (input.hasNext()) {
-
-            final Integer[][] row = new Integer[machineNum][2];
-            final String[] values = input.nextLine().split("\\t");
-
-            Integer machine;
-            Integer processingTime;
-            Integer count = 0;
-            for (int i = 0; i < values.length; i += 2) {
-
-                machine = Integer.valueOf(values[i]);
-                processingTime = Integer.valueOf(values[i + 1]);
-                row[count] = new Integer[]{machine, processingTime};
-                count++;
-            }
-
-            benchmarkInstance[jobCount] = row;
-            jobCount++;
-        }
         return benchmarkInstance;
     }
 }

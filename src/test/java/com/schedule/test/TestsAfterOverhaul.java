@@ -1,6 +1,5 @@
 package com.schedule.test;
 
-import com.google.common.truth.Truth;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.FireflyService;
@@ -11,6 +10,8 @@ import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.InputStream;
 
 public class TestsAfterOverhaul extends TestSetup {
 
@@ -133,7 +134,7 @@ public class TestsAfterOverhaul extends TestSetup {
     }
 
     @Test
-    public void checkNumberOfRequiredIterations(){
+    public void checkNumberOfRequiredIterations() {
         instantiateServices("yn2");
         setUp("yn2", 100);
 
@@ -158,11 +159,11 @@ public class TestsAfterOverhaul extends TestSetup {
     }
 
     @Test
-    public void localSearchIterations(){
+    public void localSearchIterations() {
         instantiateServices("yn2");
         setUp("yn2", 30);
 
-        for(final Schedule schedule : testSchedules){
+        for (final Schedule schedule : testSchedules) {
             localSearchService.executeLocalSearchIteratively(schedule, Integer.MAX_VALUE);
         }
     }
@@ -177,5 +178,14 @@ public class TestsAfterOverhaul extends TestSetup {
         simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, saParameters[0], saParameters[1]);
         safaService = new SAFAService(fireflyService, simulatedAnnealingService, optimalSchedule, saParameters[0],
                                       saParameters[1]);
+    }
+
+    @Test
+    public void loadResource() {
+
+        final InputStream inputStream = TestsAfterOverhaul.class.getClassLoader().getResourceAsStream
+                ("BenchmarkInstances/blah");
+        LOG.debug("Input stream: {}", inputStream);
+
     }
 }

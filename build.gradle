@@ -9,6 +9,19 @@ repositories {
     mavenCentral()
 }
 
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+
+    manifest {
+        attributes 'Implementation-Title': 'Jar File JSSP',
+                'Implementation-Version': version,
+                'Main-Class': 'com.schedule.core.Graphs.Execution'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
