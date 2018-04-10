@@ -207,7 +207,7 @@ public class SchedulesBuilder {
     private Schedule generateTreeTemplate(final Integer[][][] jobset, final Integer numMachines,
                                           final Integer numJobs) {
 
-        final Schedule schedule = new Schedule(numMachines, numJobs);
+        final Schedule schedule = new Schedule(numJobs, numMachines);
 
         Integer jobValue = 0;
         Integer taskValue = 0;

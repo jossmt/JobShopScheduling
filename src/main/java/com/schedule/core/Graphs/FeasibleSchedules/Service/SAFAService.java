@@ -243,7 +243,6 @@ public class SAFAService implements Observer {
                     LOG.trace("Making random move");
                     scheduleService.findFeasibleEdgeAndFlip(schedule);
 
-
                     randomCount++;
                 }
 
@@ -331,7 +330,11 @@ public class SAFAService implements Observer {
         LOG.debug("Updated max, starting new SAFA thread");
 
         if (schedule != null) {
-            addSimulatedAnnealingFireflyThread(schedule);
+
+            //100x20 instances cause stack overflow
+            if(!(schedule.getNumMachines() == 20 && schedule.getNumJobs() == 100)){
+                addSimulatedAnnealingFireflyThread(schedule);
+            }
         }
     }
 }

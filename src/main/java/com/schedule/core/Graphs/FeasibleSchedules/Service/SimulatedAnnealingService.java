@@ -245,7 +245,14 @@ public class SimulatedAnnealingService implements Observer {
     @Override
     public void update(Schedule schedule) {
 
-        final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
-        executeSimulatedAnnealing(beaconCopy);
+        if (schedule != null) {
+            LOG.debug("Num jobs: {} num machiens: {}", schedule.getNumJobs(), schedule.getNumMachines());
+            if (schedule.getNumJobs() != 100 && schedule.getNumMachines() != 20) {
+                final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
+                executeSimulatedAnnealing(beaconCopy);
+            } else {
+                executeSimulatedAnnealing(schedule);
+            }
+        }
     }
 }
