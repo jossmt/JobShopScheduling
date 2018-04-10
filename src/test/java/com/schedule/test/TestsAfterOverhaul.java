@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-
 public class TestsAfterOverhaul extends TestSetup {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestsAfterOverhaul.class);
@@ -135,8 +133,8 @@ public class TestsAfterOverhaul extends TestSetup {
 
     @Test
     public void checkNumberOfRequiredIterations() {
-        instantiateServices("yn2");
-        setUp("yn2", 100);
+        instantiateServices("swv11");
+        setUp("swv11", 2);
 
         optimalSchedule.setOptimalSchedule(optimal);
 
@@ -146,8 +144,8 @@ public class TestsAfterOverhaul extends TestSetup {
     @Test
     public void calculateSAParams() {
 
-        Double temp = 1000.0;
-        Double coolingRate = 0.0025;
+        Double temp = 10000.0;
+        Double coolingRate = 0.001;
 
         int count = 0;
         while (temp > 1) {
@@ -178,14 +176,5 @@ public class TestsAfterOverhaul extends TestSetup {
         simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, saParameters[0], saParameters[1]);
         safaService = new SAFAService(fireflyService, simulatedAnnealingService, optimalSchedule, saParameters[0],
                                       saParameters[1]);
-    }
-
-    @Test
-    public void loadResource() {
-
-        final InputStream inputStream = TestsAfterOverhaul.class.getClassLoader().getResourceAsStream
-                ("BenchmarkInstances/blah");
-        LOG.debug("Input stream: {}", inputStream);
-
     }
 }

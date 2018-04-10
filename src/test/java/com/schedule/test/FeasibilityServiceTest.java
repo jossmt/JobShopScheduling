@@ -10,6 +10,7 @@
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 //
+//import java.util.ArrayList;
 //import java.util.Set;
 //
 ///**
@@ -28,28 +29,7 @@
 //
 //        setUp("ft10", 1);
 //
-//        final Set<Edge> machineEdgesLongestPath = optimal.getMachineEdgesNotOnLP();
-//        LOG.trace("Edge options: {}", machineEdgesLongestPath);
-//
-//        for (final Edge edge : machineEdgesLongestPath) {
-//
-//            scheduleService.switchEdge(edge);
-//
-//            final Operation from = edge.getOperationFrom();
-//            final Operation to = edge.getOperationTo();
-//
-//            if (feasibilityService.hasCycle(optimal)) {
-//
-//                Truth.assertThat(feasibilityService.scheduleIsFeasibleProof(from, to)).isFalse();
-//
-//                //undo flip edge
-//                scheduleService.switchEdge(edge);
-//                scheduleService.calculateScheduleData(optimal);
-//            } else {
-//
-//                scheduleService.calculateScheduleData(optimal);
-//            }
-//        }
+//        final ArrayList<Edge> machineEdges = optimal.getAllMachineEdgesManually();
 //    }
 //
 //

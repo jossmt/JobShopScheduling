@@ -255,11 +255,13 @@ public class SAFAService implements Observer {
                 }
             }
 
-            LOG.trace("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
+            LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
 
             iteration++;
             temp *= 1 - coolingRate;
         }
+
+        LOG.debug("Finished SAFA execution after {} iterations", iteration);
 
         shutDownExecutors();
     }

@@ -47,6 +47,7 @@ public class Execution {
 
         //Benchmark instance to use
         final String benchmarkInstance = args[0];
+        final Integer iterations = Integer.valueOf(args[1]);
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);
@@ -70,7 +71,7 @@ public class Execution {
         final StringBuilder resultBuilder = new StringBuilder();
 
         // Loop dictating number of times entire algorithm is to be run on a random instance.
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < iterations; i++) {
 
             LOG.debug("Generating starting schedules...");
 

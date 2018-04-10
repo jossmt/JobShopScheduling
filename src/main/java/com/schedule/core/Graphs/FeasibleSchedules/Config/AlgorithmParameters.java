@@ -8,25 +8,26 @@ public class AlgorithmParameters {
     public static final Map<String, Integer> startingPopulationParameter = new HashMap<String, Integer>() {
         {
             put("ft06", 80);
-            put("ft10", 200);
-            put("la01", 200);
-            put("la10", 200);
-            put("la11", 200);
-            put("la23", 200);
+            put("ft10", 150);
+            put("la01", 150);
+            put("la10", 150);
+            put("la11", 150);
+            put("la23", 150);
 
-            put("la34", 200);
-            put("la35", 200);
+            put("la34", 120);
+            put("la35", 120);
 
-            put("swv11",220);
-            put("swv13",220);
-            put("swv17",220);
-            put("swv18",220);
+            put("swv11",100);
+            put("swv13",100);
+            put("swv17",100);
+            put("swv18",100);
 
-            put("ta69", 250);
-            put("ta71", 250);
-            put("ta76", 250);
+            // Params used for results
+            put("ta69", 80);
+            put("ta71", 80);
+            put("ta76", 80);
 
-            put("yn2",  200);
+            put("yn2",  120);
         }
     };
 
@@ -75,7 +76,7 @@ public class AlgorithmParameters {
             put("la35", new Double[]{1000.0, 0.002});
 
             //50x10  (around 9k iterations)
-            put("swv11",new Double[]{10000.0, 0.001});
+            put("swv11",new Double[]{1000000.0, 0.001});
             put("swv13",new Double[]{10000.0, 0.001});
             put("swv17",new Double[]{10000.0, 0.001});
             put("swv18",new Double[]{10000.0, 0.001});
