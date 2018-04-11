@@ -165,12 +165,13 @@ public class TestsAfterOverhaul extends TestSetup {
 
     @Test
     public void localSearchIterations() {
-        instantiateServices("yn2");
-        setUp("yn2", 10);
+        instantiateServices("la23");
+        setUp("la23", 30);
 
         int priortotal = 0;
         int total = 0;
         int count = 0;
+        final long start = System.currentTimeMillis();
         for (final Schedule schedule : testSchedules) {
 
             priortotal += schedule.getMakespan();
@@ -178,8 +179,11 @@ public class TestsAfterOverhaul extends TestSetup {
             total += schedule.getMakespan();
             count++;
         }
+        final long end = System.currentTimeMillis();
+        final long timeElapsed = end-start;
 
         LOG.debug("Average makespan before: {}, after: {}", priortotal / count, total / count);
+        LOG.debug("Time elapsed: {}", timeElapsed);
     }
 
     @Test
