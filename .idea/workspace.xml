@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3f661da-2b14-4e22-af47-fa28a769e40a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-la23Optimal.png" afterPath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-la23Optimal.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-la23Optimal.png" afterPath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-la23Optimal.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsSAOnlyCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsSAOnlyCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -29,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Execution.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Execution.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-52">
-              <caret line="41" column="24" lean-forward="false" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+            <state relative-caret-position="43">
+              <caret line="110" column="80" lean-forward="false" selection-start-line="110" selection-start-column="80" selection-end-line="110" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -52,8 +50,8 @@
       <file leaf-file-name="SimulatedAnnealingCallable.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="32" column="40" lean-forward="true" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+            <state relative-caret-position="142">
+              <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -79,16 +77,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestsAfterOverhaul.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/TestsAfterOverhaul.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="182" column="5" lean-forward="true" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SimulatedAnnealingService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -108,21 +96,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScheduleService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java">
+      <file leaf-file-name="SAFAService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="275" column="27" lean-forward="false" selection-start-line="275" selection-start-column="27" selection-end-line="275" selection-end-column="27" />
+            <state relative-caret-position="85">
+              <caret line="180" column="16" lean-forward="false" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SAFAService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java">
+      <file leaf-file-name="BenchmarkLowerBounds.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-209">
-              <caret line="129" column="0" lean-forward="true" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+            <state relative-caret-position="159">
+              <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AlgorithmParameters.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -150,8 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>calculatePaths</find>
-      <find>calculateSc</find>
       <find>calculateSch</find>
       <find>optimal sch</find>
       <find>manually</find>
@@ -180,6 +176,8 @@
       <find>2446</find>
       <find>starting new sa</find>
       <find>sa thread</find>
+      <find>new sa thread</find>
+      <find>1090</find>
     </findStrings>
     <replaceStrings>
       <replace>,</replace>
@@ -515,9 +513,7 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/FeasibilityServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/BenchmarkInstances/swv18" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Services.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/OptimalSchedule.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" />
@@ -525,11 +521,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsCallable.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsSAOnlyCallable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
       </list>
     </option>
   </component>
@@ -1567,7 +1565,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163801000" />
+    <option name="totallyTimeSpent" value="165184000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1279" height="726" extended-state="6" />
@@ -1583,7 +1581,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.76498425" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2823344" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2791798" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1884,22 +1882,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1245">
-          <caret line="84" column="44" lean-forward="false" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Services.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -2006,24 +1988,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="32" column="40" lean-forward="true" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-52">
-          <caret line="41" column="24" lean-forward="false" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+        <state relative-caret-position="142">
+          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-209">
-          <caret line="129" column="0" lean-forward="true" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state relative-caret-position="85">
+          <caret line="180" column="16" lean-forward="false" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="41" column="30" lean-forward="true" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="110" column="80" lean-forward="false" selection-start-line="110" selection-start-column="80" selection-end-line="110" selection-end-column="80" />
           <folding />
         </state>
       </provider>

@@ -195,7 +195,7 @@ public class SAFAService implements Observer {
                 break;
             }
 
-            LOG.debug("SAFA Iteration: {}", iteration);
+            LOG.debug("SAFA Iteration: {}, SchedulesSize: {}", iteration, schedules.size());
             int randomCount = 0;
             int fireflyMoveCount = 0;
 
@@ -203,6 +203,10 @@ public class SAFAService implements Observer {
             while (scheduleIterator.hasNext()) {
 
                 final Schedule schedule = scheduleIterator.next();
+
+                if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
+                    continue;
+                }
 
                 LOG.trace("\n_________________________\n");
 
@@ -231,7 +235,7 @@ public class SAFAService implements Observer {
                             scheduleService.findFeasibleEdgeAndFlip(schedule);
 
                         } else {
-                            scheduleIterator.remove();
+                            continue;
                         }
                     }
                     fireflyMoveCount++;
@@ -246,6 +250,11 @@ public class SAFAService implements Observer {
             }
 
             LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
+
+            //All fireflies equal beacon
+            if (randomCount + fireflyMoveCount == 0) {
+                break;
+            }
 
             iteration++;
             temp *= 1 - coolingRate;

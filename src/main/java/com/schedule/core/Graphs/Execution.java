@@ -47,8 +47,8 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = "ft10";
-        final Integer iterations = 1;
+        final String benchmarkInstance = args[0];
+        final Integer iterations = Integer.valueOf(args[1]);
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);
@@ -108,7 +108,8 @@ public class Execution {
                 }
             }
 
-            while(!safaService.executorsTerminated()){
+            //Shutdown executor service properly before starting next iteration.
+            while (!safaService.executorsTerminated()) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
