@@ -1,7 +1,6 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Threads;
 
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.SAFAService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.SimulatedAnnealingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,7 @@ public class ShutDownThreadsSAOnlyCallable implements Callable<Schedule> {
     public Schedule call() throws Exception {
 
         LOG.debug("Checking whether to shutdown");
+        simulatedAnnealingService.shuttingDownService();
 
         boolean completedSA = simulatedAnnealingService.removeCompletedThreads();
         while (!(completedSA)) {

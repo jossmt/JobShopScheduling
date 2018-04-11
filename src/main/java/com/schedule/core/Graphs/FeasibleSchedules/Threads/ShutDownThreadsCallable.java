@@ -26,6 +26,7 @@ public class ShutDownThreadsCallable implements Callable<Schedule> {
     public Schedule call() throws Exception {
 
         LOG.debug("Checking whether to shutdown");
+        simulatedAnnealingService.shuttingDownService();
 
         boolean completedSAFA = safaService.removeCompletedThreads();
         boolean completedSA = simulatedAnnealingService.removeCompletedThreads();

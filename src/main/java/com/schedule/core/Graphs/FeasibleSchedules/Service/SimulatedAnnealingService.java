@@ -47,6 +47,9 @@ public class SimulatedAnnealingService implements Observer {
     /** Cooling rate. */
     private Double coolingRate;
 
+    /** true when Executorservice is shutting down. */
+    private boolean shuttingDownService = false;
+
     /**
      * Constructor.
      */
@@ -93,14 +96,16 @@ public class SimulatedAnnealingService implements Observer {
 
         scheduleService.calculateMakeSpan(schedule);
 
-        Double temp = startTemp;
+//        Double temp = startTemp;
+        Double temp = 10000000.0;
+        coolingRate = 0.001;
 
         ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
         int count = 0;
         while (temp > 1) {
 
-            LOG.debug("Iteration: {}, Makespan: {}", count, schedule.getMakespan());
+            LOG.trace("Iteration: {}, Makespan: {}", count, schedule.getMakespan());
 
             // Makespan before flipping edge.
             final Integer prevMakespan = schedule.getMakespan();
@@ -109,7 +114,7 @@ public class SimulatedAnnealingService implements Observer {
             final Optional<Edge> edgeOptional = scheduleService.findRandomEdge(allMachineEdges);
 
             if (!edgeOptional.isPresent()) {
-                LOG.debug("Local minima reached");
+                LOG.trace("Local minima reached");
                 allMachineEdges = schedule.getAllMachineEdgesManually();
                 continue;
             }
@@ -147,17 +152,17 @@ public class SimulatedAnnealingService implements Observer {
                 // If acceptance prob exceeds threshold, flip edge back
                 if (acceptanceProb > random) {
 
-                    LOG.debug("Accepted flip");
+                    LOG.trace("Accepted flip");
 
                 } else {
-                    LOG.debug("Not accepting edge flip");
+                    LOG.trace("Not accepting edge flip");
 
                     // Switching same edge back
                     scheduleService.switchEdge(edgeOptional.get());
                     scheduleService.calculateMakeSpan(schedule);
                 }
             } else {
-                LOG.debug("Infeasible edge flip");
+                LOG.trace("Infeasible edge flip");
 
                 // Switching same edge back - continue so as not to count iteration in temp.
                 scheduleService.switchEdge(edgeOptional.get());
@@ -243,9 +248,29 @@ public class SimulatedAnnealingService implements Observer {
      * Restarts thread executor
      */
     public void restartThreadExecutor() {
-
+        shuttingDownService = false;
         executorService = Executors.newFixedThreadPool(5);
         runningThreads = new ArrayList<>();
+    }
+
+    public boolean executorTerminated(){
+        return executorService.isTerminated();
+    }
+
+    /**
+     * Checks whether SA is executing or stagnant.s
+     *
+     * @return true/false
+     */
+    public boolean inactive() {
+        return runningThreads.size() < 5 && !shuttingDownService;
+    }
+
+    /**
+     * Tells new sa threads to stop running.
+     */
+    public void shuttingDownService() {
+        shuttingDownService = true;
     }
 
     /**
@@ -257,7 +282,6 @@ public class SimulatedAnnealingService implements Observer {
     @Override
     public void update(Schedule schedule) {
 
-        //TODO: add object copy via deserialisation process for larger instances.
         final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
         executeSimulatedAnnealing(beaconCopy);
     }

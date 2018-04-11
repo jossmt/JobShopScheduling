@@ -47,7 +47,7 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = "la34";
+        final String benchmarkInstance = "ft10";
         final Integer iterations = 1;
 
         //Generates parameters given the benchmark instance
@@ -94,8 +94,6 @@ public class Execution {
             //Executes SAFA
             safaService.iterativeApproachSAFA(localOptimaSet);
 
-            safaService.beginShuttingDownThreads();
-
             //Result
             LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
             resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
@@ -110,6 +108,13 @@ public class Execution {
                 }
             }
 
+            while(!safaService.executorsTerminated()){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             //Restart thread executor
             simulatedAnnealingService.restartThreadExecutor();
             safaService.restartThreadExecutor();

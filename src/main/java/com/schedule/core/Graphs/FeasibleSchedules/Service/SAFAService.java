@@ -128,7 +128,7 @@ public class SAFAService implements Observer {
         int iterations = 0;
         while (temp > 1) {
 
-            LOG.debug("SAFA iterations: {}", iterations);
+            LOG.trace("SAFA iterations: {}", iterations);
 
             LOG.trace("\n_________________________\n");
 
@@ -252,7 +252,6 @@ public class SAFAService implements Observer {
         }
 
         LOG.debug("Finished SAFA execution after {} iterations", iteration);
-
         beginShuttingDownThreads();
     }
 
@@ -261,9 +260,11 @@ public class SAFAService implements Observer {
      */
     public boolean removeCompletedThreads() {
 
-        LOG.trace("Removing completed threads from cache, size: {}", allRunningThreads.size());
+        LOG.debug("Removing completed threads from cache, size: {}", allRunningThreads.size());
 
         scheduleService.removeCompletedThreads(allRunningThreads);
+
+        LOG.debug("Finished removing completed threads from cache, size: {}", allRunningThreads.size());
 
         return allRunningThreads.isEmpty();
     }
@@ -293,6 +294,18 @@ public class SAFAService implements Observer {
 
         executorService = Executors.newFixedThreadPool(5);
         allRunningThreads = new ArrayList<>();
+    }
+
+    /**
+     * Checks if executor services are terminated.
+     *
+     * @return true/false
+     */
+    public boolean executorsTerminated() {
+        boolean safaExecutorTerminated = executorService.isTerminated();
+        boolean saExecutorTerminated = simulatedAnnealingService.executorTerminated();
+
+        return safaExecutorTerminated & saExecutorTerminated;
     }
 
     /**

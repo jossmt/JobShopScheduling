@@ -29,6 +29,11 @@ public class SimulatedAnnealingCallable implements Callable<Schedule> {
 
         LOG.debug("Finished SA thread.");
 
+        // Keeps SA running
+        if(simulatedAnnealingService.inactive()){
+            simulatedAnnealingService.update(null);
+        }
+
         return simulatedAnnealingService.getOptimal();
     }
 }
