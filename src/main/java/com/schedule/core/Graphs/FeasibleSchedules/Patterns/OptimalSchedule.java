@@ -38,10 +38,13 @@ public class OptimalSchedule implements Observable {
      */
     public synchronized void setOptimalSchedule(final Schedule optimalSchedule) {
 
-        LOG.debug("Optimal schedule update");
-
         Schedule oldOptimal = this.optimalSchedule;
         this.optimalSchedule = optimalSchedule;
+
+        if (oldOptimal != null) {
+            LOG.debug("Optimal schedule update: new: {}, before: {}", optimalSchedule.getMakespan(), oldOptimal
+                    .getMakespan());
+        }
 
         notifyObservers(oldOptimal);
     }
@@ -92,5 +95,12 @@ public class OptimalSchedule implements Observable {
         for (final Observer service : services) {
             service.update(oldOptimalSchedule);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(optimalSchedule.getMakespan());
+        return stringBuilder.toString();
     }
 }

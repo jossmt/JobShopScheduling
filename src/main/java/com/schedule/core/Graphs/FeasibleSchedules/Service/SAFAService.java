@@ -24,9 +24,6 @@ public class SAFAService implements Observer {
     /** {@link ScheduleService}. */
     private ScheduleService scheduleService = new ScheduleService();
 
-    /** {@link FeasibilityService}. */
-    private FeasibilityService feasibilityService = new FeasibilityService();
-
     /** {@link FireflyService}. */
     private FireflyService fireflyService;
 
@@ -130,7 +127,6 @@ public class SAFAService implements Observer {
     public void iterateAndUpdateOptimalFirefly(final Schedule schedule) {
 
         scheduleService.calculateMakeSpan(schedule);
-        schedule.initialiseCache();
 
         Double temp = startTemp;
 
@@ -159,7 +155,7 @@ public class SAFAService implements Observer {
                 scheduleService.findFeasibleEdgeAndFlip(schedule);
             }
 
-            if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
+            if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
 
                 LOG.trace("Setting new optimal");
                 optimalSchedule.setOptimalSchedule(schedule);
@@ -213,13 +209,11 @@ public class SAFAService implements Observer {
 
                 final Schedule schedule = scheduleIterator.next();
 
-                schedule.initialiseCache();
-
                 LOG.trace("\n_________________________\n");
 
                 final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
                 final Double randomProb = scheduleService.randomDouble();
-                if (!(acceptanceProb > randomProb)) {
+                if (acceptanceProb < randomProb) {
                     LOG.trace("Firefly move toward optimal");
 
                     final boolean successMove = fireflyService.moveToOptimalNew(schedule);
@@ -232,6 +226,7 @@ public class SAFAService implements Observer {
 
                             LOG.trace("Making random move");
                             scheduleService.findFeasibleEdgeAndFlip(schedule);
+
                         } else {
                             scheduleIterator.remove();
                         }
@@ -245,12 +240,12 @@ public class SAFAService implements Observer {
 
                     randomCount++;
                 }
+                if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
 
-                if (schedule.getMakespan() < this.optimalSchedule.getOptimalSchedule().getMakespan()) {
-
-                    LOG.trace("Setting new optimal");
-
+                    LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
+                            .getOptimalSchedule().getMakespan());
                     optimalSchedule.setOptimalSchedule(schedule);
+                    scheduleIterator.remove();
                 }
             }
 

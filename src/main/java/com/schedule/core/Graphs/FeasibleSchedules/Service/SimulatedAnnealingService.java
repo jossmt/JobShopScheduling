@@ -141,7 +141,10 @@ public class SimulatedAnnealingService implements Observer {
                 // Update external reference to optimal if makespan preferred
                 if (currentMakespan < optimalSchedule.getOptimalSchedule().getMakespan()) {
 
+                    LOG.debug("Setting new optimal: {} old: {}", currentMakespan, optimalSchedule.getOptimalSchedule
+                            ().getMakespan());
                     optimalSchedule.setOptimalSchedule(schedule);
+                    break;
                 }
 
                 // If acceptance prob exceeds threshold, flip edge back
@@ -247,13 +250,8 @@ public class SimulatedAnnealingService implements Observer {
     @Override
     public void update(Schedule schedule) {
 
-        if (schedule != null) {
-            if (schedule.exceedsCopyLimit()) {
-                executeSimulatedAnnealing(schedule);
-            } else {
-                final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
-                executeSimulatedAnnealing(beaconCopy);
-            }
-        }
+        //TODO: add object copy via deserialisation process for larger instances.
+        final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
+        executeSimulatedAnnealing(beaconCopy);
     }
 }
