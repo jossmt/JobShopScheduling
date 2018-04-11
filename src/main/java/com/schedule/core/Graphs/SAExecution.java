@@ -34,7 +34,7 @@ public class SAExecution {
 
     public static void main(String[] args) {
 
-        final String benchmarkInstance = "la34";
+        final String benchmarkInstance = args[0];
 
         //Generates parameters given the benchmark instance
         final Double[] saParameters = AlgorithmParameters.saParameters.get(benchmarkInstance);

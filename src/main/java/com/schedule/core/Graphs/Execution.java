@@ -122,7 +122,7 @@ public class Execution {
         }
 
         LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
-        LOG.debug("Optimal update rate for SA: {}, FA: {}", optimalSchedule.getSaUpdateCount(), optimalSchedule
-                .getFaUpdateCount());
+        LOG.debug("Optimal update rate for LS: {}, SA: {}, FA: {}", optimalSchedule.getLsUpdateCount(),
+                  optimalSchedule.getSaUpdateCount(), optimalSchedule.getFaUpdateCount());
     }
 }

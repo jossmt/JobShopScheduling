@@ -97,6 +97,15 @@ public class OptimalSchedule implements Observable {
     }
 
     /**
+     * Gets Rate of optimal schedule update for lssafa.
+     *
+     * @return Value of Rate of optimal schedule update for lssafa.
+     */
+    public Integer getLsUpdateCount() {
+        return lsUpdateCount;
+    }
+
+    /**
      * Adds observer.
      *
      * @param service
