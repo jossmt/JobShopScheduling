@@ -215,15 +215,17 @@ public class SimulatedAnnealingService implements Observer {
      */
     public void manualShutdownExecutorService() {
 
-        if (runningThread.isDone()) {
-            executorService.shutdown();
-        } else {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (runningThread != null) {
+            if (runningThread.isDone()) {
+                executorService.shutdown();
+            } else {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                manualShutdownExecutorService();
             }
-            manualShutdownExecutorService();
         }
     }
 
@@ -246,12 +248,11 @@ public class SimulatedAnnealingService implements Observer {
     public void update(Schedule schedule) {
 
         if (schedule != null) {
-            LOG.debug("Num jobs: {} num machiens: {}", schedule.getNumJobs(), schedule.getNumMachines());
-            if (schedule.getNumJobs() != 100 && schedule.getNumMachines() != 20) {
+            if (schedule.exceedsCopyLimit()) {
+                executeSimulatedAnnealing(schedule);
+            } else {
                 final Schedule beaconCopy = cloner.deepClone(optimalSchedule.getOptimalSchedule());
                 executeSimulatedAnnealing(beaconCopy);
-            } else {
-                executeSimulatedAnnealing(schedule);
             }
         }
     }

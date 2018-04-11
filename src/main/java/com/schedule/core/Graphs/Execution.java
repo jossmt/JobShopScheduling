@@ -86,12 +86,12 @@ public class Execution {
                                                                                        localSearchMaxIterations);
 
             // Executes SA on Optimal
-            optimalSchedule.setOptimalSchedule(scheduleSet.iterator().next());
+            optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule());
 
             LOG.debug("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
             //Executes SAFA
-            safaService.iterativeApproachSAFA(scheduleSet);
+            safaService.iterativeApproachSAFA(localOptimaSet);
 
             //Result
             LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());

@@ -510,6 +510,23 @@ public class Schedule implements Serializable {
     }
 
     /**
+     * Exceeds deep copy limit of library (serialisation copy needed).
+     *
+     * @return true if exceeds.
+     */
+    public boolean exceedsCopyLimit() {
+
+        if (numJobs > 70) {
+
+            if (numMachines > 10) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Equals.
      */
     @Override

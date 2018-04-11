@@ -228,11 +228,11 @@ public class SAFAService implements Observer {
 
                         LOG.trace("No more move options, check if equal to optimal: {}",
                                   schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
-                        if(schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()){
+                        if (schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()) {
 
                             LOG.trace("Making random move");
                             scheduleService.findFeasibleEdgeAndFlip(schedule);
-                        }else {
+                        } else {
                             scheduleIterator.remove();
                         }
                     }
@@ -331,8 +331,7 @@ public class SAFAService implements Observer {
 
         if (schedule != null) {
 
-            //100x20 instances cause stack overflow
-            if(!(schedule.getNumMachines() == 20 && schedule.getNumJobs() == 100)){
+            if (!schedule.exceedsCopyLimit()) {
                 addSimulatedAnnealingFireflyThread(schedule);
             }
         }
