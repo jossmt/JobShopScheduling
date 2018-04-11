@@ -55,7 +55,5 @@ public class SAExecution {
 
         LOG.debug("Makespan before SA: {}", optimalSchedule.getOptimalSchedule().getMakespan());
         simulatedAnnealingService.manualShutdownExecutorService();
-
-        LOG.debug("Makespan after SA: {}", optimalSchedule.getOptimalSchedule().getMakespan());
     }
 }

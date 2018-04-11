@@ -208,7 +208,15 @@ public class SAFAService implements Observer {
 
                 final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
                 final Double randomProb = scheduleService.randomDouble();
-                if (acceptanceProb < randomProb) {
+                if (acceptanceProb > randomProb) {
+
+                    LOG.trace("Making random move");
+                    scheduleService.findFeasibleEdgeAndFlip(schedule);
+
+                    randomCount++;
+
+                } else {
+
                     LOG.trace("Firefly move toward optimal");
 
                     final boolean successMove = fireflyService.moveToOptimalNew(schedule);
@@ -227,13 +235,6 @@ public class SAFAService implements Observer {
                         }
                     }
                     fireflyMoveCount++;
-
-                } else {
-
-                    LOG.trace("Making random move");
-                    scheduleService.findFeasibleEdgeAndFlip(schedule);
-
-                    randomCount++;
                 }
                 if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
 

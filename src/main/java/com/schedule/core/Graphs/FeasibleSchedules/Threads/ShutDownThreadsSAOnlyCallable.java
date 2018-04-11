@@ -34,6 +34,8 @@ public class ShutDownThreadsSAOnlyCallable implements Callable<Schedule> {
 
         LOG.debug("Shutdown services.");
 
+        LOG.debug("Optimal: {}", simulatedAnnealingService.getOptimal().getMakespan());
+
         return simulatedAnnealingService.getOptimal();
     }
 }
