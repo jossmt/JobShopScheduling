@@ -4,6 +4,7 @@ import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
 import com.schedule.core.Graphs.FeasibleSchedules.DataGenerator.SchedulesBuilder;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.LocalSearchService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.ScheduleService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.SimulatedAnnealingService;
@@ -26,12 +27,14 @@ public class SAExecution {
     /** {@link OptimalSchedule}. */
     private static final OptimalSchedule optimalSchedule = new OptimalSchedule();
 
+    private static final LocalSearchService localSearchService = new LocalSearchService();
+
     /** {@link SimulatedAnnealingService}. */
     private static SimulatedAnnealingService simulatedAnnealingService;
 
     public static void main(String[] args) {
 
-        final String benchmarkInstance = args[0];
+        final String benchmarkInstance = "la34";
 
         //Generates parameters given the benchmark instance
         final Double[] saParameters = AlgorithmParameters.saParameters.get(benchmarkInstance);
@@ -45,8 +48,10 @@ public class SAExecution {
 
         final Set<Schedule> schedules = schedulesBuilder.generateStartingSchedules(benchmarkInstance, 1);
 
+        localSearchService.executeLocalSearch(schedules, Integer.MAX_VALUE);
+
         final Schedule schedule = schedules.iterator().next();
-        optimalSchedule.setOptimalSchedule(schedule);
+        optimalSchedule.setOptimalSchedule(schedule, Services.LOCAL_SEARCH);
 
         LOG.debug("Makespan before SA: {}", optimalSchedule.getOptimalSchedule().getMakespan());
         simulatedAnnealingService.manualShutdownExecutorService();

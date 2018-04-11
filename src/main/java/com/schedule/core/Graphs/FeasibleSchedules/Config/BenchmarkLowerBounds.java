@@ -25,14 +25,14 @@ public class BenchmarkLowerBounds {
             put("ta69", 3071);
             put("ta71", 5464);
             put("ta76", 5342);
-            put("yn2",  870);
+            put("yn2",  902);
         }
     };
 
     public static final Map<String, Integer> achieved = new HashMap<String, Integer>() {
         {
             put("ft06", 54);
-            put("ft10", 1026);
+            put("ft10", 1007);
             put("la01", 666);
             put("la10", 958);
             put("la11", 1222);

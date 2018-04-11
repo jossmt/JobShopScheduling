@@ -8,18 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Callable;
 
-public class ShutDownThreadsCallable implements Callable<Schedule> {
+public class ShutDownThreadsSAOnlyCallable implements Callable<Schedule> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ShutDownThreadsCallable.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ShutDownThreadsSAOnlyCallable.class);
 
     private SimulatedAnnealingService simulatedAnnealingService;
 
-    private SAFAService safaService;
-
-    public ShutDownThreadsCallable(final SimulatedAnnealingService simulatedAnnealingService,
-                                   final SAFAService safaService) {
+    public ShutDownThreadsSAOnlyCallable(final SimulatedAnnealingService simulatedAnnealingService) {
         this.simulatedAnnealingService = simulatedAnnealingService;
-        this.safaService = safaService;
     }
 
     @Override
@@ -27,19 +23,17 @@ public class ShutDownThreadsCallable implements Callable<Schedule> {
 
         LOG.debug("Checking whether to shutdown");
 
-        boolean completedSAFA = safaService.removeCompletedThreads();
         boolean completedSA = simulatedAnnealingService.removeCompletedThreads();
-        while (!(completedSA & completedSAFA)) {
+        while (!(completedSA)) {
             LOG.debug("Threads still running, not shutting down");
             Thread.sleep(2000);
-            completedSAFA = safaService.removeCompletedThreads();
             completedSA = simulatedAnnealingService.removeCompletedThreads();
         }
 
-        safaService.shutDownExecutorService();
+        simulatedAnnealingService.shutdownExecutorService();
 
         LOG.debug("Shutdown services.");
 
-        return safaService.getOptimal();
+        return simulatedAnnealingService.getOptimal();
     }
 }

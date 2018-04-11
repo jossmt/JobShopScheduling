@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,104 +37,6 @@ public class ScheduleService {
      * Constructor.
      */
     public ScheduleService() {
-    }
-
-//    /**
-//     * Triggers on change calculation of Schedule makespan/longest paths.
-//     *
-//     * @param schedule
-//     *         {@link Schedule}
-//     */
-//    public void calculateScheduleData(final Schedule schedule) {
-//
-//        LOG.debug("Calculating schedule data");
-//        calculateMakeSpan(schedule);
-//        calculateMachineEdgesLP(schedule);
-//    }
-
-//    /**
-//     * Flips the edge that is crossed most on each of the longest paths provided.
-//     *
-//     * @param schedule
-//     *         Schedule instance.
-//     * @param longestPathEdges
-//     *         List of all edges on longest paths (including duplicates).
-//     * @param useTabuList
-//     *         Determines whether or not to use a tabu list.
-//     * @return {@link Edge}
-//     */
-//    public Optional<Edge> flipMostVisitedEdgeLongestPath(final Schedule schedule,
-//                                                         final ArrayList<Edge> longestPathEdges,
-//                                                         final boolean useTabuList) {
-//
-//        final Optional<Edge> maxEdge = getMostVisitedEdgeLongestPath(schedule, longestPathEdges, useTabuList);
-//
-//        maxEdge.ifPresent(this::switchEdge);
-//
-//        return maxEdge;
-//    }
-
-    /**
-     * Returns the edge that is crossed most on each of the longest paths provided.
-     *
-     * @param schedule
-     *         Schedule instance.
-     * @param longestPathEdges
-     *         List of all edges on longest paths (including duplicates).
-     * @param useTabuList
-     *         Determines whether or not to use a tabu list.
-     * @return {@link Edge}
-     */
-    public Optional<Edge> getMostVisitedEdgeLongestPath(final Schedule schedule, final ArrayList<Edge> longestPathEdges,
-                                                        final boolean useTabuList) {
-        Optional<Edge> maxEdge = findMostVisitedEdge(longestPathEdges);
-
-        while (useTabuList && maxEdge.isPresent()) {
-
-            final Optional<Double> acceptanceProb = schedule.getCachedEdgeAcceptanceProb(maxEdge.get());
-
-            LOG.trace("Edge: {}, acceptance prob: {}", maxEdge.get(), acceptanceProb);
-            LOG.trace("Cached Data: {}", schedule.getLruEdgeCache().size());
-
-            if (acceptanceProb.isPresent()) {
-                if (acceptanceProb.get() > randomDouble()) {
-
-                    schedule.updateLruEdgeCache(maxEdge.get());
-                    break;
-                } else {
-
-                    longestPathEdges.remove(maxEdge.get());
-                    maxEdge = findMostVisitedEdge(longestPathEdges);
-                }
-
-            } else {
-                schedule.updateLruEdgeCache(maxEdge.get());
-                break;
-            }
-        }
-
-        return maxEdge;
-    }
-
-    /**
-     * Returns most visited edge from list of edges crossed by longest paths.
-     *
-     * @param allEdges
-     *         List of all edges.
-     * @return {@link Edge}
-     */
-    public Optional<Edge> findMostVisitedEdge(final ArrayList<Edge> allEdges) {
-
-        LOG.trace("All edges size: {}", allEdges.size());
-
-        final Edge maxVal = allEdges.stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                .entrySet().stream().max(Comparator.comparing(Map.Entry::getValue))
-                .map(Map.Entry::getKey).orElse(null);
-
-        LOG.trace("Found max Edge: {}", maxVal);
-
-        return Optional.ofNullable(maxVal);
     }
 
     /**
@@ -253,7 +158,7 @@ public class ScheduleService {
      *
      * @return Makespan
      */
-    public Integer calculateMakeSpan(final Schedule schedule) {
+    public void calculateMakeSpan(final Schedule schedule) {
 
         LOG.trace("Calculating Makespan");
 
@@ -298,8 +203,6 @@ public class ScheduleService {
         schedule.setMakespan(makespan);
 
         LOG.trace("Makespan: {}", makespan);
-
-        return makespan;
     }
 
     /**
@@ -309,7 +212,7 @@ public class ScheduleService {
      *         {@link Schedule}
      * @return Optional {@link Edge}
      */
-    public Optional<Edge> findFeasibleEdgeAndFlip(final Schedule schedule) {
+    public void findFeasibleEdgeAndFlip(final Schedule schedule) {
 
         final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 
@@ -324,13 +227,12 @@ public class ScheduleService {
             if (feasibilityService.scheduleIsFeasibleProof(opFrom, opTo)) {
 
                 calculateMakeSpan(schedule);
-                return edgeOptional;
+                break;
             } else {
                 switchEdge(edge);
                 edgeOptional = findRandomEdge(allMachineEdges);
             }
         }
-        return Optional.empty();
     }
 
     /**
@@ -366,6 +268,33 @@ public class ScheduleService {
 
         final Random random = new Random();
         return random.nextInt(100) / 100.0;
+    }
+
+    /**
+     * Shuts down executor service when all threads complete.
+     */
+    public void removeCompletedThreads(final List<Future<Schedule>> allRunningThreads) {
+
+        LOG.trace("Removing completed threads from cache, size: {}", allRunningThreads.size());
+
+        final List<Future<Schedule>> toRemove = new ArrayList<>();
+        if (!allRunningThreads.isEmpty()) {
+
+            for (Future<Schedule> currentThread : allRunningThreads) {
+
+                try {
+                    currentThread.get();
+
+                    if (currentThread.isDone()) {
+                        toRemove.add(currentThread);
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        allRunningThreads.removeAll(toRemove);
     }
 
     /**

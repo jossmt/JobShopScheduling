@@ -21,6 +21,11 @@ public class OptimalSchedule implements Observable {
     /** Optimal {@link Schedule} instance. */
     private Schedule optimalSchedule;
 
+    /** Rate of optimal schedule update for ls/sa/fa */
+    private Integer lsUpdateCount = 0;
+    private Integer saUpdateCount = 0;
+    private Integer faUpdateCount = 0;
+
     /**
      * Gets optimalSchedule.
      *
@@ -36,7 +41,7 @@ public class OptimalSchedule implements Observable {
      * @param optimalSchedule
      *         Optimal Schedule.
      */
-    public synchronized void setOptimalSchedule(final Schedule optimalSchedule) {
+    public synchronized void setOptimalSchedule(final Schedule optimalSchedule, Services isSA) {
 
         Schedule oldOptimal = this.optimalSchedule;
         this.optimalSchedule = optimalSchedule;
@@ -44,6 +49,18 @@ public class OptimalSchedule implements Observable {
         if (oldOptimal != null) {
             LOG.debug("Optimal schedule update: new: {}, before: {}", optimalSchedule.getMakespan(), oldOptimal
                     .getMakespan());
+        }
+
+        switch (isSA) {
+            case FIREFLY:
+                faUpdateCount++;
+                break;
+            case LOCAL_SEARCH:
+                lsUpdateCount++;
+                break;
+            case SIMULATED_ANNEALING:
+                saUpdateCount++;
+                break;
         }
 
         notifyObservers(oldOptimal);
@@ -59,6 +76,24 @@ public class OptimalSchedule implements Observable {
 
         LOG.debug("Optimal schedule update");
         this.optimalSchedule = optimalSchedule;
+    }
+
+    /**
+     * Gets Rate of optimal schedule update for safa.
+     *
+     * @return Value of Rate of optimal schedule update for safa.
+     */
+    public Integer getSaUpdateCount() {
+        return saUpdateCount;
+    }
+
+    /**
+     * Gets faUpdateCount.
+     *
+     * @return Value of faUpdateCount.
+     */
+    public Integer getFaUpdateCount() {
+        return faUpdateCount;
     }
 
     /**

@@ -1,9 +1,8 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
-import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
-import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SAFACallable;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.ShutDownThreadsCallable;
@@ -58,7 +57,7 @@ public class SAFAService implements Observer {
         this.optimalSchedule = optimalSchedule;
 
         executorService = Executors.newFixedThreadPool(5);
-        allRunningThreads = new ArrayList<>();
+        allRunningThreads = Collections.synchronizedList(new ArrayList<>());
 
         this.startTemp = startTemp;
         this.coolingRate = coolingRate;
@@ -89,10 +88,6 @@ public class SAFAService implements Observer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        //Adds shutdown thread to handle ending threads
-        final ShutDownThreadsCallable shutDownThreadsCallable = new ShutDownThreadsCallable(this);
-        executorService.submit(shutDownThreadsCallable);
     }
 
     /**
@@ -158,7 +153,7 @@ public class SAFAService implements Observer {
             if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
 
                 LOG.trace("Setting new optimal");
-                optimalSchedule.setOptimalSchedule(schedule);
+                optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
                 break;
             }
 
@@ -244,7 +239,7 @@ public class SAFAService implements Observer {
 
                     LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
                             .getOptimalSchedule().getMakespan());
-                    optimalSchedule.setOptimalSchedule(schedule);
+                    optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
                     scheduleIterator.remove();
                 }
             }
@@ -257,7 +252,7 @@ public class SAFAService implements Observer {
 
         LOG.debug("Finished SAFA execution after {} iterations", iteration);
 
-        shutDownExecutors();
+        beginShuttingDownThreads();
     }
 
     /**
@@ -267,32 +262,24 @@ public class SAFAService implements Observer {
 
         LOG.trace("Removing completed threads from cache, size: {}", allRunningThreads.size());
 
-        if (!allRunningThreads.isEmpty()) {
-
-            Iterator<Future<Schedule>> threadIterator = allRunningThreads.iterator();
-            while (threadIterator.hasNext()) {
-
-                final Future<Schedule> currentThread = threadIterator.next();
-
-                try {
-                    currentThread.get();
-
-                    if (currentThread.isDone()) {
-                        threadIterator.remove();
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        scheduleService.removeCompletedThreads(allRunningThreads);
 
         return allRunningThreads.isEmpty();
     }
 
     /**
-     * Shuts down executors.
+     * Begins shutting down executor threads.
      */
-    public void shutDownExecutors() {
+    public void beginShuttingDownThreads() {
+
+        ShutDownThreadsCallable shutDownThreadsCallable = new ShutDownThreadsCallable(simulatedAnnealingService, this);
+        executorService.submit(shutDownThreadsCallable);
+    }
+
+    /**
+     * Shuts down executor service.
+     */
+    public void shutDownExecutorService() {
 
         executorService.shutdown();
         simulatedAnnealingService.shutdownExecutorService();

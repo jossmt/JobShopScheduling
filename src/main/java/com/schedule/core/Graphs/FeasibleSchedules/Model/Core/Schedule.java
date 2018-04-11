@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * StaticSchedule essentially representing origin vertex for job shop scheduling
  */
-public class Schedule implements Serializable {
+public class Schedule {
 
     /** Logger. */
     private static final Logger LOG = LoggerFactory.getLogger(Schedule.class);
@@ -38,12 +38,6 @@ public class Schedule implements Serializable {
 
     /** Makespan. */
     private Integer makespan;
-
-    /** BackBone Score (Firefly). */
-    private Integer backBoneScore = 0;
-
-    /** Least Recently Used Cache of flipped Edges. */
-    private LRUCache<Edge, Double> lruEdgeCache;
 
     /**
      * Constructor.
@@ -370,34 +364,6 @@ public class Schedule implements Serializable {
         this.makespan = makespan;
     }
 
-    /**
-     * Gets Number of machines and therefore jobs..
-     *
-     * @return Value of Number of machines and therefore jobs..
-     */
-    public Integer getNumMachines() {
-        return numMachines;
-    }
-
-    /**
-     * Get backbone score.
-     *
-     * @return Backbone score.
-     */
-    public Integer getBackBoneScore() {
-        return backBoneScore;
-    }
-
-    /**
-     * Updates backbone score.
-     *
-     * @param value
-     *         Score.
-     */
-    public void updateBackBoneScore(final Integer value) {
-
-        backBoneScore += value;
-    }
 
     /**
      * Gets Number of jobs..
@@ -435,78 +401,12 @@ public class Schedule implements Serializable {
     }
 
     /**
-     * Initialises least recently used cache
-     * with size based on size of schedule.
-     */
-    public void initialiseCache() {
-
-        final Integer cacheSize = Math.max(numJobs, numMachines);
-
-        lruEdgeCache = new LRUCache<>(cacheSize);
-    }
-
-    /**
-     * Sets new Least Recently Used Cache of flipped Edges..
-     *
-     * @param lruEdge
-     *         New value of Least Recently Used Cache of flipped Edges..
-     */
-    public void updateLruEdgeCache(final Edge lruEdge) {
-
-        final Cloner cloner = new Cloner();
-
-        if (lruEdgeCache.containsKey(lruEdge)) {
-
-            final Double priorProbability = lruEdgeCache.get(lruEdge);
-
-            lruEdgeCache.put(cloner.deepClone(lruEdge), priorProbability * 0.9);
-        } else {
-
-            lruEdgeCache.put(cloner.deepClone(lruEdge), 0.9);
-        }
-    }
-
-    /**
-     * Gets Least Recently Used Cache of flipped Edges..
-     *
-     * @return Value of Least Recently Used Cache of flipped Edges..
-     */
-    public LRUCache getLruEdgeCache() {
-        return lruEdgeCache;
-    }
-
-    /**
-     * Clears cache of least recently used edges.
-     */
-    public void clearCache() {
-
-        initialiseCache();
-    }
-
-    /**
      * Gets Set of all edges..
      *
      * @return Value of Set of all edges..
      */
     public Set<Edge> getAllEdges() {
         return allEdges;
-    }
-
-    /**
-     * Returns acceptance probability of cached edge.
-     *
-     * @param edge
-     *         {@link Edge}
-     * @return Optional value.
-     */
-    public Optional<Double> getCachedEdgeAcceptanceProb(final Edge edge) {
-
-        Double value = null;
-        if (lruEdgeCache.containsKey(edge)) {
-            value = lruEdgeCache.get(edge);
-        }
-
-        return Optional.ofNullable(value);
     }
 
     /**

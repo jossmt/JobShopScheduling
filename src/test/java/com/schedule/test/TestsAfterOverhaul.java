@@ -1,7 +1,11 @@
 package com.schedule.test;
 
+import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
+import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
+import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.FireflyService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.LocalSearchService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.SAFAService;
@@ -10,6 +14,9 @@ import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Set;
 
 public class TestsAfterOverhaul extends TestSetup {
 
@@ -28,7 +35,7 @@ public class TestsAfterOverhaul extends TestSetup {
         instantiateServices("ft06");
         setUp("ft06", 2);
 
-        optimalSchedule.setOptimalSchedule(optimal);
+        optimalSchedule.setOptimalSchedule(optimal, Services.LOCAL_SEARCH);
 
         simulatedAnnealingService.iterateAndUpdateOptimal(testSchedules.iterator().next());
     }
@@ -136,7 +143,7 @@ public class TestsAfterOverhaul extends TestSetup {
         instantiateServices("swv11");
         setUp("swv11", 2);
 
-        optimalSchedule.setOptimalSchedule(optimal);
+        optimalSchedule.setOptimalSchedule(optimal, Services.LOCAL_SEARCH);
 
         safaService.iterativeApproachSAFA(testSchedules);
     }
@@ -172,7 +179,20 @@ public class TestsAfterOverhaul extends TestSetup {
             count++;
         }
 
-        LOG.debug("Average makespan before: {}, after: {}", priortotal/count, total/count);
+        LOG.debug("Average makespan before: {}, after: {}", priortotal / count, total / count);
+    }
+
+    @Test
+    public void cloningLargeObjects() {
+        instantiateServices("ta76");
+        setUp("ta76", 1);
+
+        final Cloner cloner = new Cloner();
+
+        final Schedule schedule = optimal;
+
+        final Schedule schedule1 = cloner.deepClone(schedule);
+
     }
 
     /**

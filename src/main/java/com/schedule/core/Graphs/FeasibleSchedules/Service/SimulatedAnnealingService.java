@@ -5,6 +5,8 @@ import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
+import com.schedule.core.Graphs.FeasibleSchedules.Threads.ShutDownThreadsSAOnlyCallable;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SimulatedAnnealingCallable;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
 import org.slf4j.Logger;
@@ -37,7 +39,7 @@ public class SimulatedAnnealingService implements Observer {
     private Cloner cloner = new Cloner();
 
     /** {@link Future} of type {@link Schedule}. */
-    private Future<Schedule> runningThread;
+    private List<Future<Schedule>> runningThreads;
 
     /** Start temperature. */
     private Double startTemp;
@@ -51,7 +53,8 @@ public class SimulatedAnnealingService implements Observer {
     public SimulatedAnnealingService(final OptimalSchedule optimalSchedule, final Double startTemp,
                                      final Double coolingRate) {
         this.optimalSchedule = optimalSchedule;
-        executorService = Executors.newSingleThreadExecutor();
+        executorService = Executors.newFixedThreadPool(5);
+        runningThreads = new CopyOnWriteArrayList<>(new ArrayList<>());
 
         this.startTemp = startTemp;
         this.coolingRate = coolingRate;
@@ -67,15 +70,11 @@ public class SimulatedAnnealingService implements Observer {
 
         LOG.trace("Executing SA with schedule hash: {}", schedule.hashCode());
 
-        if (runningThread != null) {
-
-            runningThread.cancel(true);
-        }
-
         // Build threads
         final SimulatedAnnealingCallable simulatedAnnealingCallable =
                 new SimulatedAnnealingCallable(this, schedule);
-        runningThread = executorService.submit(simulatedAnnealingCallable);
+        final Future<Schedule> runningThread = executorService.submit(simulatedAnnealingCallable);
+        runningThreads.add(runningThread);
     }
 
     /**
@@ -93,7 +92,6 @@ public class SimulatedAnnealingService implements Observer {
     public void iterateAndUpdateOptimal(final Schedule schedule) {
 
         scheduleService.calculateMakeSpan(schedule);
-        schedule.initialiseCache();
 
         Double temp = startTemp;
 
@@ -112,7 +110,6 @@ public class SimulatedAnnealingService implements Observer {
 
             if (!edgeOptional.isPresent()) {
                 LOG.trace("Local minima reached");
-                schedule.clearCache();
                 allMachineEdges = schedule.getAllMachineEdgesManually();
                 continue;
             }
@@ -143,7 +140,7 @@ public class SimulatedAnnealingService implements Observer {
 
                     LOG.debug("Setting new optimal: {} old: {}", currentMakespan, optimalSchedule.getOptimalSchedule
                             ().getMakespan());
-                    optimalSchedule.setOptimalSchedule(schedule);
+                    optimalSchedule.setOptimalSchedule(schedule, Services.SIMULATED_ANNEALING);
                     break;
                 }
 
@@ -218,18 +215,28 @@ public class SimulatedAnnealingService implements Observer {
      */
     public void manualShutdownExecutorService() {
 
-        if (runningThread != null) {
-            if (runningThread.isDone()) {
-                executorService.shutdown();
-            } else {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                manualShutdownExecutorService();
-            }
+        LOG.debug("Manually shutting down executor service for SA");
+
+        final ShutDownThreadsSAOnlyCallable shutDownThreadsSAOnlyCallable = new ShutDownThreadsSAOnlyCallable(this);
+        executorService.submit(shutDownThreadsSAOnlyCallable);
+    }
+
+    /**
+     * Shuts down executor service when all threads complete.
+     */
+    public boolean removeCompletedThreads() {
+
+        LOG.debug("Removing completed threads from cache, size: {}", runningThreads.size());
+
+        if (runningThreads.isEmpty()) {
+            return true;
         }
+
+        scheduleService.removeCompletedThreads(runningThreads);
+
+        LOG.debug("Finished removing completed threads from cache, size: {}", runningThreads.size());
+
+        return runningThreads.isEmpty();
     }
 
     /**
@@ -237,8 +244,8 @@ public class SimulatedAnnealingService implements Observer {
      */
     public void restartThreadExecutor() {
 
-        executorService = Executors.newSingleThreadExecutor();
-        runningThread = null;
+        executorService = Executors.newFixedThreadPool(5);
+        runningThreads = new ArrayList<>();
     }
 
     /**

@@ -4,6 +4,7 @@ import com.schedule.core.Graphs.FeasibleSchedules.Config.AlgorithmParameters;
 import com.schedule.core.Graphs.FeasibleSchedules.Config.BenchmarkLowerBounds;
 import com.schedule.core.Graphs.FeasibleSchedules.DataGenerator.SchedulesBuilder;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.*;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import org.slf4j.Logger;
@@ -46,8 +47,8 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = args[0];
-        final Integer iterations = Integer.valueOf(args[1]);
+        final String benchmarkInstance = "la34";
+        final Integer iterations = 1;
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);
@@ -86,12 +87,14 @@ public class Execution {
                                                                                        localSearchMaxIterations);
 
             // Executes SA on Optimal
-            optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule());
+            optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
 
             LOG.debug("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
             //Executes SAFA
             safaService.iterativeApproachSAFA(localOptimaSet);
+
+            safaService.beginShuttingDownThreads();
 
             //Result
             LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
@@ -113,5 +116,7 @@ public class Execution {
         }
 
         LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
+        LOG.debug("Optimal update rate for SA: {}, FA: {}", optimalSchedule.getSaUpdateCount(), optimalSchedule
+                .getFaUpdateCount());
     }
 }
