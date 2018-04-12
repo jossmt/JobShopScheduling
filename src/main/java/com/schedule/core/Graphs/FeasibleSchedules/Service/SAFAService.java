@@ -191,10 +191,6 @@ public class SAFAService implements Observer {
         int iteration = 0;
         while (temp > 1) {
 
-            if (schedules.isEmpty()) {
-                break;
-            }
-
             LOG.debug("SAFA Iteration: {}, SchedulesSize: {}", iteration, schedules.size());
             int randomCount = 0;
             int fireflyMoveCount = 0;
@@ -262,6 +258,45 @@ public class SAFAService implements Observer {
 
         LOG.debug("Finished SAFA execution after {} iterations", iteration);
         beginShuttingDownThreads();
+    }
+
+
+    public void executeSingleSAFAIteration(final Set<Schedule> schedules) {
+
+        final Iterator<Schedule> scheduleIterator = schedules.iterator();
+        while (scheduleIterator.hasNext()) {
+
+            final Schedule schedule = scheduleIterator.next();
+
+            if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
+                continue;
+            }
+
+            LOG.trace("\n_________________________\n");
+
+            LOG.trace("Firefly move toward optimal");
+
+            final boolean successMove = fireflyService.moveToOptimalNew(schedule);
+
+            if (!successMove) {
+
+                LOG.trace("No more move options, check if equal to optimal: {}",
+                          schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
+                if (schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()) {
+
+                    LOG.trace("Making random move");
+                    scheduleService.findFeasibleEdgeAndFlip(schedule);
+
+                }
+            }
+
+            if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
+
+                LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
+                        .getOptimalSchedule().getMakespan());
+                optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
+            }
+        }
     }
 
     /**
