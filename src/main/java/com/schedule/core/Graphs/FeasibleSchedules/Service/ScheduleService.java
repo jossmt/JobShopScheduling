@@ -183,7 +183,6 @@ public class ScheduleService {
             final Set<Edge> adjacentEdges = operation.getActiveEdges();
             for (final Edge edge : adjacentEdges) {
 
-                //Find a better way of doing this with edge processing time
                 int newDist = dist[operation.getId()];
                 if (!(edge.getOperationTo() instanceof EndVertex))
                     newDist -= edge.getOperationTo().getConjunctiveEdge().getProcessingTime();
