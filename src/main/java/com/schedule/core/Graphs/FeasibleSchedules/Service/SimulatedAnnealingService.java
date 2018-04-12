@@ -96,9 +96,7 @@ public class SimulatedAnnealingService implements Observer {
 
         scheduleService.calculateMakeSpan(schedule);
 
-//        Double temp = startTemp;
-        Double temp = 10000000.0;
-        coolingRate = 0.001;
+        Double temp = startTemp;
 
         ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
 

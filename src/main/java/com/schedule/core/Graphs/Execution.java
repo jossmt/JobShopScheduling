@@ -47,8 +47,8 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = args[0];
-        final Integer iterations = Integer.valueOf(args[1]);
+        final String benchmarkInstance = "la10";
+        final Integer iterations = Integer.valueOf("1");
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);
@@ -80,11 +80,13 @@ public class Execution {
             final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance,
                                                                                          startingPopulation);
 
-            LOG.debug("Finished generating schedules");
+            LOG.debug("Finished generating schedules, size: {}", scheduleSet.size());
 
             // Execute Local Search
             final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet,
                                                                                        localSearchMaxIterations);
+
+            LOG.debug("Finished LS schedules, size: {}", scheduleSet.size());
 
             // Executes SA on Optimal
             optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
