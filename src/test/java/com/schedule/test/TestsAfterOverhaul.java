@@ -6,10 +6,7 @@ import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.FireflyService;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.LocalSearchService;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.SAFAService;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.SimulatedAnnealingService;
+import com.schedule.core.Graphs.FeasibleSchedules.Service.*;
 import com.schedule.test.Config.TestSetup;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -29,6 +26,9 @@ public class TestsAfterOverhaul extends TestSetup {
     private SimulatedAnnealingService simulatedAnnealingService;
 
     private SAFAService safaService;
+
+    private SAFAHybridService safaHybridService;
+
 
     @Test
     public void SATest() {
@@ -180,7 +180,7 @@ public class TestsAfterOverhaul extends TestSetup {
             count++;
         }
         final long end = System.currentTimeMillis();
-        final long timeElapsed = end-start;
+        final long timeElapsed = end - start;
 
         LOG.debug("Average makespan before: {}, after: {}", priortotal / count, total / count);
         LOG.debug("Time elapsed: {}", timeElapsed);
@@ -199,6 +199,22 @@ public class TestsAfterOverhaul extends TestSetup {
 
     }
 
+    @Test
+    public void newSAFAApproach() {
+        instantiateServices("ft06");
+        setUp("ft06", 30);
+
+        final Set<Schedule> localoptimaSet = localSearchService.executeLocalSearch(testSchedules, Integer.MAX_VALUE);
+
+        optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
+        optimalSchedule.setTargetSchedule(localSearchService.getOptimalSchedule());
+
+        safaHybridService.iterativeApproachSAFA(localoptimaSet);
+
+        LOG.debug("Optimal schedule mkspn: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+    }
+
+
     /**
      * Instantiates services.
      */
@@ -209,5 +225,10 @@ public class TestsAfterOverhaul extends TestSetup {
         simulatedAnnealingService = new SimulatedAnnealingService(optimalSchedule, saParameters[0], saParameters[1]);
         safaService = new SAFAService(fireflyService, simulatedAnnealingService, optimalSchedule, saParameters[0],
                                       saParameters[1]);
+
+        safaHybridService = new SAFAHybridService(fireflyService, simulatedAnnealingService, optimalSchedule, saParameters[0],
+                saParameters[1]);
     }
+
+
 }

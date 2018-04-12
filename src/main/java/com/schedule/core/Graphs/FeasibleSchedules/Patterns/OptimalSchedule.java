@@ -21,6 +21,9 @@ public class OptimalSchedule implements Observable {
     /** Optimal {@link Schedule} instance. */
     private Schedule optimalSchedule;
 
+    /** Target {@link Schedule} instance. */
+    private Schedule targetSchedule;
+
     /** Rate of optimal schedule update for ls/sa/fa */
     private Integer lsUpdateCount = 0;
     private Integer saUpdateCount = 0;
@@ -43,13 +46,9 @@ public class OptimalSchedule implements Observable {
      */
     public synchronized void setOptimalSchedule(final Schedule optimalSchedule, Services isSA) {
 
-        Schedule oldOptimal = this.optimalSchedule;
+        final Cloner cloner = new Cloner();
+        final Schedule copy = cloner.deepClone(optimalSchedule);
         this.optimalSchedule = optimalSchedule;
-
-        if (oldOptimal != null) {
-            LOG.debug("Optimal schedule update: new: {}, before: {}", optimalSchedule.getMakespan(), oldOptimal
-                    .getMakespan());
-        }
 
         switch (isSA) {
             case FIREFLY:
@@ -63,7 +62,7 @@ public class OptimalSchedule implements Observable {
                 break;
         }
 
-        notifyObservers(oldOptimal);
+//        notifyObservers(oldOptimal);
     }
 
     /**
@@ -76,6 +75,25 @@ public class OptimalSchedule implements Observable {
 
         LOG.debug("Optimal schedule update");
         this.optimalSchedule = optimalSchedule;
+    }
+
+    /**
+     * Sets new Target {@link Schedule} instance..
+     *
+     * @param targetSchedule
+     *         New value of Target {@link Schedule} instance..
+     */
+    public void setTargetSchedule(Schedule targetSchedule) {
+        this.targetSchedule = targetSchedule;
+    }
+
+    /**
+     * Gets Target {@link Schedule} instance..
+     *
+     * @return Value of Target {@link Schedule} instance..
+     */
+    public Schedule getTargetSchedule() {
+        return targetSchedule;
     }
 
     /**

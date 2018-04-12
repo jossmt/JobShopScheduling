@@ -49,7 +49,7 @@ public class FireflyService {
      */
     public boolean moveToOptimalNew(final Schedule schedule) {
 
-        final Schedule optimal = optimalSchedule.getOptimalSchedule();
+        final Schedule optimal = optimalSchedule.getTargetSchedule();
 
         boolean acceptedFlip = false;
         final ArrayList<Edge> allMachineEdges = schedule.getAllMachineEdgesManually();
@@ -104,7 +104,7 @@ public class FireflyService {
      */
     private Optional<Edge> findEdgeToSwitchInList(final ArrayList<Edge> edges) {
 
-        final Schedule optimal = optimalSchedule.getOptimalSchedule();
+        final Schedule optimal = optimalSchedule.getTargetSchedule();
         final Iterator<Edge> edgeIterator = edges.iterator();
 
         Edge edgeFlipped = null;

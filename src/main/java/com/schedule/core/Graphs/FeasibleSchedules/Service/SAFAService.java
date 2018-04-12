@@ -260,45 +260,6 @@ public class SAFAService implements Observer {
         beginShuttingDownThreads();
     }
 
-
-    public void executeSingleSAFAIteration(final Set<Schedule> schedules) {
-
-        final Iterator<Schedule> scheduleIterator = schedules.iterator();
-        while (scheduleIterator.hasNext()) {
-
-            final Schedule schedule = scheduleIterator.next();
-
-            if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
-                continue;
-            }
-
-            LOG.trace("\n_________________________\n");
-
-            LOG.trace("Firefly move toward optimal");
-
-            final boolean successMove = fireflyService.moveToOptimalNew(schedule);
-
-            if (!successMove) {
-
-                LOG.trace("No more move options, check if equal to optimal: {}",
-                          schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
-                if (schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()) {
-
-                    LOG.trace("Making random move");
-                    scheduleService.findFeasibleEdgeAndFlip(schedule);
-
-                }
-            }
-
-            if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
-
-                LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
-                        .getOptimalSchedule().getMakespan());
-                optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
-            }
-        }
-    }
-
     /**
      * Shuts down executor service when all threads complete.
      */
