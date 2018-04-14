@@ -12,12 +12,15 @@ public class BenchmarkLowerBounds {
         {
             put("ft06", 55);
             put("ft10", 930);
+            put("ft20", 1165);
             put("la01", 666);
             put("la10", 958);
             put("la11", 1222);
             put("la23", 1032);
             put("la34", 1721);
             put("la35", 1888);
+            put("la36", 1268);
+            put("la37", 1397);
             put("swv11",2983);
             put("swv13",3104);
             put("swv17",2794);
@@ -25,7 +28,7 @@ public class BenchmarkLowerBounds {
             put("ta69", 3071);
             put("ta71", 5464);
             put("ta76", 5342);
-            put("yn2",  902);
+            put("yn2",  904);
         }
     };
 
@@ -33,6 +36,7 @@ public class BenchmarkLowerBounds {
         {
             put("ft06", 54);
             put("ft10", 1007);
+            put("ft20", 2000);
             put("la01", 666);
             put("la10", 958);
             put("la11", 1222);
@@ -40,13 +44,15 @@ public class BenchmarkLowerBounds {
             put("swv11", 4583);
             put("la34", 1926);
             put("la35", 2160);
+            put("la36", 2500);
+            put("la37", 2500);
             put("swv11",4375);
-            put("swv13",10000);
+            put("swv13",4619);
             put("swv17",3064);
-            put("swv18",3152);
+            put("swv18",3073);
             put("ta69", 4201);
-            put("ta71", 7811);
-            put("ta76", 7688);
+            put("ta71", 7600);
+            put("ta76", 7339);
             put("yn2",  1197);
         }
     };

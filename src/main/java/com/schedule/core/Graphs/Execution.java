@@ -71,39 +71,48 @@ public class Execution {
         // Accumulates results for multiple executions.
         final StringBuilder resultBuilder = new StringBuilder();
 
+        Integer lsUpdateCounter = 0;
+        Integer saUpdateCounter = 0;
+        Integer faUpdateCounter = 0;
+
         // Loop dictating number of times entire algorithm is to be run on a random instance.
         for (int i = 0; i < iterations; i++) {
 
-            LOG.debug("Generating starting schedules...");
+            LOG.trace("Generating starting schedules...");
 
             // Generate Schedules
             final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance,
                                                                                          startingPopulation);
 
-            LOG.debug("Finished generating schedules, size: {}", scheduleSet.size());
+            LOG.trace("Finished generating schedules, size: {}", scheduleSet.size());
 
             // Execute Local Search
             final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet,
                                                                                        localSearchMaxIterations);
 
-            LOG.debug("Finished LS schedules, size: {}", scheduleSet.size());
+            LOG.trace("Finished LS schedules, size: {}", scheduleSet.size());
 
             // Executes SA on Optimal
             optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
 
-            LOG.debug("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+            LOG.trace("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
             //Executes SAFA
             safaService.iterativeApproachSAFA(localOptimaSet);
 
             //Result
-            LOG.debug("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+            LOG.trace("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
             resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
 
-            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance)) {
+            lsUpdateCounter += optimalSchedule.getLsUpdateCount();
+            saUpdateCounter += optimalSchedule.getSaUpdateCount();
+            faUpdateCounter += optimalSchedule.getFaUpdateCount();
+
+            //100x20 too large to print
+            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance) && !benchmarkInstance.contains("ta")) {
                 if (optimalSchedule.getOptimalSchedule().getMakespan() <=
                         BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
-                    LOG.debug("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+                    LOG.trace("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
                     scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance +
                             "Optimal");
 
@@ -124,7 +133,8 @@ public class Execution {
         }
 
         LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
-        LOG.debug("Optimal update rate for LS: {}, SA: {}, FA: {}", optimalSchedule.getLsUpdateCount(),
-                  optimalSchedule.getSaUpdateCount(), optimalSchedule.getFaUpdateCount());
+        final Integer remainder = Integer.valueOf(args[1]);
+        LOG.debug("Optimal update rates: LS: {}, SA: {}, FA: {}", lsUpdateCounter / remainder, saUpdateCounter /
+                remainder, faUpdateCounter / remainder);
     }
 }

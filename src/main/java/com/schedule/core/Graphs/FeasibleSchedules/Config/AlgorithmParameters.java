@@ -9,20 +9,22 @@ public class AlgorithmParameters {
         {
             put("ft06", 80);
             put("ft10", 150);
+            put("ft20", 150);
+
             put("la01", 150);
             put("la10", 150);
             put("la11", 150);
             put("la23", 150);
-
             put("la34", 120);
             put("la35", 120);
+            put("la36", 120);
+            put("la37", 120);
 
             put("swv11",100);
             put("swv13",100);
             put("swv17",100);
             put("swv18",100);
 
-            // Params used for results
             put("ta69", 80);
             put("ta71", 80);
             put("ta76", 80);
@@ -35,6 +37,8 @@ public class AlgorithmParameters {
         {
             put("ft06", 30);
             put("ft10", 60);
+            put("ft20", 60);
+
             put("la01", 30);
             put("la10", 50);
             put("la11", 60);
@@ -42,6 +46,8 @@ public class AlgorithmParameters {
 
             put("la34", 100);
             put("la35", 100);
+            put("la36", 100);
+            put("la37", 100);
 
             put("swv11",150);
             put("swv13",150);
@@ -62,6 +68,9 @@ public class AlgorithmParameters {
             put("ft06", new Double[]{1000.0, 0.03});
             //10x10 (around 400 iterations)
             put("ft10", new Double[]{1000.0, 0.015});
+            //20x5 (Around 275 iterations)
+            put("ft20", new Double[]{1000.0, 0.02});
+
             //10x5 (Around 250 iterations)
             put("la01", new Double[]{1000.0, 0.025});
             //15x5 (Around 275 iterations)
@@ -74,6 +83,10 @@ public class AlgorithmParameters {
             //30 x 10 (around 3k iterations)
             put("la34", new Double[]{1000.0, 0.002});
             put("la35", new Double[]{1000.0, 0.002});
+
+            //15 x 15 (around 3k iterations)
+            put("la36", new Double[]{1000.0, 0.002});
+            put("la37", new Double[]{1000.0, 0.002});
 
             //50x10  (around 9k iterations)
             put("swv11",new Double[]{1000000.0, 0.001});
