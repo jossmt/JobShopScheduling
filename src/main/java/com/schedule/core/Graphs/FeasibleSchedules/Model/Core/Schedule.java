@@ -300,16 +300,16 @@ public class Schedule {
      *         Job of Operation
      * @param lastJob
      *         Last job in task order
-     * @param taskParams
-     *         Params of Operation
+     * @param machine
+     *         Machine of Operation
      */
-    public void setActiveEdge(final Integer job, final Integer lastJob, final Integer[] taskParams) {
+    public void setActiveEdge(final Integer lastJob, final Integer job, final Integer machine) {
 
-        final Operation operationTo = findJobTaskWithMachine(jobHashMap.get(job), taskParams[0]);
+        final Operation operationTo = findJobTaskWithMachine(jobHashMap.get(job), machine);
 
         if (lastJob != null) {
 
-            final Operation operationFrom = findJobTaskWithMachine(jobHashMap.get(lastJob), taskParams[0]);
+            final Operation operationFrom = findJobTaskWithMachine(jobHashMap.get(lastJob), machine);
 
             final Edge disjunctiveEdge = new Edge(operationFrom, operationTo, operationFrom.getProcessingTime());
             operationFrom.setDisjunctiveEdge(disjunctiveEdge);

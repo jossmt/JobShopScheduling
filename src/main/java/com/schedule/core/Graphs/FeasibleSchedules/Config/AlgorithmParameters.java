@@ -30,6 +30,7 @@ public class AlgorithmParameters {
             put("ta76", 80);
 
             put("yn2",  120);
+            put("yn3",  120);
         }
     };
 
@@ -59,6 +60,7 @@ public class AlgorithmParameters {
             put("ta76", 200);
 
             put("yn2",  100);
+            put("yn3",  100);
         }
     };
 
@@ -101,6 +103,8 @@ public class AlgorithmParameters {
 
             // 20x20 (around 2.5k iterations)
             put("yn2",  new Double[]{1000.0, 0.0025});
+            put("yn3",  new Double[]{1000.0, 0.0025});
+
         }
     };
 }

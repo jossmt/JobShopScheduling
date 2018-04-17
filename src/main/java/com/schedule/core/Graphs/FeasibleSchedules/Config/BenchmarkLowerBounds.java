@@ -29,6 +29,7 @@ public class BenchmarkLowerBounds {
             put("ta71", 5464);
             put("ta76", 5342);
             put("yn2",  904);
+            put("yn3",  892);
         }
     };
 
@@ -54,6 +55,7 @@ public class BenchmarkLowerBounds {
             put("ta71", 7600);
             put("ta76", 7339);
             put("yn2",  1197);
+            put("yn3",  2000);
         }
     };
 }

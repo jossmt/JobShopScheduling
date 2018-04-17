@@ -126,13 +126,58 @@ public class SchedulesBuilder {
             if (count[randVal] < numMachines) {
 
                 final Integer machine = jobset[randVal][count[randVal]][0];
-                schedule.setActiveEdge(randVal, lastActiveJob[machine], jobset[randVal][count[randVal]]);
+                schedule.setActiveEdge(lastActiveJob[machine], randVal, jobset[randVal][count[randVal]][0]);
 
                 lastActiveJob[machine] = randVal;
                 count[randVal]++;
                 sum++;
             }
             LOG.trace("Sum: {}, total: {}", sum, numMachines * numJobs);
+        }
+
+        LOG.debug("Generated schedule, calculating schedule data...");
+
+        scheduleService.calculateMakeSpan(schedule);
+
+        return schedule;
+    }
+
+    /**
+     * Builds random schedules using benchmark instance data.
+     *
+     * @return {@link Schedule}
+     */
+    public Schedule build6x6() {
+
+        final Integer[][][] jobset = getBenchmarkInstance("ft06");
+
+        final Integer numMachines = jobset[0].length;
+        final Integer numJobs = jobset.length;
+
+        final Schedule schedule = generateTreeTemplate(jobset, numMachines, numJobs);
+
+        Integer[] count = new Integer[numJobs];
+        for (Integer i = 0; i < count.length; i++) {
+            count[i] = 0;
+        }
+
+        final Integer[] m0 = {0, 3, 2, 5, 1, 4};
+        final Integer[] m1 = {1, 3, 5, 4, 0, 2};
+        final Integer[] m2 = {0, 2, 1, 3, 5, 4};
+        final Integer[] m3 = {2, 5, 3, 0, 1, 4};
+        final Integer[] m4 = {1, 4, 3, 2, 5, 0};
+        final Integer[] m5 = {2, 5, 1, 4, 0, 3};
+        final Integer[][] machinePaths = new Integer[][]{m0, m1, m2, m3, m4, m5};
+
+        int machine = 0;
+        for(Integer[] machinePath : machinePaths){
+
+            int index = 0;
+            while(index+1 < machinePath.length){
+                schedule.setActiveEdge(machinePath[index], machinePath[index+1], machine);
+                index++;
+            }
+            machine++;
         }
 
         LOG.debug("Generated schedule, calculating schedule data...");
@@ -177,7 +222,7 @@ public class SchedulesBuilder {
                 LOG.trace("Count of job: {}", count[jobVal]);
 
                 final Integer machine = jobset[jobVal][count[jobVal]][0];
-                schedule.setActiveEdge(jobVal, lastActiveJob[machine], jobset[jobVal][count[jobVal]]);
+                schedule.setActiveEdge(lastActiveJob[machine], jobVal, jobset[jobVal][count[jobVal]][0]);
 
                 lastActiveJob[machine] = jobVal;
                 count[jobVal]++;

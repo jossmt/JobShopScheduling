@@ -1,2 +1,0 @@
-{PT: 29 JFrom: 0 MFrom: 0 | JTo:1 MTo: 0,
-=0.81}

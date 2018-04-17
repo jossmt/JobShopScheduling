@@ -1,24 +1,19 @@
 package com.schedule.test.Config;
 
+/**
+ * File paths to test data.
+ */
 public class TestDataPaths {
 
-    public static final String CALCULATE_PATHS_PATH = "./src/test/resources/CalculatePathsTestData.txt";
-
+    // Topological sort path.
     public static final String TOPOLOGICAL_SORT_PATH = "./src/test/resources/TopologicalSortTestData.txt";
-
-    public static final String FLIP_EDGE_HASHES_PATH = "./src/test/resources/FlipEdgeHashesTestData.txt";
-
+    // Hashes of firefly as they move.
     public static final String FIREFLY_MOVEMENT_PATH = "./src/test/resources/FireflyMovementHashes.txt";
-
-    public static final String LRU_CACHE_PATH = "./src/test/resources/LRUCacheTestData.txt";
-
-    public static final String MOST_VISITED_EDGE_PATH = "./src/test/resources/MostVisitedEdgeData.txt";
-
-    public static final String LOCAL_SEARCH_DATA_PATH = "./src/test/resources/LSft10Data.txt";
-
-    public static final String LOCAL_SEARCH_DATA_PATH_2 = "./src/test/resources/LSla01Data.txt";
-
-    public static final String LOCAL_SEARCH_DATA_PATH_3 = "./src/test/resources/LSla23Data.txt";
-
+    // Hashes of larger firefly as they move.
+    public static final String FIREFLY_MOVEMENT_LARGER_PATH = "./src/test/resources/FireflyMovementHashesLarger.txt";
+    // Makespan calculations of schedules.
+    public static final String MAKESPAN_CALCULATIONS_PATH = "./src/test/resources/MakespanCalculations.txt";
+    // Hashes of generated schedules.
+    public static final String SCHEDULE_GENERATION_HASHES_PATH = "./src/test/resources/ScheduleGenerationHashes.txt";
 
 }

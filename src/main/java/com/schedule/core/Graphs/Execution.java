@@ -74,9 +74,14 @@ public class Execution {
         Integer lsUpdateCounter = 0;
         Integer saUpdateCounter = 0;
         Integer faUpdateCounter = 0;
+        Long computationTime = 0L;
 
         // Loop dictating number of times entire algorithm is to be run on a random instance.
         for (int i = 0; i < iterations; i++) {
+
+            final Long start = System.currentTimeMillis();
+
+            LOG.debug("Started run for iteration: {}", i);
 
             LOG.trace("Generating starting schedules...");
 
@@ -100,6 +105,10 @@ public class Execution {
             //Executes SAFA
             safaService.iterativeApproachSAFA(localOptimaSet);
 
+            final Long end = System.currentTimeMillis();
+            final Long timeTaken = end - start;
+            computationTime += timeTaken;
+
             //Result
             LOG.trace("Final: {}", optimalSchedule.getOptimalSchedule().getMakespan());
             resultBuilder.append(optimalSchedule.getOptimalSchedule().getMakespan()).append(",");
@@ -109,15 +118,15 @@ public class Execution {
             faUpdateCounter += optimalSchedule.getFaUpdateCount();
 
             //100x20 too large to print
-            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance) && !benchmarkInstance.contains("ta")) {
-                if (optimalSchedule.getOptimalSchedule().getMakespan() <=
-                        BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
-                    LOG.trace("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
-                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance +
-                            "Optimal");
-
-                }
-            }
+//            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance) && !benchmarkInstance.contains("ta")) {
+//                if (optimalSchedule.getOptimalSchedule().getMakespan() <=
+//                        BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
+//                    LOG.trace("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
+//                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance +
+//                            "Optimal");
+//
+//                }
+//            }
 
             //Shutdown executor service properly before starting next iteration.
             while (!safaService.executorsTerminated()) {
@@ -133,8 +142,8 @@ public class Execution {
         }
 
         LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
-        final Integer remainder = Integer.valueOf(args[1]);
-        LOG.debug("Optimal update rates: LS: {}, SA: {}, FA: {}", lsUpdateCounter / remainder, saUpdateCounter /
-                remainder, faUpdateCounter / remainder);
+        LOG.debug("Optimal update rates: LS: {}, SA: {}, FA: {}", lsUpdateCounter / iterations, saUpdateCounter /
+                iterations, faUpdateCounter / iterations);
+        LOG.debug("Average computation time: {}", computationTime/iterations);
     }
 }

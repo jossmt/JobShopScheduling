@@ -17,7 +17,7 @@ import java.util.Set;
 public class TestSetup {
 
     /** {@link SchedulesBuilder}. */
-    protected SchedulesBuilder schedulesBuilder = new SchedulesBuilder();
+    private SchedulesBuilder schedulesBuilder = new SchedulesBuilder();
 
     /** {@link ScheduleService}. */
     protected ScheduleService scheduleService = new ScheduleService();
@@ -35,7 +35,7 @@ public class TestSetup {
     protected Set<Schedule> testSchedules;
 
     /**
-     * Setup.
+     * Setup schedules with random yet constant test data generation.
      *
      * @param benchmarkInstance
      *         Benchmark Instance
@@ -46,7 +46,7 @@ public class TestSetup {
 
         testSchedules = new HashSet<>();
 
-        final Set<Schedule> schedules = schedulesBuilder.generateStartingSchedules(benchmarkInstance, setSize);
+        final Set<Schedule> schedules = schedulesBuilder.generateTestSchedules(benchmarkInstance, setSize);
 
         boolean first = true;
         for (final Schedule schedule : schedules) {
