@@ -110,13 +110,13 @@ public class Schedule {
             final Integer jobToCheck = uncheckedJobs.iterator().next();
 
             //Finds first available job/machine match
-            final Operation relevantOperationForJob = findVertexForMachine(operation.getMachine(),
-                                                                           jobHashMap.get(jobToCheck));
+            final Operation relevantOperationForJob = findVertexForMachine(operation.getMachine(), jobHashMap.get
+                    (jobToCheck));
 
             //If not null, run depth first update vertices to add disjunctive edges
             if (relevantOperationForJob != null) {
-                final Set<Integer> updatedEdges = depthFirstUpdateVertices(new HashSet<>(), operation,
-                                                                           relevantOperationForJob);
+                final Set<Integer> updatedEdges =
+                        depthFirstUpdateVertices(new HashSet<>(), operation, relevantOperationForJob);
                 uncheckedJobs.removeAll(updatedEdges);
 
             } else {
@@ -147,8 +147,9 @@ public class Schedule {
             for (final Edge disjunctiveEdge : oldOperation.getInactiveDisjunctiveEdges()) {
 
                 if (!depthFirstUpdatedVertices.contains(disjunctiveEdge.getOperationTo().getJob())) {
-                    depthFirstUpdatedVertices.addAll(depthFirstUpdateVertices(depthFirstUpdatedVertices, newOperation,
-                                                                              disjunctiveEdge.getOperationTo()));
+                    depthFirstUpdatedVertices
+                            .addAll(depthFirstUpdateVertices(
+                                    depthFirstUpdatedVertices, newOperation, disjunctiveEdge.getOperationTo()));
                 }
             }
 

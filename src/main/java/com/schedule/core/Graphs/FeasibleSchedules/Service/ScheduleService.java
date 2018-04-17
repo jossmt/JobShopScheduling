@@ -316,24 +316,21 @@ public class ScheduleService {
             while (currentOperation.hasConjunctiveEdge()) {
 
                 if (!(currentOperation instanceof EndVertex)) {
-                    cluster.append("J").append(currentOperation.getJob()).append("M").append(currentOperation
-                                                                                                     .getMachine());
+                    cluster.append("J").append(currentOperation.getJob()).append("M")
+                            .append(currentOperation.getMachine());
 
                     if (!(currentOperation.getConjunctiveEdge().getOperationTo() instanceof EndVertex)) {
                         cluster.append(" -> ");
                     } else {
-                        endEdges.append("J").append(currentOperation.getJob()).append("M").append(currentOperation
-                                                                                                          .getMachine
-                                                                                                                  ())
+                        endEdges.append("J").append(currentOperation.getJob()).append("M")
+                                .append(currentOperation.getMachine())
                                 .append(" -> ").append("E;\n");
                     }
                 }
 
                 if (currentOperation.getDisjunctiveEdge() != null) {
-                    directedEdges.append("J").append(currentOperation.getJob()).append("M").append(currentOperation
-                                                                                                           .getMachine
-                                                                                                                   ()
-                    ).append(" -> ")
+                    directedEdges.append("J").append(currentOperation.getJob()).append("M")
+                            .append(currentOperation.getMachine()).append(" -> ")
                             .append("J").append(currentOperation.getDisjunctiveEdge().getOperationTo().getJob())
                             .append("M")
                             .append(currentOperation.getDisjunctiveEdge().getOperationTo().getMachine())

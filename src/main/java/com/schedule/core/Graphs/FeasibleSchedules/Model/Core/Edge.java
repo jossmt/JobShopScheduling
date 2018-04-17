@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.io.Serializable;
 
 /**
- * Edge between vertices (tasks)
+ * Edge between Vertices(Operations)
  */
 public class Edge implements Serializable {
 
@@ -141,6 +141,13 @@ public class Edge implements Serializable {
         setProcessingTime(operationFrom.getProcessingTime());
     }
 
+    /**
+     * Equals builder.
+     *
+     * @param obj
+     *         Comparison Object
+     * @return equal/not
+     */
     @Override
     public boolean equals(final Object obj) {
 
@@ -185,14 +192,11 @@ public class Edge implements Serializable {
         if (operationFrom != null) {
 
             stringBuilder.append("PT: ").append(processingTime).append(" JFrom: ").append(operationFrom.getJob())
-                    .append(" MFrom: ").append(operationFrom
-                                                       .getMachine());
+                    .append(" MFrom: ").append(operationFrom.getMachine());
         }
         if (operationTo != null) {
-
-            stringBuilder.append(" | JTo:").append(operationTo.getJob()).append(" MTo: ").append(operationTo
-                                                                                                         .getMachine())
-                    .append(",\n");
+            stringBuilder.append(" | JTo:").append(operationTo.getJob()).append(" MTo: ")
+                    .append(operationTo.getMachine()).append(",\n");
         }
         return stringBuilder.toString();
     }

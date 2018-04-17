@@ -88,7 +88,7 @@ public class SimulatedAnnealingService implements Observer {
     /**
      * Simulated Annealing Algorithm
      * <p>
-     * Utilises parameters starting temperature (default 3000) and a cooling rate (default 0.02) to dictate number
+     * Utilises parameters starting temperature and a cooling rate (based on input schedule size) to dictate number
      * of iterations and the rate of temperature change. When temperature is high, our acceptance rate is high, leading
      * to the acceptance of a sporadic/random movement. As our temperature diminishes according to the cooling rate
      * and our acceptance rate diminishes, execution of the desired transition function increases, thereby effectively

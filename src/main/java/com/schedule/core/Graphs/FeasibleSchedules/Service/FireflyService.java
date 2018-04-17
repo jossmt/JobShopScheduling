@@ -126,8 +126,8 @@ public class FireflyService {
                 }
 
                 //If order of operations is different in optimal, reorder local
-                final Operation opTo = optimal.locateOperation(currentEdge.getOperationTo().getJob(),
-                                                               currentEdge.getOperationTo().getMachine());
+                final Operation opTo = optimal.locateOperation(
+                        currentEdge.getOperationTo().getJob(), currentEdge.getOperationTo().getMachine());
                 if (!scheduleService.isInOrder(opFrom, opTo)) {
 
                     edgeFlipped = currentEdge;

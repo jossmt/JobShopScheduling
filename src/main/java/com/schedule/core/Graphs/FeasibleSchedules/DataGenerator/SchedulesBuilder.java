@@ -19,8 +19,7 @@ import java.util.Set;
 public class SchedulesBuilder {
 
     /** Logger. */
-    private static final Logger LOG = LoggerFactory.getLogger(com.schedule.core.Graphs.FeasibleSchedules
-                                                                      .DataGenerator.SchedulesBuilder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SchedulesBuilder.class);
 
     /** {@link ScheduleService}. */
     private ScheduleService scheduleService = new ScheduleService();

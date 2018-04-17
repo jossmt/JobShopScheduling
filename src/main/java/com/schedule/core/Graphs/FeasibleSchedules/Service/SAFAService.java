@@ -50,8 +50,6 @@ public class SAFAService implements Observer {
     /**
      * Constructor.
      *
-     * @param fireflyService
-     *         {@link FireflyService}
      */
     public SAFAService(final FireflyService fireflyService, final SimulatedAnnealingService simulatedAnnealingService,
                        final OptimalSchedule optimalSchedule, final Double startTemp, final Double coolingRate) {
@@ -109,7 +107,7 @@ public class SAFAService implements Observer {
 
     /**
      * Simulated Annealing Firefly Algorithm Formula
-     * Utilises parameters starting temperature (default 3000) and a cooling rate (default 0.02) to dictate number
+     * Utilises parameters starting temperature and a cooling rate (based on input schedule size) to dictate number
      * of iterations and the rate of temperature change. When temperature is high, our acceptance rate is high, leading
      * to the acceptance of a sporadic/random movement. As our temperature diminishes according to the cooling rate
      * and our acceptance rate diminishes, execution of the desired transition function, in this case the firefly

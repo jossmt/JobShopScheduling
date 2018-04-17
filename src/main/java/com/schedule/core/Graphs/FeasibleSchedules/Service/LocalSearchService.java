@@ -146,9 +146,9 @@ public class LocalSearchService {
     }
 
     /**
-     * Gets Local optimas for SA..
+     * Gets Local optimas..
      *
-     * @return Value of Local optimas for SA..
+     * @return Value of Local optimas.
      */
     public Set<Schedule> getLocalOptimalSchedules() {
         return localOptimalSchedules;

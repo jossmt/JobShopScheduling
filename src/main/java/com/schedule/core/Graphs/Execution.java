@@ -85,19 +85,20 @@ public class Execution {
             LOG.trace("Generating starting schedules...");
 
             // Generate Schedules
-            final Set<Schedule> scheduleSet = schedulesBuilder.generateStartingSchedules(benchmarkInstance,
-                                                                                         startingPopulation);
+            final Set<Schedule> scheduleSet = schedulesBuilder
+                    .generateStartingSchedules(benchmarkInstance, startingPopulation);
 
             LOG.trace("Finished generating schedules, size: {}", scheduleSet.size());
 
             // Execute Local Search
-            final Set<Schedule> localOptimaSet = localSearchService.executeLocalSearch(scheduleSet,
-                                                                                       localSearchMaxIterations);
+            final Set<Schedule> localOptimaSet = localSearchService
+                    .executeLocalSearch(scheduleSet, localSearchMaxIterations);
 
             LOG.trace("Finished LS schedules, size: {}", scheduleSet.size());
 
             // Executes SA on Optimal
-            optimalSchedule.setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
+            optimalSchedule
+                    .setOptimalSchedule(localSearchService.getOptimalSchedule(), Services.LOCAL_SEARCH);
 
             LOG.trace("Computed max local optimal: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
