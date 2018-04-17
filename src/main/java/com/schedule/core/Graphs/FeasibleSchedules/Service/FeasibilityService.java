@@ -25,9 +25,9 @@ public class FeasibilityService {
 
     /**
      * Schedule feasibility check following an edge switch.
-     * Using operation edge flipped from, and operation edge flipped to, a method is developed to assert if the new
+     * Using operation edge flipped from, and operation edge flipped to, method asserts if the new
      * schedule instance is feasible. With the help of a proof, the method checks that all paths leading from
-     * operation to do not lead back to any job preceding the new operation from.
+     * operationTO do not lead back to any job preceding the new operationFrom.
      *
      * @param from
      *         after being flipped

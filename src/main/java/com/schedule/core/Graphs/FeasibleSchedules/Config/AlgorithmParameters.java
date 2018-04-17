@@ -3,8 +3,14 @@ package com.schedule.core.Graphs.FeasibleSchedules.Config;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Benchmark execution parameters.
+ */
 public class AlgorithmParameters {
 
+    /**
+     * Starting firefly population.
+     */
     public static final Map<String, Integer> startingPopulationParameter = new HashMap<String, Integer>() {
         {
             put("ft06", 80);
@@ -20,20 +26,23 @@ public class AlgorithmParameters {
             put("la36", 120);
             put("la37", 120);
 
-            put("swv11",100);
-            put("swv13",100);
-            put("swv17",100);
-            put("swv18",100);
+            put("swv11", 100);
+            put("swv13", 100);
+            put("swv17", 100);
+            put("swv18", 100);
 
             put("ta69", 80);
             put("ta71", 80);
             put("ta76", 80);
 
-            put("yn2",  120);
-            put("yn3",  120);
+            put("yn2", 120);
+            put("yn3", 120);
         }
     };
 
+    /**
+     * Max local search iterations parameter.
+     */
     public static final Map<String, Integer> localSearchIterationsParameter = new HashMap<String, Integer>() {
         {
             put("ft06", 30);
@@ -50,20 +59,23 @@ public class AlgorithmParameters {
             put("la36", 100);
             put("la37", 100);
 
-            put("swv11",150);
-            put("swv13",150);
-            put("swv17",150);
-            put("swv18",150);
+            put("swv11", 150);
+            put("swv13", 150);
+            put("swv17", 150);
+            put("swv18", 150);
 
             put("ta69", 200);
             put("ta71", 200);
             put("ta76", 200);
 
-            put("yn2",  100);
-            put("yn3",  100);
+            put("yn2", 100);
+            put("yn3", 100);
         }
     };
 
+    /**
+     * Simulated Annealing temperature and cooling rate parameters.
+     */
     public static final Map<String, Double[]> saParameters = new HashMap<String, Double[]>() {
         {
             //6x6 (around 200 iterations)
@@ -91,10 +103,10 @@ public class AlgorithmParameters {
             put("la37", new Double[]{1000.0, 0.002});
 
             //50x10  (around 9k iterations)
-            put("swv11",new Double[]{1000000.0, 0.001});
-            put("swv13",new Double[]{10000.0, 0.001});
-            put("swv17",new Double[]{10000.0, 0.001});
-            put("swv18",new Double[]{10000.0, 0.001});
+            put("swv11", new Double[]{1000000.0, 0.001});
+            put("swv13", new Double[]{10000.0, 0.001});
+            put("swv17", new Double[]{10000.0, 0.001});
+            put("swv18", new Double[]{10000.0, 0.001});
 
             //100 x 20
             put("ta69", new Double[]{1000000.0, 0.001});
@@ -102,8 +114,8 @@ public class AlgorithmParameters {
             put("ta76", new Double[]{1000000.0, 0.001});
 
             // 20x20 (around 2.5k iterations)
-            put("yn2",  new Double[]{1000.0, 0.0025});
-            put("yn3",  new Double[]{1000.0, 0.0025});
+            put("yn2", new Double[]{1000.0, 0.0025});
+            put("yn3", new Double[]{1000.0, 0.0025});
 
         }
     };

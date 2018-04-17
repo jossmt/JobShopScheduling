@@ -63,7 +63,7 @@ public class SchedulesBuilder {
         //Generates the same schedules using same random number set.
         Scanner input = null;
         try {
-            File file = new File("./src/test/resources/RandomVals.txt");
+            File file = new File(FileDataPaths.RANDOM_VALUES_PATH);
             LOG.trace("File exists: {}", file.exists());
             input = new Scanner(file);
         } catch (FileNotFoundException e) {
@@ -143,52 +143,7 @@ public class SchedulesBuilder {
     }
 
     /**
-     * Builds random schedules using benchmark instance data.
-     *
-     * @return {@link Schedule}
-     */
-    public Schedule build6x6() {
-
-        final Integer[][][] jobset = getBenchmarkInstance("ft06");
-
-        final Integer numMachines = jobset[0].length;
-        final Integer numJobs = jobset.length;
-
-        final Schedule schedule = generateTreeTemplate(jobset, numMachines, numJobs);
-
-        Integer[] count = new Integer[numJobs];
-        for (Integer i = 0; i < count.length; i++) {
-            count[i] = 0;
-        }
-
-        final Integer[] m0 = {0, 3, 2, 5, 1, 4};
-        final Integer[] m1 = {1, 3, 5, 4, 0, 2};
-        final Integer[] m2 = {0, 2, 1, 3, 5, 4};
-        final Integer[] m3 = {2, 5, 3, 0, 1, 4};
-        final Integer[] m4 = {1, 4, 3, 2, 5, 0};
-        final Integer[] m5 = {2, 5, 1, 4, 0, 3};
-        final Integer[][] machinePaths = new Integer[][]{m0, m1, m2, m3, m4, m5};
-
-        int machine = 0;
-        for(Integer[] machinePath : machinePaths){
-
-            int index = 0;
-            while(index+1 < machinePath.length){
-                schedule.setActiveEdge(machinePath[index], machinePath[index+1], machine);
-                index++;
-            }
-            machine++;
-        }
-
-        LOG.debug("Generated schedule, calculating schedule data...");
-
-        scheduleService.calculateMakeSpan(schedule);
-
-        return schedule;
-    }
-
-    /**
-     * Builds test schedules using random values from a file.s
+     * Builds test schedules using random values from a file.
      *
      * @param jobset
      *         Data for schedule instance.
@@ -277,7 +232,7 @@ public class SchedulesBuilder {
     }
 
     /**
-     * Gets the benchmark instance data from a saved file.s
+     * Gets the benchmark instance data from a saved file.
      *
      * @param instance
      *         String of instance name.

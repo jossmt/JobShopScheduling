@@ -16,11 +16,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Schedule Service handling functionality directly related to the {@link Schedule} object.
@@ -155,8 +152,6 @@ public class ScheduleService {
 
     /**
      * Calculates makespan using reverse modification of Dijkstras Algorithm.
-     *
-     * @return Makespan
      */
     public void calculateMakeSpan(final Schedule schedule) {
 
@@ -209,7 +204,6 @@ public class ScheduleService {
      *
      * @param schedule
      *         {@link Schedule}
-     * @return Optional {@link Edge}
      */
     public void findFeasibleEdgeAndFlip(final Schedule schedule) {
 

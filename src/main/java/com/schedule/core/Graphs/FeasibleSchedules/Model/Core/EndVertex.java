@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * End dummy vertex.
+ * End dummy vertex (SINK).
  */
 public class EndVertex extends Operation implements Serializable {
 
@@ -37,7 +37,6 @@ public class EndVertex extends Operation implements Serializable {
         endParentEdges = new HashSet<>();
     }
 
-
     /**
      * Gets endEdges.
      *
@@ -52,7 +51,6 @@ public class EndVertex extends Operation implements Serializable {
     public boolean hasParentEdges(){
 
         return !endParentEdges.isEmpty();
-
     }
 
     /**

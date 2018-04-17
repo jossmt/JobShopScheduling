@@ -5,7 +5,9 @@ package com.schedule.core.Graphs.FeasibleSchedules.Config;
  */
 public class FileDataPaths {
 
+    //Path to graph generation folder.
     public static final String GENERATED_GRAPH_PATH = "./src/main/resources/graphviz/";
 
-    public static final String BENCHMARK_INSTANCES_PATH = "./src/main/resources/BenchmarkInstances/";
+    //Path to random values for test data generation.
+    public static final String RANDOM_VALUES_PATH = "./src/test/resources/RandomVals.txt";
 }

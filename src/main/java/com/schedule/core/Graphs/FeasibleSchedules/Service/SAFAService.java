@@ -336,9 +336,7 @@ public class SAFAService implements Observer {
 
         if (schedule != null) {
 
-            if (!schedule.exceedsCopyLimit()) {
-                addSimulatedAnnealingFireflyThread(schedule);
-            }
+            addSimulatedAnnealingFireflyThread(schedule);
         }
     }
 }

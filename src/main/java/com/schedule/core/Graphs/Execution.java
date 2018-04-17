@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 
 /**
- * Executes makespan optimisation process.
+ * Executes full Hybrid Algorithm.
  */
 public class Execution {
 
@@ -22,9 +22,6 @@ public class Execution {
 
     /** {@link LocalSearchService}. */
     private static final LocalSearchService localSearchService = new LocalSearchService();
-
-    /** {@link ScheduleService}. */
-    private static final ScheduleService scheduleService = new ScheduleService();
 
     /** {@link SchedulesBuilder}. */
     private static final SchedulesBuilder schedulesBuilder = new SchedulesBuilder();
@@ -117,17 +114,6 @@ public class Execution {
             saUpdateCounter += optimalSchedule.getSaUpdateCount();
             faUpdateCounter += optimalSchedule.getFaUpdateCount();
 
-            //100x20 too large to print
-//            if (BenchmarkLowerBounds.achieved.containsKey(benchmarkInstance) && !benchmarkInstance.contains("ta")) {
-//                if (optimalSchedule.getOptimalSchedule().getMakespan() <=
-//                        BenchmarkLowerBounds.achieved.get(benchmarkInstance)) {
-//                    LOG.trace("NEW OPTIMUM FOUND: {}", optimalSchedule.getOptimalSchedule().getMakespan());
-//                    scheduleService.generateGraphCode(optimalSchedule.getOptimalSchedule(), benchmarkInstance +
-//                            "Optimal");
-//
-//                }
-//            }
-
             //Shutdown executor service properly before starting next iteration.
             while (!safaService.executorsTerminated()) {
                 try {
@@ -144,6 +130,6 @@ public class Execution {
         LOG.debug("Results: benchmark: {}, values: {}", benchmarkInstance, resultBuilder.toString());
         LOG.debug("Optimal update rates: LS: {}, SA: {}, FA: {}", lsUpdateCounter / iterations, saUpdateCounter /
                 iterations, faUpdateCounter / iterations);
-        LOG.debug("Average computation time: {}", computationTime/iterations);
+        LOG.debug("Average computation time: {}", computationTime / iterations);
     }
 }

@@ -251,7 +251,7 @@ public class SimulatedAnnealingService implements Observer {
         runningThreads = new ArrayList<>();
     }
 
-    public boolean executorTerminated(){
+    public boolean executorTerminated() {
         return executorService.isTerminated();
     }
 

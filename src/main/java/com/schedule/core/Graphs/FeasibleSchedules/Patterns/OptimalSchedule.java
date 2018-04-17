@@ -1,6 +1,5 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Patterns;
 
-import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +50,7 @@ public class OptimalSchedule implements Observable {
                     .getMakespan());
         }
 
+        // Updates given counter depending on which service updated optimal.
         switch (isSA) {
             case FIREFLY:
                 faUpdateCount++;
@@ -141,6 +141,11 @@ public class OptimalSchedule implements Observable {
         }
     }
 
+    /**
+     * String builder.
+     *
+     * @return Stringified object.
+     */
     @Override
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();

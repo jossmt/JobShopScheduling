@@ -1,17 +1,14 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Model.Core;
 
-import com.rits.cloning.Cloner;
-import com.schedule.core.Graphs.FeasibleSchedules.Model.Other.LRUCache;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
 import java.util.*;
 
 /**
- * StaticSchedule essentially representing origin vertex for job shop scheduling
+ * Schedule representing origin vertex (SOURCE).
  */
 public class Schedule {
 
@@ -51,18 +48,6 @@ public class Schedule {
 
         final Integer taskNumber = numJobs * numMachines;
         endVertex = new EndVertex(taskNumber, -1, -1);
-    }
-
-    /**
-     * Copy constructor.
-     *
-     * @param schedule
-     *         {@link Schedule}
-     */
-    public Schedule(final Schedule schedule) {
-
-        this.jobHashMap = schedule.getJobHashMap();
-        this.makespan = schedule.getMakespan();
     }
 
     /**
@@ -410,24 +395,7 @@ public class Schedule {
     }
 
     /**
-     * Exceeds deep copy limit of library (serialisation copy needed).
-     *
-     * @return true if exceeds.
-     */
-    public boolean exceedsCopyLimit() {
-
-        if (numJobs > 70) {
-
-            if (numMachines > 10) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Equals.
+     * Equals builder.
      */
     @Override
     public boolean equals(final Object obj) {
@@ -447,7 +415,7 @@ public class Schedule {
     }
 
     /**
-     * Equals.
+     * Hash builder.
      */
     @Override
     public int hashCode() {

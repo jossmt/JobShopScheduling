@@ -116,15 +116,6 @@ public class Edge implements Serializable {
     }
 
     /**
-     * Checks if has job to.
-     *
-     * @return true/false
-     */
-    public boolean hasJobTo() {
-        return operationTo != null;
-    }
-
-    /**
      * Checks if machine path.
      *
      * @return true if is MP.

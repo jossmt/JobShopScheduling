@@ -272,6 +272,11 @@ public class Operation implements Serializable {
         this.disjunctiveEdge = disjunctiveEdge;
     }
 
+    /**
+     * Returns operation processing time.
+     *
+     * @return Processing time in second units.
+     */
     public Integer getProcessingTime() {
 
         return conjunctiveEdge.getProcessingTime();
@@ -373,6 +378,11 @@ public class Operation implements Serializable {
         return equalsBuilder.isEquals();
     }
 
+    /**
+     * Hashcode builder.
+     *
+     * @return Unique integer hash.
+     */
     @Override
     public int hashCode() {
 
@@ -381,7 +391,6 @@ public class Operation implements Serializable {
 
         return hashCodeBuilder.toHashCode();
     }
-
 
     /**
      * String representation of job.

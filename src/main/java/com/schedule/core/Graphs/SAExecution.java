@@ -32,6 +32,9 @@ public class SAExecution {
     /** {@link SimulatedAnnealingService}. */
     private static SimulatedAnnealingService simulatedAnnealingService;
 
+    /**
+     * Executor function.
+     */
     public static void main(String[] args) {
 
         final String benchmarkInstance = args[0];
@@ -52,8 +55,6 @@ public class SAExecution {
 
         final Schedule schedule = schedules.iterator().next();
         optimalSchedule.setOptimalSchedule(schedule, Services.LOCAL_SEARCH);
-
-        LOG.debug("Makespan before SA: {}", optimalSchedule.getOptimalSchedule().getMakespan());
 
         simulatedAnnealingService.manualShutdownExecutorService();
     }
