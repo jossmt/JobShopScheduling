@@ -1,7 +1,7 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Threads;
 
-import com.schedule.core.Graphs.FeasibleSchedules.Service.SAFAService;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Service.SAFAService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

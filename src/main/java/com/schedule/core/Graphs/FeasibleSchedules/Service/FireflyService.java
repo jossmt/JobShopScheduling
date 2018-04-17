@@ -1,6 +1,5 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
-import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
@@ -8,7 +7,9 @@ import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * Service handling methods surrounding movement of fireflies in FireflyAlgorithm.

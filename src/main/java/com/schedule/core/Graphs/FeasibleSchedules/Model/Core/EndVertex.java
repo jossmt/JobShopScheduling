@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**

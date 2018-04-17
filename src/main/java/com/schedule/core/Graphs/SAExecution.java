@@ -6,7 +6,6 @@ import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.LocalSearchService;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.ScheduleService;
 import com.schedule.core.Graphs.FeasibleSchedules.Service.SimulatedAnnealingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

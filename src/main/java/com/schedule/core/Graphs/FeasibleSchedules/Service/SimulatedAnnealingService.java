@@ -3,17 +3,22 @@ package com.schedule.core.Graphs.FeasibleSchedules.Service;
 import com.rits.cloning.Cloner;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Edge;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Operation;
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.ShutDownThreadsSAOnlyCallable;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SimulatedAnnealingCallable;
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Simulated Annealing Service Layer.

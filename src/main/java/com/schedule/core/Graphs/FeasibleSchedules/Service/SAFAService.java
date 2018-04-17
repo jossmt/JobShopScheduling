@@ -1,16 +1,19 @@
 package com.schedule.core.Graphs.FeasibleSchedules.Service;
 
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Services;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.SAFACallable;
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.Observer;
 import com.schedule.core.Graphs.FeasibleSchedules.Threads.ShutDownThreadsCallable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Simulated Annealing-Firefly Algorithm service layer.

@@ -2,78 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3f661da-2b14-4e22-af47-fa28a769e40a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-4x4Test.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflyOptimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-6x6FireflySchedule6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-abz6Optimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-after.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-before.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-errorschedule.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule-orb08Optimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule4x4InfeasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule4x4InfeasibleAFix.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule4x4feasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule6x6InfeasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/main/graphviz/schedule6x6feasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/FireflyMovementHashes.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/FireflyMovementHashesLarger.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/MakespanCalculations.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/RandomVals.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/ScheduleGenerationHashes.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/resources/test/TopologicalSortTestData.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-4x4Test.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflyOptimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule5.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-6x6FireflySchedule6.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-abz6Optimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-after.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-before.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-errorschedule.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule-orb08Optimal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule4x4InfeasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule4x4InfeasibleAFix.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule4x4feasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule6x6InfeasibleA.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/resources/graphviz/schedule6x6feasibleA.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/fileContent/fileContent.lock" afterPath="$PROJECT_DIR$/.gradle/3.4/fileContent/fileContent.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/taskHistory/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.4/taskHistory/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.4/taskHistory/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/taskHistory/jvmClassSignatures.bin" afterPath="$PROJECT_DIR$/.gradle/3.4/taskHistory/jvmClassSignatures.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/3.4/taskHistory/taskHistory.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.4/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/3.4/taskHistory/taskHistory.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/FileDataPaths.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/FileDataPaths.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/DataGenerator/SchedulesBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Edge.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/EndVertex.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Operation.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Operation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Model/Core/Schedule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Observable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Observable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Observer.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/Observer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/OptimalSchedule.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Patterns/OptimalSchedule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/FeasibilityService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SAFAService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/ScheduleService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Service/SimulatedAnnealingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/LocalSearchCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/LocalSearchCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SAFACallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SAFACallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/ShutDownThreadsCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" afterPath="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java" afterPath="$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -198,8 +127,8 @@
       <file leaf-file-name="TestGeneration.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-48">
-              <caret line="12" column="30" lean-forward="false" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+            <state relative-caret-position="270">
+              <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -577,7 +506,6 @@
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/FeasibilityServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/LocalSearchServiceTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/ScheduleServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/AlgorithmParameters.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/BenchmarkLowerBounds.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Config/FileDataPaths.java" />
@@ -599,6 +527,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/FeasibleSchedules/Threads/SimulatedAnnealingCallable.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/SAExecution.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/schedule/core/Graphs/Execution.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java" />
       </list>
     </option>
   </component>
@@ -1419,7 +1348,7 @@
       <workItem from="1523731780275" duration="1740000" />
       <workItem from="1523798687801" duration="2682000" />
       <workItem from="1523954794313" duration="2750000" />
-      <workItem from="1523964275611" duration="8194000" />
+      <workItem from="1523964275611" duration="8495000" />
     </task>
     <servers />
   </component>
@@ -1456,10 +1385,11 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190842000" />
+    <option name="totallyTimeSpent" value="191143000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="33" y="23" width="1176" height="712" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1480,8 +1410,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.117741935" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.45483872" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24779542" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42741936" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24779542" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32419354" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1923,8 +1853,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/schedule/test/TestGeneration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="12" column="30" lean-forward="false" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        <state relative-caret-position="270">
+          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

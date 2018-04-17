@@ -1,9 +1,10 @@
 package com.schedule.test.Config;
 
 import com.schedule.core.Graphs.FeasibleSchedules.DataGenerator.SchedulesBuilder;
-import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
 import com.schedule.core.Graphs.FeasibleSchedules.Model.Core.Schedule;
-import com.schedule.core.Graphs.FeasibleSchedules.Service.*;
+import com.schedule.core.Graphs.FeasibleSchedules.Patterns.OptimalSchedule;
+import com.schedule.core.Graphs.FeasibleSchedules.Service.FeasibilityService;
+import com.schedule.core.Graphs.FeasibleSchedules.Service.ScheduleService;
 
 import java.io.IOException;
 import java.nio.file.Files;
