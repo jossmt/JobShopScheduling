@@ -103,7 +103,7 @@ public class AlgorithmParameters {
             put("la37", new Double[]{1000.0, 0.002});
 
             //50x10  (around 9k iterations)
-            put("swv11", new Double[]{1000000.0, 0.001});
+            put("swv11", new Double[]{10000.0, 0.001});
             put("swv13", new Double[]{10000.0, 0.001});
             put("swv17", new Double[]{10000.0, 0.001});
             put("swv18", new Double[]{10000.0, 0.001});
