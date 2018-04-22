@@ -9,17 +9,24 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    // configuration that holds jars to copy into lib
+    extraLibs
+}
+
 //create a single Jar with all dependencies
-task fatJar(type: Jar) {
+jar {
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+
+    from {
+        configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 
     manifest {
         attributes 'Implementation-Title': 'Jar File JSSP',
                 'Implementation-Version': version,
                 'Main-Class': 'com.schedule.core.Graphs.Execution'
     }
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }
 
 dependencies {
@@ -50,4 +57,12 @@ dependencies {
 
     compile 'com.github.rkumsher:utils:1.3'
 
+    // Libraries required for executable jar
+    extraLibs 'com.github.rkumsher:utils:1.3'
+    extraLibs group: 'uk.com.robust-it', name: 'cloning', version: '1.9.2'
+    extraLibs group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
+    extraLibs group: 'ch.qos.logback', name: 'logback-core', version:'1.1.2'
+    extraLibs group: 'ch.qos.logback', name: 'logback-classic', version:'1.1.2'
+    extraLibs group: 'ch.qos.logback', name: 'logback-access', version:'1.1.2'
+    extraLibs group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 }
