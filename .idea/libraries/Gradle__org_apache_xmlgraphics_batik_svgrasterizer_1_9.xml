@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.xmlgraphics:batik-svgrasterizer:1.9">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.xmlgraphics/batik-svgrasterizer/1.9/32f6ffcb2f7a19fcf5684a2dd61933840e115fdc/batik-svgrasterizer-1.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.xmlgraphics/batik-svgrasterizer/1.9/157c8dea25cb979ac634491c33b99baafd744fa1/batik-svgrasterizer-1.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

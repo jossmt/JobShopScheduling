@@ -46,8 +46,8 @@ public class Execution {
     public static void main(String[] args) {
 
         //Benchmark instance to use
-        final String benchmarkInstance = args[0];
-        final Integer iterations = Integer.valueOf(args[1]);
+        final String benchmarkInstance = "swv13";
+        final Integer iterations = 1;
 
         //Generates parameters given the benchmark instance
         final Integer startingPopulation = AlgorithmParameters.startingPopulationParameter.get(benchmarkInstance);

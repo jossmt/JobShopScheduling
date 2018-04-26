@@ -127,35 +127,43 @@ public class SAFAService implements Observer {
         Double temp = startTemp;
 
         int iterations = 0;
-        while (temp > 1) {
+        while (temp > 2.5) {
 
             LOG.trace("SAFA iterations: {}", iterations);
 
             LOG.trace("\n_________________________\n");
 
-            final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
-            final Double randomProb = scheduleService.randomDouble();
-            if (!(acceptanceProb > randomProb)) {
-                LOG.trace("Firefly move toward optimal");
+            int numIterations = 0;
+            while(numIterations < 500) {
 
-                final boolean successMove = fireflyService.moveToOptimalNew(schedule);
-                if (!successMove) {
-                    LOG.debug("No more move options, check if equal to optimal: {}",
-                              schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
+                LOG.debug("SAFA it: {} num it: {}", iterations, numIterations);
+
+                final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
+                final Double randomProb = scheduleService.randomDouble();
+                if (!(acceptanceProb > randomProb)) {
+                    LOG.trace("Firefly move toward optimal");
+
+                    final boolean successMove = fireflyService.moveToOptimalNew(schedule);
+                    if (!successMove) {
+                        LOG.debug("No more move options, check if equal to optimal: {}",
+                                  schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
+                        break;
+                    }
+
+                } else {
+
+                    LOG.trace("Making random move");
+                    scheduleService.findFeasibleEdgeAndFlip(schedule);
+                }
+
+                if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
+
+                    LOG.trace("Setting new optimal");
+                    optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
                     break;
                 }
 
-            } else {
-
-                LOG.trace("Making random move");
-                scheduleService.findFeasibleEdgeAndFlip(schedule);
-            }
-
-            if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
-
-                LOG.trace("Setting new optimal");
-                optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
-                break;
+                numIterations++;
             }
 
             iterations++;
@@ -190,71 +198,79 @@ public class SAFAService implements Observer {
         Double temp = startTemp;
 
         int iteration = 0;
-        while (temp > 1) {
+        outerloop:
+        while (temp > 2.5) {
 
             if (schedules.isEmpty()) {
                 break;
             }
 
-            LOG.debug("SAFA Iteration: {}, SchedulesSize: {}", iteration, schedules.size());
-            int randomCount = 0;
-            int fireflyMoveCount = 0;
+            int numIterations = 0;
+            while(numIterations < 500) {
 
-            final Iterator<Schedule> scheduleIterator = schedules.iterator();
-            while (scheduleIterator.hasNext()) {
+                LOG.debug("SAFA it: {} num it: {}", iteration, numIterations);
+                int randomCount = 0;
+                int fireflyMoveCount = 0;
 
-                final Schedule schedule = scheduleIterator.next();
+                final Iterator<Schedule> scheduleIterator = schedules.iterator();
+                while (scheduleIterator.hasNext()) {
 
-                if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
-                    continue;
-                }
+                    final Schedule schedule = scheduleIterator.next();
 
-                LOG.trace("\n_________________________\n");
-
-                final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
-                final Double randomProb = scheduleService.randomDouble();
-                if (acceptanceProb > randomProb) {
-
-                    LOG.trace("Making random move");
-                    scheduleService.findFeasibleEdgeAndFlip(schedule);
-
-                    randomCount++;
-
-                } else {
-
-                    LOG.trace("Firefly move toward optimal");
-
-                    final boolean successMove = fireflyService.moveToOptimalNew(schedule);
-
-                    if (!successMove) {
-
-                        LOG.trace("No more move options, check if equal to optimal: {}",
-                                  schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
-                        if (schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()) {
-
-                            LOG.trace("Making random move");
-                            scheduleService.findFeasibleEdgeAndFlip(schedule);
-
-                        } else {
-                            continue;
-                        }
+                    if (schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode()) {
+                        continue;
                     }
-                    fireflyMoveCount++;
+
+                    LOG.trace("\n_________________________\n");
+
+                    final Double acceptanceProb = fireflyService.acceptanceProbability(temp, startTemp);
+                    final Double randomProb = scheduleService.randomDouble();
+                    if (acceptanceProb > randomProb) {
+
+                        LOG.trace("Making random move");
+                        scheduleService.findFeasibleEdgeAndFlip(schedule);
+
+                        randomCount++;
+
+                    } else {
+
+                        LOG.trace("Firefly move toward optimal");
+
+                        final boolean successMove = fireflyService.moveToOptimalNew(schedule);
+
+                        if (!successMove) {
+
+                            LOG.trace("No more move options, check if equal to optimal: {}",
+                                      schedule.hashCode() == optimalSchedule.getOptimalSchedule().hashCode());
+                            if (schedule.hashCode() != optimalSchedule.getOptimalSchedule().hashCode()) {
+
+                                LOG.trace("Making random move");
+                                scheduleService.findFeasibleEdgeAndFlip(schedule);
+
+                            } else {
+                                continue;
+                            }
+                        }
+                        fireflyMoveCount++;
+                    }
+                    if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
+
+                        LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
+                                .getOptimalSchedule().getMakespan());
+                        optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
+                        scheduleIterator.remove();
+                    }
                 }
-                if (schedule.getMakespan() < optimalSchedule.getOptimalSchedule().getMakespan()) {
 
-                    LOG.trace("Setting new optimal: {}, old: {}", schedule.getMakespan(), optimalSchedule
-                            .getOptimalSchedule().getMakespan());
-                    optimalSchedule.setOptimalSchedule(schedule, Services.FIREFLY);
-                    scheduleIterator.remove();
+                numIterations++;
+
+                LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
+
+                //All fireflies equal beacon
+                if (randomCount + fireflyMoveCount == 0) {
+                    break outerloop;
                 }
-            }
 
-            LOG.debug("Ratios => Random move:FireflyMove => {}:{}", randomCount, fireflyMoveCount);
-
-            //All fireflies equal beacon
-            if (randomCount + fireflyMoveCount == 0) {
-                break;
             }
 
             iteration++;
